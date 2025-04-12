@@ -1,5 +1,6 @@
 package br.com.fiap.fasefood.entities;
 
+import br.com.fiap.fasefood.dtos.ChangeUserPasswordDTO;
 import br.com.fiap.fasefood.dtos.CreateUserDTO;
 import br.com.fiap.fasefood.dtos.EnderecoDTO;
 import br.com.fiap.fasefood.dtos.UpdateUserDataDTO;
@@ -56,6 +57,11 @@ public class User {
         this.dataUltimaAtualizacao = LocalDate.now();
     }
 
+    public void changeUserPassword(ChangeUserPasswordDTO userData) {
+        changePassword(userData);
+        this.dataUltimaAtualizacao = LocalDate.now();
+    }
+
     public void deleteUser() {
         this.ativo = false;
     }
@@ -76,6 +82,12 @@ public class User {
     private void atualizarEndereco(EnderecoDTO endereco) {
         if (endereco != null && this.endereco != null) {
             this.endereco.atualizarInformacoesEndereco(endereco);
+        }
+    }
+
+    private void changePassword(ChangeUserPasswordDTO userData) {
+        if(senha != null) {
+            this.senha = userData.senha();
         }
     }
 

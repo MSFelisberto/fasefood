@@ -1,10 +1,9 @@
 package br.com.fiap.fasefood.controllers;
 
+import br.com.fiap.fasefood.dtos.ChangeUserPasswordDTO;
 import br.com.fiap.fasefood.dtos.CreateUserDTO;
 import br.com.fiap.fasefood.dtos.ListUserDTO;
 import br.com.fiap.fasefood.dtos.UpdateUserDataDTO;
-import br.com.fiap.fasefood.entities.User;
-import br.com.fiap.fasefood.repositories.UserRepository;
 import br.com.fiap.fasefood.services.UserService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -51,7 +50,14 @@ public class UserController {
     @PutMapping
     @Transactional
     public ResponseEntity<Void> updateUser(@RequestBody @Valid UpdateUserDataDTO userData) {
-        this.userService.updateUser(userData);
+        this.userService.updateUserDetais(userData);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/change-password")
+    @Transactional
+    public ResponseEntity<Void> changeUserPassword(@RequestBody @Valid ChangeUserPasswordDTO userData) {
+        this.userService.changeUserPassword(userData);
         return ResponseEntity.noContent().build();
     }
 

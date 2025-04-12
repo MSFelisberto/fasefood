@@ -1,5 +1,6 @@
 package br.com.fiap.fasefood.services;
 
+import br.com.fiap.fasefood.dtos.ChangeUserPasswordDTO;
 import br.com.fiap.fasefood.dtos.CreateUserDTO;
 import br.com.fiap.fasefood.dtos.ListUserDTO;
 import br.com.fiap.fasefood.dtos.UpdateUserDataDTO;
@@ -32,7 +33,7 @@ public class UserService {
         userRepository.save(new User(createUserDTO));
     }
 
-    public void updateUser(UpdateUserDataDTO updateUserDTO) {
+    public void updateUserDetais(UpdateUserDataDTO updateUserDTO) {
         var user = userRepository.getReferenceById(updateUserDTO.id());
         user.atualizarInformacoes(updateUserDTO);
     }
@@ -40,6 +41,11 @@ public class UserService {
     public void deleteUser(Long id) {
         var user = userRepository.getReferenceById(id);
         user.deleteUser();
+    }
+
+    public void changeUserPassword(ChangeUserPasswordDTO userData) {
+        var user = userRepository.getReferenceById(userData.id());
+        user.setSenha(userData.senha());
     }
 
 }
