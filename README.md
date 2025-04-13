@@ -38,10 +38,14 @@ graph TD
     
     Clients["Clients (Postman, Browsers)"] --> SpringBoot
     
-    classDef container fill:#e9f6fb,stroke:#333,stroke-width:2px;
-    classDef client fill:#f9f9f9,stroke:#333,stroke-width:1px;
+    classDef container fill:#34495e,stroke:#ffffff,stroke-width:2px,color:#ffffff;
+    classDef springapp fill:#3498db,stroke:#ffffff,stroke-width:2px,color:#ffffff;
+    classDef database fill:#e74c3c,stroke:#ffffff,stroke-width:2px,color:#ffffff;
+    classDef client fill:#f39c12,stroke:#ffffff,stroke-width:2px,color:#ffffff;
     
-    class SpringBoot,H2 container;
+    class Docker container;
+    class SpringBoot springapp;
+    class H2 database;
     class Clients client;
 ```
 
