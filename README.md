@@ -30,27 +30,18 @@ A aplicação está containerizada com Docker, utilizando um container para a ap
 
 ### Diagrama da Arquitetura
 
-┌─────────────────────────────────────────────────────┐
-│ Docker Environment │
-│ │
-│ ┌────────────────┐ ┌────────────────┐ │
-│ │ │ │ │ │
-│ │ Spring Boot │◄────────►│ H2 Database │ │
-│ │ Application │ │ │ │
-│ │ │ │ │ │
-│ └────────────────┘ └────────────────┘ │
-│ │
-└─────────────────────────────────────────────────────┘
-▲
-│
-│ HTTP Requests
-│
-┌───────────▼─────────────┐
-│ │
-│ Clients │
-│ (Postman, Browsers) │
-│ │
-└─────────────────────────┘
+graph TD
+    subgraph "Docker Environment"
+        SpringBoot["Spring Boot Application"] <--> H2["H2 Database"]
+    end
+    
+    Clients["Clients (Postman, Browsers)"] --> SpringBoot
+    
+    classDef container fill:#e9f6fb,stroke:#333,stroke-width:2px;
+    classDef client fill:#f9f9f9,stroke:#333,stroke-width:1px;
+    
+    class SpringBoot,H2 container;
+    class Clients client;
 
 
 
@@ -260,23 +251,25 @@ O código completo está disponível em: [https://github.com/MSFelisberto/fasefo
 
 ### Estrutura do Repositório
 
+```
 fasefood/
 ├── src/
-│ ├── main/
-│ │ ├── java/br/com/fiap/fasefood/
-│ │ │ ├── config/
-│ │ │ ├── controllers/
-│ │ │ ├── dtos/
-│ │ │ ├── entities/
-│ │ │ ├── enums/
-│ │ │ ├── repositories/
-│ │ │ ├── services/
-│ │ │ └── FasefoodApplication.java
-│ │ └── resources/
-│ └── test/
-├── Dockerfile
-├── docker-compose.yml
-├── FaseFood.postman_collection.json
-├── README.md
-└── pom.xml
+│   ├── main/
+│   │   ├── java/br/com/fiap/fasefood/
+│   │   │   ├── config/            # Configurações da aplicação
+│   │   │   ├── controllers/       # Controladores REST
+│   │   │   ├── dtos/              # Objetos de transferência de dados
+│   │   │   ├── entities/          # Entidades JPA
+│   │   │   ├── enums/             # Enumerações
+│   │   │   ├── repositories/      # Repositórios JPA
+│   │   │   ├── services/          # Camada de serviços
+│   │   │   └── FasefoodApplication.java  # Classe principal
+│   │   └── resources/             # Arquivos de configuração
+│   └── test/                      # Testes da aplicação
+├── Dockerfile                     # Build da imagem Docker
+├── docker-compose.yml             # Orquestração dos containers
+├── FaseFood.postman_collection.json  # Collection para testes
+├── README.md                      # Documentação
+└── pom.xml                        # Configuração Maven
+```
 
