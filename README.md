@@ -30,6 +30,7 @@ A aplicação está containerizada com Docker, utilizando um container para a ap
 
 ### Diagrama da Arquitetura
 
+```mermaid
 graph TD
     subgraph "Docker Environment"
         SpringBoot["Spring Boot Application"] <--> H2["H2 Database"]
@@ -42,8 +43,7 @@ graph TD
     
     class SpringBoot,H2 container;
     class Clients client;
-
-
+```
 
 ## 3. Descrição dos Endpoints da API
 
