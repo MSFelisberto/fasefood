@@ -1,9 +1,11 @@
 # Projeto: FaseFood - Sistema de Gestão para Restaurantes
 
 ## Equipe:
-- [Nome do Aluno 1] - RM [número]
-- [Nome do Aluno 2] - RM [número]
-- [Nome do Aluno 3] - RM [número]
+- [Fernando Bertolo] - RM [número]
+- [Leonardo Mattioli] - RM [número]
+- [Heider Bezerra] - RM [número]
+- [Marcos Felisberto] - RM [364607]
+- [Raphael Martins] - RM [número]
 
 ## 1. Introdução
 
