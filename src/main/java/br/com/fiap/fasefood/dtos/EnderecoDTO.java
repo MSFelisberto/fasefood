@@ -1,24 +1,28 @@
 package br.com.fiap.fasefood.dtos;
 
-import br.com.fiap.fasefood.entities.User;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public record EnderecoDTO(
-        @NotBlank
+        @NotBlank(message = "O logradouro é obrigatório")
         String logradouro,
-        @NotBlank
+
+        @NotBlank(message = "O número é obrigatório")
         String numero,
-        @NotBlank
-        @Pattern(regexp = "\\d{8}")
+
+        @NotBlank(message = "O CEP é obrigatório")
+        @Pattern(regexp = "\\d{8}", message = "O CEP deve conter 8 dígitos numéricos")
         String cep,
+
         String complemento,
-        @NotBlank
+
+        @NotBlank(message = "O bairro é obrigatório")
         String bairro,
-        @NotBlank
+
+        @NotBlank(message = "A cidade é obrigatória")
         String cidade,
-        @NotBlank
+
+        @NotBlank(message = "A UF é obrigatória")
         String uf
 ) {
 }
