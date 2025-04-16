@@ -1,8 +1,6 @@
 package br.com.fiap.fasefood.dtos;
 
-import br.com.fiap.fasefood.entities.User;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public record EnderecoDTO(

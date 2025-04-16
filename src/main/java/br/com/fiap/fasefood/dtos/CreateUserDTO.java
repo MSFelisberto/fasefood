@@ -1,6 +1,6 @@
 package br.com.fiap.fasefood.dtos;
 
-import br.com.fiap.fasefood.entities.Endereco;
+
 import br.com.fiap.fasefood.enums.ETipoUsuario;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
