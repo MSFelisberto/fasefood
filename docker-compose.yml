@@ -1,0 +1,13 @@
+services:
+  api-fasefood:
+    build: .
+    image: fase-food:1.0
+    ports:
+      - "8080:8080"
+    networks:
+      - api-network
+
+
+networks:
+  api-network:
+    driver: bridge
