@@ -2,6 +2,7 @@ package br.com.fiap.fasefood.dtos;
 
 
 import br.com.fiap.fasefood.enums.ETipoUsuario;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

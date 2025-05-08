@@ -2,6 +2,9 @@ package br.com.fiap.fasefood.controllers;
 
 import br.com.fiap.fasefood.dtos.*;
 import br.com.fiap.fasefood.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -15,6 +18,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
+@Tag(name = "Usuários", description = "Controller para crud de usuários")
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {
@@ -26,6 +30,13 @@ public class UserController {
     }
 
 
+    @Operation(
+            summary = "Busca de usuários",
+            description = "Lista todos os usuários do sistema com paginação",
+            responses = {
+                    @ApiResponse(description = "Ok", responseCode = "200")
+            }
+    )
     @GetMapping
     public ResponseEntity<Page<ListUserDTO>> findAll(
             @Parameter(description = "Parâmetros de paginação")
@@ -34,6 +45,13 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
+    @Operation(
+            summary = "Busca de usuários por ID",
+            description = "Obter as informações de um usuário específico com base no seu ID",
+            responses = {
+                    @ApiResponse(description = "Ok", responseCode = "200")
+            }
+    )
     @GetMapping("/{id}")
     public ResponseEntity<ListUserDTO> findUser(
             @Parameter(description = "ID do usuário", required = true)
@@ -43,6 +61,13 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @Operation(
+            summary = "Cadastrar um novo usuário",
+            description = "Cadastrar um novo usuário no sistema",
+            responses = {
+                    @ApiResponse(description = "Ok", responseCode = "200")
+            }
+    )
     @PostMapping
     @Transactional
     public ResponseEntity<ListUserDTO> saveUser(
@@ -55,6 +80,13 @@ public class UserController {
         return ResponseEntity.created(location).body(savedUser);
     }
 
+    @Operation(
+            summary = "Atualização de usuários por ID",
+            description = "Atualizar os dados de um usuário específico com base no seu ID",
+            responses = {
+                    @ApiResponse(description = "Ok", responseCode = "200")
+            }
+    )
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<ListUserDTO> updateUser(
@@ -69,6 +101,13 @@ public class UserController {
         return ResponseEntity.ok(updatedUser);
     }
 
+    @Operation(
+            summary = "Atualizar senha de usuário",
+            description = "Atualizar a senha de um usuário específico com base no seu ID",
+            responses = {
+                    @ApiResponse(description = "Ok", responseCode = "200")
+            }
+    )
     @PatchMapping("/{id}/password")
     @Transactional
     public ResponseEntity<Void> changeUserPassword(
@@ -81,6 +120,13 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(
+            summary = "Deletar usuários por ID",
+            description = "Deletar os dados de um usuário específico com base no seu ID",
+            responses = {
+                    @ApiResponse(description = "Ok", responseCode = "200")
+            }
+    )
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<Void> deleteUser(
@@ -91,6 +137,13 @@ public class UserController {
                 ResponseEntity.notFound().build();
     }
 
+    @Operation(
+            summary = "Autenticação de usuário",
+            description = "Autenticar um usuário no sistema",
+            responses = {
+                    @ApiResponse(description = "Ok", responseCode = "200")
+            }
+    )
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(
             @Parameter(description = "Credenciais do usuário", required = true)
