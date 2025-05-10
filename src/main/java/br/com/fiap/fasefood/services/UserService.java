@@ -3,6 +3,7 @@ package br.com.fiap.fasefood.services;
 import br.com.fiap.fasefood.dtos.*;
 import br.com.fiap.fasefood.entities.User;
 import br.com.fiap.fasefood.repositories.UserRepository;
+import br.com.fiap.fasefood.services.exceptions.AuthenticationFailedException;
 import br.com.fiap.fasefood.services.exceptions.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,14 +88,14 @@ public class UserService {
 
         if (userOptional.isEmpty()) {
             logger.warn("Tentativa de login falhou: login não encontrado - {}", loginRequestDTO.login());
-            return new LoginResponseDTO(false, "Login ou Senha incorretos");
+            throw new AuthenticationFailedException("Login ou senha incorretos");
         }
 
         User user = userOptional.get();
 
         if (!user.getSenha().equals(loginRequestDTO.senha())) {
             logger.warn("Tentativa de login falhou: senha incorreta para usuário - {}", loginRequestDTO.login());
-            return new LoginResponseDTO(false, "Login ou Senha incorretos");
+            throw new AuthenticationFailedException("Login ou senha incorretos");
         }
 
         logger.info("Login realizado com sucesso para o usuário: {}", loginRequestDTO.login());
