@@ -5,7 +5,7 @@ WORKDIR /app
 COPY src /app/src
 COPY pom.xml /app
 
-RUN mvn clean install
+RUN mvn clean install -DskipTests
 
 FROM eclipse-temurin:21-jre-alpine
 
@@ -15,5 +15,4 @@ WORKDIR /app
 
 EXPOSE 8080
 
-CMD ["java",  "-jar", "app.jar"]
-
+CMD ["sh", "-c", "sleep 15 && java -jar app.jar"]

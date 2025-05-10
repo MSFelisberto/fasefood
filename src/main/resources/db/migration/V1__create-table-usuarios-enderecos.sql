@@ -19,12 +19,7 @@ CREATE TABLE usuarios
     senha VARCHAR(255) NOT NULL,
     data_ultima_atualizacao DATE,
     tipo_usuario VARCHAR(100) NOT NULL,
-    ativo SMALLINT NOT NULL,
+    ativo BIT NOT NULL,
     endereco_id BIGINT NOT NULL,
     CONSTRAINT fk_usuarios_enderecos FOREIGN KEY (endereco_id) REFERENCES enderecos(id)
 );
-
-
-
-
-
