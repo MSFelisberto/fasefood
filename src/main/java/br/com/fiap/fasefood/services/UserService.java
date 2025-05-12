@@ -47,9 +47,9 @@ public class UserService {
     }
 
 
-    public ListUserDTO updateUserDetails(UpdateUserDataDTO updateUserDTO) {
-        logger.info("Atualizando dados do usuário com ID: {}", updateUserDTO.id());
-        User user = getUserById(updateUserDTO.id());
+    public ListUserDTO updateUserDetails(UpdateUserDataDTO updateUserDTO, long id) {
+        logger.info("Atualizando dados do usuário com ID: {}", id);
+        User user = getUserById(id);
         user.atualizarInformacoes(updateUserDTO);
         userRepository.save(user);
         logger.info("Dados do usuário atualizados com sucesso");

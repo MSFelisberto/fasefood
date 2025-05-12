@@ -94,31 +94,10 @@ public class UserController {
             @PathVariable Long id,
             @Parameter(description = "Dados para atualização do usuário", required = true)
             @RequestBody @Valid UpdateUserDataDTO userData) {
-        if (!id.equals(userData.id())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-        var updatedUser = this.userService.updateUserDetails(userData);
+        var updatedUser = this.userService.updateUserDetails(userData, id);
         return ResponseEntity.ok(updatedUser);
     }
 
-    @Operation(
-            summary = "Atualizar senha de usuário",
-            description = "Atualizar a senha de um usuário específico com base no seu ID",
-            responses = {
-                    @ApiResponse(description = "Ok", responseCode = "200")
-            }
-    )
-    @PatchMapping("/{id}/password")
-    @Transactional
-    public ResponseEntity<Void> changeUserPassword(
-            @Parameter(description = "ID do usuário", required = true)
-            @PathVariable Long id,
-            @Parameter(description = "Nova senha do usuário", required = true)
-            @RequestBody @Valid ChangeUserPasswordDTO userData) {
-
-        this.userService.changeUserPassword(id, userData);
-        return ResponseEntity.noContent().build();
-    }
 
     @Operation(
             summary = "Deletar usuários por ID",
@@ -136,21 +115,4 @@ public class UserController {
         return deleted ? ResponseEntity.noContent().build() :
                 ResponseEntity.notFound().build();
     }
-
-    @Operation(
-            summary = "Autenticação de usuário",
-            description = "Autenticar um usuário no sistema",
-            responses = {
-                    @ApiResponse(description = "Ok", responseCode = "200")
-            }
-    )
-    @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(
-            @Parameter(description = "Credenciais do usuário", required = true)
-            @RequestBody @Valid LoginRequestDTO loginRequestDTO) {
-
-        LoginResponseDTO response = userService.authenticate(loginRequestDTO);
-        return ResponseEntity.ok(response);
-    }
-
 }
