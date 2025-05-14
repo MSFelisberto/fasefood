@@ -71,39 +71,6 @@ public class UserService {
     }
 
 
-    public void changeUserPassword(Long id, ChangeUserPasswordDTO userData) {
-        logger.info("Alterando senha do usuário com ID: {}", id);
-        User user = getUserById(id);
-        user.changeUserPassword(userData);
-        userRepository.save(user);
-        logger.info("Senha do usuário alterada com sucesso");
-    }
-
-
-
-    public LoginResponseDTO authenticate(LoginRequestDTO loginRequestDTO) {
-        logger.info("Tentativa de login para o usuário: {}", loginRequestDTO.login());
-
-        Optional<User> userOptional = userRepository.findByLoginAndAtivoTrue(loginRequestDTO.login());
-
-        if (userOptional.isEmpty()) {
-            logger.warn("Tentativa de login falhou: login não encontrado - {}", loginRequestDTO.login());
-            throw new AuthenticationFailedException("Login ou senha incorretos");
-        }
-
-        User user = userOptional.get();
-
-        if (!user.getSenha().equals(loginRequestDTO.senha())) {
-            logger.warn("Tentativa de login falhou: senha incorreta para usuário - {}", loginRequestDTO.login());
-            throw new AuthenticationFailedException("Login ou senha incorretos");
-        }
-
-        logger.info("Login realizado com sucesso para o usuário: {}", loginRequestDTO.login());
-        return new LoginResponseDTO(true, "Login realizado com sucesso");
-    }
-
-
-
     private User getUserById(Long id) {
         return userRepository.findByIdAndAtivoTrue(id)
                 .orElseThrow(() -> {
