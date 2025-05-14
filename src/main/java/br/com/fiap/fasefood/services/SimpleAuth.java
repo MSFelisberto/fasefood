@@ -1,11 +1,10 @@
-package br.com.fiap.fasefood.services.auth;
+package br.com.fiap.fasefood.services;
 
 import br.com.fiap.fasefood.dtos.ChangeUserPasswordDTO;
 import br.com.fiap.fasefood.dtos.LoginRequestDTO;
 import br.com.fiap.fasefood.dtos.LoginResponseDTO;
 import br.com.fiap.fasefood.entities.User;
 import br.com.fiap.fasefood.repositories.UserRepository;
-import br.com.fiap.fasefood.services.AuthStrategy;
 import br.com.fiap.fasefood.services.exceptions.AuthenticationFailedException;
 import br.com.fiap.fasefood.services.exceptions.ResourceNotFoundException;
 import org.slf4j.Logger;
