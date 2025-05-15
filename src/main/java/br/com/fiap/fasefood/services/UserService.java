@@ -1,9 +1,10 @@
 package br.com.fiap.fasefood.services;
 
+import br.com.fiap.fasefood.core.domain.User;
 import br.com.fiap.fasefood.dtos.*;
-import br.com.fiap.fasefood.entities.User;
+import br.com.fiap.fasefood.entities.UserEntity;
+import br.com.fiap.fasefood.entities.UserEntityMapper;
 import br.com.fiap.fasefood.repositories.UserRepository;
-import br.com.fiap.fasefood.services.exceptions.AuthenticationFailedException;
 import br.com.fiap.fasefood.services.exceptions.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,31 +40,30 @@ public class UserService {
     }
 
 
-    public ListUserDTO saveUser(CreateUserDTO createUserDTO) {
-        logger.info("Criando novo usuário com login: {}", createUserDTO.login());
-        User user = new User(createUserDTO);
-        user = userRepository.save(user);
-        logger.info("Usuário criado com ID: {}", user.getId());
-        return new ListUserDTO(user);
+    public ListUserDTO saveUser(User user) {
+        logger.info("Criando novo usuário com login: {}", user.getLogin());
+        userRepository.save(UserEntityMapper.toEntity(user));
+        logger.info("Usuário criado com ID: {}", UserEntityMapper.toEntity(user).getId());
+        return new ListUserDTO(UserEntityMapper.toEntity(user));
     }
 
 
     public ListUserDTO updateUserDetails(UpdateUserDataDTO updateUserDTO, long id) {
         logger.info("Atualizando dados do usuário com ID: {}", id);
-        User user = getUserById(id);
-        user.atualizarInformacoes(updateUserDTO);
-        userRepository.save(user);
+        UserEntity userEntity = getUserById(id);
+        userEntity.atualizarInformacoes(updateUserDTO);
+        userRepository.save(userEntity);
         logger.info("Dados do usuário atualizados com sucesso");
-        return new ListUserDTO(user);
+        return new ListUserDTO(userEntity);
     }
 
 
     public boolean deleteUser(Long id) {
         logger.info("Tentando excluir usuário com ID: {}", id);
         return userRepository.findByIdAndAtivoTrue(id)
-                .map(user -> {
-                    user.deleteUser();
-                    userRepository.save(user);
+                .map(userEntity -> {
+                    userEntity.deleteUser();
+                    userRepository.save(userEntity);
                     logger.info("Usuário com ID: {} excluído com sucesso", id);
                     return true;
                 })
@@ -71,7 +71,7 @@ public class UserService {
     }
 
 
-    private User getUserById(Long id) {
+    private UserEntity getUserById(Long id) {
         return userRepository.findByIdAndAtivoTrue(id)
                 .orElseThrow(() -> {
                     logger.error("Usuário não encontrado com ID: {}", id);

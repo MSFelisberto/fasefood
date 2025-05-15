@@ -1,54 +1,44 @@
-package br.com.fiap.fasefood.entities;
+package br.com.fiap.fasefood.core.domain;
 
 import br.com.fiap.fasefood.dtos.ChangeUserPasswordDTO;
-import br.com.fiap.fasefood.dtos.CreateUserDTO;
 import br.com.fiap.fasefood.dtos.EnderecoDTO;
 import br.com.fiap.fasefood.dtos.UpdateUserDataDTO;
+import br.com.fiap.fasefood.entities.Endereco;
 import br.com.fiap.fasefood.enums.ETipoUsuario;
-import jakarta.persistence.*;
-import lombok.*;
 
 import java.time.LocalDate;
 
-@Entity(name = "usuario")
-@Table(name = "usuarios")
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@EqualsAndHashCode(of = "id")
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     private String nome;
     private String email;
     private String login;
     private String senha;
     private LocalDate dataUltimaAtualizacao;
-
-    @Enumerated(EnumType.STRING)
-    private ETipoUsuario tipoUsuario;
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "endereco_id")
     private Endereco endereco;
 
+    private ETipoUsuario tipoUsuario;
     private boolean ativo;
 
-
-    public User(CreateUserDTO userData) {
-        this.ativo = true;
-        this.nome = userData.nome();
-        this.email = userData.email();
-        this.login = userData.login();
-        this.senha = userData.senha();
-        this.dataUltimaAtualizacao = LocalDate.now();
-        this.tipoUsuario = userData.tipoUsuario();
-        this.endereco = new Endereco(userData.endereco());
+    public User(
+        String nome,
+        String email,
+        String login,
+        String senha,
+        LocalDate dataUltimaAtualizacao,
+        Endereco endereco,
+        ETipoUsuario tipoUsuario,
+        boolean ativo
+    ) {
+        this.nome = nome;
+        this.email = email;
+        this.login = login;
+        this.senha = senha;
+        this.dataUltimaAtualizacao = dataUltimaAtualizacao;
+        this.endereco = endereco;
+        this.tipoUsuario = tipoUsuario;
+        this.ativo = ativo;
     }
-
 
     public void atualizarInformacoes(UpdateUserDataDTO data) {
         atualizarNome(data.nome());
@@ -91,6 +81,35 @@ public class User {
         }
     }
 
+    public String getNome() {
+        return nome;
+    }
 
+    public String getEmail() {
+        return email;
+    }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public LocalDate getDataUltimaAtualizacao() {
+        return dataUltimaAtualizacao;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public ETipoUsuario getTipoUsuario() {
+        return tipoUsuario;
+    }
 }

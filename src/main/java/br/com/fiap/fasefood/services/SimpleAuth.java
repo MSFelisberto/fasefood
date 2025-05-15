@@ -3,7 +3,7 @@ package br.com.fiap.fasefood.services;
 import br.com.fiap.fasefood.dtos.ChangeUserPasswordDTO;
 import br.com.fiap.fasefood.dtos.LoginRequestDTO;
 import br.com.fiap.fasefood.dtos.LoginResponseDTO;
-import br.com.fiap.fasefood.entities.User;
+import br.com.fiap.fasefood.entities.UserEntity;
 import br.com.fiap.fasefood.repositories.UserRepository;
 import br.com.fiap.fasefood.services.exceptions.AuthenticationFailedException;
 import br.com.fiap.fasefood.services.exceptions.ResourceNotFoundException;
@@ -27,16 +27,16 @@ public class SimpleAuth implements AuthStrategy {
     public LoginResponseDTO authenticate(LoginRequestDTO loginRequestDTO) {
         logger.info("Tentativa de login para o usuário: {}", loginRequestDTO.login());
 
-        Optional<User> userOptional = userRepository.findByLoginAndAtivoTrue(loginRequestDTO.login());
+        Optional<UserEntity> userOptional = userRepository.findByLoginAndAtivoTrue(loginRequestDTO.login());
 
         if (userOptional.isEmpty()) {
             logger.warn("Tentativa de login falhou: login não encontrado - {}", loginRequestDTO.login());
             throw new AuthenticationFailedException("Login ou senha incorretos");
         }
 
-        User user = userOptional.get();
+        UserEntity userEntity = userOptional.get();
 
-        if (!user.getSenha().equals(loginRequestDTO.senha())) {
+        if (!userEntity.getSenha().equals(loginRequestDTO.senha())) {
             logger.warn("Tentativa de login falhou: senha incorreta para usuário - {}", loginRequestDTO.login());
             throw new AuthenticationFailedException("Login ou senha incorretos");
         }
@@ -48,14 +48,14 @@ public class SimpleAuth implements AuthStrategy {
     @Override
     public void changeUserPassword(Long id, ChangeUserPasswordDTO userData) {
         logger.info("Alterando senha do usuário com ID: {}", id);
-        User user = userRepository.findByIdAndAtivoTrue(id)
+        UserEntity userEntity = userRepository.findByIdAndAtivoTrue(id)
                 .orElseThrow(() -> {
                     logger.error("Usuário não encontrado com ID: {}", id);
                     return new ResourceNotFoundException("Usuário não encontrado com ID: " + id);
                 });
 
-        user.changeUserPassword(userData);
-        userRepository.save(user);
+        userEntity.changeUserPassword(userData);
+        userRepository.save(userEntity);
         logger.info("Senha do usuário alterada com sucesso");
     }
 }
