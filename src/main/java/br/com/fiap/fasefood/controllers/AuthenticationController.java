@@ -3,6 +3,7 @@ package br.com.fiap.fasefood.controllers;
 import br.com.fiap.fasefood.dtos.ChangeUserPasswordDTO;
 import br.com.fiap.fasefood.dtos.LoginRequestDTO;
 import br.com.fiap.fasefood.dtos.LoginResponseDTO;
+import br.com.fiap.fasefood.services.AuthStrategy;
 import br.com.fiap.fasefood.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -18,10 +19,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/auth")
 public class AuthenticationController {
 
-    private final UserService userService;
+    private final AuthStrategy authStrategy;
 
-    public AuthenticationController(UserService userService) {
-        this.userService = userService;
+    public AuthenticationController(AuthStrategy authStrategy) {
+        this.authStrategy = authStrategy;
     }
 
     @Operation(
@@ -39,7 +40,7 @@ public class AuthenticationController {
             @Parameter(description = "Nova senha do usuário", required = true)
             @RequestBody @Valid ChangeUserPasswordDTO userData) {
 
-        this.userService.changeUserPassword(id, userData);
+        this.authStrategy.changeUserPassword(id, userData);
         return ResponseEntity.noContent().build();
     }
 
@@ -55,7 +56,7 @@ public class AuthenticationController {
             @Parameter(description = "Credenciais do usuário", required = true)
             @RequestBody @Valid LoginRequestDTO loginRequestDTO) {
 
-        LoginResponseDTO response = userService.authenticate(loginRequestDTO);
+        LoginResponseDTO response = authStrategy.authenticate(loginRequestDTO);
         return ResponseEntity.ok(response);
     }
 }
