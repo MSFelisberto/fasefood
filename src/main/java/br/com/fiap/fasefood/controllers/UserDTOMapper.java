@@ -2,12 +2,14 @@ package br.com.fiap.fasefood.controllers;
 
 import br.com.fiap.fasefood.core.domain.User;
 import br.com.fiap.fasefood.dtos.CreateUserDTO;
+import br.com.fiap.fasefood.dtos.UpdateUserDataDTO;
 
 import java.time.LocalDate;
 
 public class UserDTOMapper {
-    static User toDomain(CreateUserDTO user){
+    public static User toDomain(CreateUserDTO user){
         return new User(
+                null,
                 user.nome(),
                 user.email(),
                 user.login(),
@@ -18,6 +20,7 @@ public class UserDTOMapper {
                 true
         );
     }
+
 //    static CreateUserDTO toDTO(User) {
 //        return new CreateUserDTO();
 //    }

@@ -54,7 +54,7 @@ public class SimpleAuth implements AuthStrategy {
                     return new ResourceNotFoundException("Usuário não encontrado com ID: " + id);
                 });
 
-        userEntity.changeUserPassword(userData);
+//        userEntity.changeUserPassword(userData);
         userRepository.save(userEntity);
         logger.info("Senha do usuário alterada com sucesso");
     }

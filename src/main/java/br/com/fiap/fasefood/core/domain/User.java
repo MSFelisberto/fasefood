@@ -4,32 +4,36 @@ import br.com.fiap.fasefood.dtos.ChangeUserPasswordDTO;
 import br.com.fiap.fasefood.dtos.EnderecoDTO;
 import br.com.fiap.fasefood.dtos.UpdateUserDataDTO;
 import br.com.fiap.fasefood.entities.Endereco;
+import br.com.fiap.fasefood.entities.EnderecoEntityMapper;
 import br.com.fiap.fasefood.enums.ETipoUsuario;
 
 import java.time.LocalDate;
 
 public class User {
 
+    private Long id;
     private String nome;
     private String email;
     private String login;
     private String senha;
     private LocalDate dataUltimaAtualizacao;
-    private Endereco endereco;
+    private EnderecoDTO endereco;
 
     private ETipoUsuario tipoUsuario;
     private boolean ativo;
 
     public User(
-        String nome,
-        String email,
-        String login,
-        String senha,
-        LocalDate dataUltimaAtualizacao,
-        Endereco endereco,
-        ETipoUsuario tipoUsuario,
-        boolean ativo
+            Long id,
+            String nome,
+            String email,
+            String login,
+            String senha,
+            LocalDate dataUltimaAtualizacao,
+            EnderecoDTO endereco,
+            ETipoUsuario tipoUsuario,
+            boolean ativo
     ) {
+        this.id = id;
         this.nome = nome;
         this.email = email;
         this.login = login;
@@ -71,7 +75,7 @@ public class User {
 
     private void atualizarEndereco(EnderecoDTO endereco) {
         if (endereco != null && this.endereco != null) {
-            this.endereco.atualizarInformacoesEndereco(endereco);
+            EnderecoEntityMapper.toEntity(this.endereco).atualizarInformacoesEndereco(endereco);
         }
     }
 
@@ -79,6 +83,10 @@ public class User {
         if(senha != null) {
             this.senha = userData.senha();
         }
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getNome() {
@@ -101,8 +109,8 @@ public class User {
         return dataUltimaAtualizacao;
     }
 
-    public Endereco getEndereco() {
-        return endereco;
+    public EnderecoDTO getEndereco() {
+        return this.endereco;
     }
 
     public boolean isAtivo() {

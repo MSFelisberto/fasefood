@@ -36,14 +36,16 @@ public class UserEntity {
 
 
     public UserEntity(
-        String nome,
-        String email,
-        String login,
-        String senha,
-        LocalDate dataUltimaAtualizacao,
-        ETipoUsuario tipoUsuario,
-        Endereco endereco
+            Long id,
+            String nome,
+            String email,
+            String login,
+            String senha,
+            LocalDate dataUltimaAtualizacao,
+            ETipoUsuario tipoUsuario,
+            Endereco endereco
     ) {
+        this.id = id;
         this.ativo = true;
         this.nome = nome;
         this.email = email;

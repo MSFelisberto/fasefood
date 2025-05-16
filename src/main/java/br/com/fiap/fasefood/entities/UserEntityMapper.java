@@ -5,12 +5,13 @@ import br.com.fiap.fasefood.core.domain.User;
 public class UserEntityMapper {
     public static User toDomain(UserEntity userEntity){
         return new User(
+                userEntity.getId(),
                 userEntity.getNome(),
                 userEntity.getEmail(),
                 userEntity.getLogin(),
                 userEntity.getSenha(),
                 userEntity.getDataUltimaAtualizacao(),
-                userEntity.getEndereco(),
+                EnderecoEntityMapper.toDto(userEntity.getEndereco()),
                 userEntity.getTipoUsuario(),
                 true
         );
@@ -18,13 +19,14 @@ public class UserEntityMapper {
 
     public static UserEntity toEntity(User user){
         return new UserEntity(
+                user.getId(),
                 user.getNome(),
                 user.getEmail(),
                 user.getLogin(),
                 user.getSenha(),
                 user.getDataUltimaAtualizacao(),
                 user.getTipoUsuario(),
-                user.getEndereco()
+                EnderecoEntityMapper.toEntity(user.getEndereco())
         );
     }
 }

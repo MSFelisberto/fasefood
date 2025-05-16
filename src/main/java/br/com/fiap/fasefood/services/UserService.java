@@ -1,5 +1,6 @@
 package br.com.fiap.fasefood.services;
 
+import br.com.fiap.fasefood.controllers.UserDTOMapper;
 import br.com.fiap.fasefood.core.domain.User;
 import br.com.fiap.fasefood.dtos.*;
 import br.com.fiap.fasefood.entities.UserEntity;
@@ -51,24 +52,27 @@ public class UserService {
     public ListUserDTO updateUserDetails(UpdateUserDataDTO updateUserDTO, long id) {
         logger.info("Atualizando dados do usuário com ID: {}", id);
         UserEntity userEntity = getUserById(id);
-        userEntity.atualizarInformacoes(updateUserDTO);
-        userRepository.save(userEntity);
+
+        User userDomain = UserEntityMapper.toDomain(userEntity);
+        userDomain.atualizarInformacoes(updateUserDTO);
+
+        userRepository.save(UserEntityMapper.toEntity(userDomain));
         logger.info("Dados do usuário atualizados com sucesso");
         return new ListUserDTO(userEntity);
     }
-
-
-    public boolean deleteUser(Long id) {
-        logger.info("Tentando excluir usuário com ID: {}", id);
-        return userRepository.findByIdAndAtivoTrue(id)
-                .map(userEntity -> {
-                    userEntity.deleteUser();
-                    userRepository.save(userEntity);
-                    logger.info("Usuário com ID: {} excluído com sucesso", id);
-                    return true;
-                })
-                .orElse(false);
-    }
+//
+//
+//    public boolean deleteUser(Long id) {
+//        logger.info("Tentando excluir usuário com ID: {}", id);
+//        return userRepository.findByIdAndAtivoTrue(id)
+//                .map(userEntity -> {
+//                    userEntity.deleteUser();
+//                    userRepository.save(userEntity);
+//                    logger.info("Usuário com ID: {} excluído com sucesso", id);
+//                    return true;
+//                })
+//                .orElse(false);
+//    }
 
 
     private UserEntity getUserById(Long id) {
