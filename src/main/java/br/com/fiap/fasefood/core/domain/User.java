@@ -22,17 +22,12 @@ public class User {
     private ETipoUsuario tipoUsuario;
     private boolean ativo;
 
-    public User(
-            Long id,
-            String nome,
-            String email,
-            String login,
-            String senha,
-            LocalDate dataUltimaAtualizacao,
-            EnderecoDTO endereco,
-            ETipoUsuario tipoUsuario,
-            boolean ativo
-    ) {
+
+    public User(String nome, String email, String login, String senha, LocalDate dataUltimaAtualizacao, EnderecoDTO endereco, ETipoUsuario tipoUsuario, boolean ativo) {
+        this(null, nome, email, login, senha, dataUltimaAtualizacao, endereco, tipoUsuario, ativo);
+    }
+
+    public User(Long id, String nome, String email, String login, String senha, LocalDate dataUltimaAtualizacao, EnderecoDTO endereco, ETipoUsuario tipoUsuario, boolean ativo) {
         this.id = id;
         this.nome = nome;
         this.email = email;

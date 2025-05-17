@@ -9,7 +9,6 @@ import java.time.LocalDate;
 public class UserDTOMapper {
     public static User toDomain(CreateUserDTO user){
         return new User(
-                null,
                 user.nome(),
                 user.email(),
                 user.login(),

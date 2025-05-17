@@ -31,21 +31,27 @@ public class UserService {
 
     public Page<ListUserDTO> findAllUsers(Pageable paginacao) {
         logger.info("Buscando todos os usuários ativos com paginação: {}", paginacao);
-        return userRepository.findAllByAtivoTrue(paginacao).map(ListUserDTO::new);
+        return userRepository
+                .findAllByAtivoTrue(paginacao)
+                .map(UserEntityMapper::toDomain)
+                .map(ListUserDTO::new);
     }
 
 
     public Optional<ListUserDTO> findUserById(Long id) {
         logger.info("Buscando usuário pelo ID: {}", id);
-        return userRepository.findByIdAndAtivoTrue(id).map(ListUserDTO::new);
+        return userRepository
+                .findByIdAndAtivoTrue(id)
+                .map(UserEntityMapper::toDomain)
+                .map(ListUserDTO::new);
     }
 
 
     public ListUserDTO saveUser(User user) {
         logger.info("Criando novo usuário com login: {}", user.getLogin());
-        userRepository.save(UserEntityMapper.toEntity(user));
-        logger.info("Usuário criado com ID: {}", UserEntityMapper.toEntity(user).getId());
-        return new ListUserDTO(UserEntityMapper.toEntity(user));
+        UserEntity userEntity = userRepository.save(UserEntityMapper.toEntity(user));
+        logger.info("Usuário criado com ID: {}", userEntity.getId());
+        return new ListUserDTO(UserEntityMapper.toDomain(userEntity));
     }
 
 
@@ -53,12 +59,14 @@ public class UserService {
         logger.info("Atualizando dados do usuário com ID: {}", id);
         UserEntity userEntity = getUserById(id);
 
-        User userDomain = UserEntityMapper.toDomain(userEntity);
-        userDomain.atualizarInformacoes(updateUserDTO);
-
-        userRepository.save(UserEntityMapper.toEntity(userDomain));
-        logger.info("Dados do usuário atualizados com sucesso");
-        return new ListUserDTO(userEntity);
+        userEntity.setNome(updateUserDTO.nome());
+        userEntity.setEmail(updateUserDTO.email());
+        if (updateUserDTO.endereco() != null) {
+            userEntity.getEndereco()
+                    .atualizarInformacoesEndereco(updateUserDTO.endereco());
+        }
+        UserEntity saved = userRepository.save(userEntity);
+        return new ListUserDTO(UserEntityMapper.toDomain(saved));
     }
 //
 //
