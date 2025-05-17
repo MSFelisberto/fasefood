@@ -3,6 +3,7 @@ package br.com.fiap.fasefood.controllers;
 import br.com.fiap.fasefood.core.domain.User;
 import br.com.fiap.fasefood.dtos.CreateUserDTO;
 import br.com.fiap.fasefood.dtos.UpdateUserDataDTO;
+import br.com.fiap.fasefood.entities.EnderecoEntityMapper;
 
 import java.time.LocalDate;
 
@@ -14,7 +15,7 @@ public class UserDTOMapper {
                 user.login(),
                 user.senha(),
                 LocalDate.now(),
-                user.endereco(),
+                EnderecoEntityMapper.toEntity(user.endereco()),
                 user.tipoUsuario(),
                 true
         );

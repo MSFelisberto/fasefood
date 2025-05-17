@@ -98,22 +98,22 @@ public class UserController {
         var updatedUser = this.userService.updateUserDetails(userData, id);
         return ResponseEntity.ok(updatedUser);
     }
-//
-//
-//    @Operation(
-//            summary = "Deletar usuários por ID",
-//            description = "Deletar os dados de um usuário específico com base no seu ID",
-//            responses = {
-//                    @ApiResponse(description = "Ok", responseCode = "200")
-//            }
-//    )
-//    @DeleteMapping("/{id}")
-//    @Transactional
-//    public ResponseEntity<Void> deleteUser(
-//            @Parameter(description = "ID do usuário", required = true)
-//            @PathVariable("id") Long id) {
-//        boolean deleted = this.userService.deleteUser(id);
-//        return deleted ? ResponseEntity.noContent().build() :
-//                ResponseEntity.notFound().build();
-//    }
+
+
+    @Operation(
+            summary = "Deletar usuários por ID",
+            description = "Deletar os dados de um usuário específico com base no seu ID",
+            responses = {
+                    @ApiResponse(description = "Ok", responseCode = "200")
+            }
+    )
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<Void> deleteUser(
+            @Parameter(description = "ID do usuário", required = true)
+            @PathVariable("id") Long id) {
+        boolean deleted = this.userService.deleteUser(id);
+        return deleted ? ResponseEntity.noContent().build() :
+                ResponseEntity.notFound().build();
+    }
 }

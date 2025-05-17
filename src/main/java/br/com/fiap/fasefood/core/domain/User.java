@@ -17,17 +17,17 @@ public class User {
     private String login;
     private String senha;
     private LocalDate dataUltimaAtualizacao;
-    private EnderecoDTO endereco;
+    private Endereco endereco;
 
     private ETipoUsuario tipoUsuario;
     private boolean ativo;
 
 
-    public User(String nome, String email, String login, String senha, LocalDate dataUltimaAtualizacao, EnderecoDTO endereco, ETipoUsuario tipoUsuario, boolean ativo) {
+    public User(String nome, String email, String login, String senha, LocalDate dataUltimaAtualizacao, Endereco endereco, ETipoUsuario tipoUsuario, boolean ativo) {
         this(null, nome, email, login, senha, dataUltimaAtualizacao, endereco, tipoUsuario, ativo);
     }
 
-    public User(Long id, String nome, String email, String login, String senha, LocalDate dataUltimaAtualizacao, EnderecoDTO endereco, ETipoUsuario tipoUsuario, boolean ativo) {
+    public User(Long id, String nome, String email, String login, String senha, LocalDate dataUltimaAtualizacao, Endereco endereco, ETipoUsuario tipoUsuario, boolean ativo) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -70,7 +70,7 @@ public class User {
 
     private void atualizarEndereco(EnderecoDTO endereco) {
         if (endereco != null && this.endereco != null) {
-            EnderecoEntityMapper.toEntity(this.endereco).atualizarInformacoesEndereco(endereco);
+            this.endereco.atualizarInformacoesEndereco(endereco);
         }
     }
 
@@ -104,7 +104,7 @@ public class User {
         return dataUltimaAtualizacao;
     }
 
-    public EnderecoDTO getEndereco() {
+    public Endereco getEndereco() {
         return this.endereco;
     }
 

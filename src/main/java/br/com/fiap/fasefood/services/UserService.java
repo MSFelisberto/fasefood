@@ -68,19 +68,20 @@ public class UserService {
         UserEntity saved = userRepository.save(userEntity);
         return new ListUserDTO(UserEntityMapper.toDomain(saved));
     }
-//
-//
-//    public boolean deleteUser(Long id) {
-//        logger.info("Tentando excluir usuário com ID: {}", id);
-//        return userRepository.findByIdAndAtivoTrue(id)
-//                .map(userEntity -> {
-//                    userEntity.deleteUser();
-//                    userRepository.save(userEntity);
-//                    logger.info("Usuário com ID: {} excluído com sucesso", id);
-//                    return true;
-//                })
-//                .orElse(false);
-//    }
+
+
+    public boolean deleteUser(Long id) {
+        logger.info("Tentando excluir usuário com ID: {}", id);
+        return userRepository.findByIdAndAtivoTrue(id)
+                .map(userEntity -> {
+                    User userDomain = UserEntityMapper.toDomain(userEntity);
+                    userDomain.deleteUser();
+                    userRepository.save(UserEntityMapper.toEntity(userDomain));
+                    logger.info("Usuário com ID: {} excluído com sucesso", id);
+                    return true;
+                })
+                .orElse(false);
+    }
 
 
     private UserEntity getUserById(Long id) {

@@ -11,9 +11,9 @@ public class UserEntityMapper {
                 userEntity.getLogin(),
                 userEntity.getSenha(),
                 userEntity.getDataUltimaAtualizacao(),
-                EnderecoEntityMapper.toDto(userEntity.getEndereco()),
+                userEntity.getEndereco(),
                 userEntity.getTipoUsuario(),
-                true
+                userEntity.isAtivo()
         );
     };
 
@@ -26,7 +26,8 @@ public class UserEntityMapper {
                 user.getSenha(),
                 user.getDataUltimaAtualizacao(),
                 user.getTipoUsuario(),
-                EnderecoEntityMapper.toEntity(user.getEndereco())
+                user.getEndereco(),
+                user.isAtivo()
         );
     }
 }
