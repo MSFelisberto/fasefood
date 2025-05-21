@@ -1,6 +1,7 @@
 package br.com.fiap.fasefood.dtos;
 
-import br.com.fiap.fasefood.entities.User;
+import br.com.fiap.fasefood.core.domain.User;
+import br.com.fiap.fasefood.entities.UserEntity;
 import br.com.fiap.fasefood.enums.ETipoUsuario;
 
 public record ListUserDTO(

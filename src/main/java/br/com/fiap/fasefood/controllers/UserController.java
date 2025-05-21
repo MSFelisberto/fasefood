@@ -71,10 +71,11 @@ public class UserController {
     @PostMapping
     @Transactional
     public ResponseEntity<ListUserDTO> saveUser(
-            @Parameter(description = "Dados para criação do usuário", required = true)
-            @RequestBody @Valid CreateUserDTO createUserDTO,
-            UriComponentsBuilder uriBuilder) {
-        var savedUser = this.userService.saveUser(createUserDTO);
+        @Parameter(description = "Dados para criação do usuário", required = true)
+        @RequestBody @Valid CreateUserDTO createUserDTO,
+        UriComponentsBuilder uriBuilder
+    ) {
+        var savedUser = this.userService.saveUser(UserDTOMapper.toDomain(createUserDTO));
         URI location = uriBuilder.path("/api/v1/users/{id}")
                 .buildAndExpand(savedUser.id()).toUri();
         return ResponseEntity.created(location).body(savedUser);

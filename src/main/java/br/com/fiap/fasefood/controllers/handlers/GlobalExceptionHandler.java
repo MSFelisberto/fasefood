@@ -1,6 +1,7 @@
 package br.com.fiap.fasefood.controllers.handlers;
 
 import br.com.fiap.fasefood.services.exceptions.AuthenticationFailedException;
+import br.com.fiap.fasefood.services.exceptions.ResourceAlreadyExists;
 import br.com.fiap.fasefood.services.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,6 +54,16 @@ public class GlobalExceptionHandler {
                 LocalDateTime.now()
         );
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(apiError);
+    }
+
+    @ExceptionHandler(ResourceAlreadyExists.class)
+    public ResponseEntity<ApiError> handleResourceAlreadyExists(ResourceAlreadyExists ex) {
+        ApiError apiError = new ApiError(
+                HttpStatus.CONFLICT.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(apiError);
     }
 
     public record ApiError(

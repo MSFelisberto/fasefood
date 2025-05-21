@@ -1,9 +1,12 @@
 package br.com.fiap.fasefood.services;
 
+import br.com.fiap.fasefood.controllers.UserDTOMapper;
+import br.com.fiap.fasefood.core.domain.User;
 import br.com.fiap.fasefood.dtos.*;
-import br.com.fiap.fasefood.entities.User;
+import br.com.fiap.fasefood.entities.UserEntity;
+import br.com.fiap.fasefood.entities.UserEntityMapper;
 import br.com.fiap.fasefood.repositories.UserRepository;
-import br.com.fiap.fasefood.services.exceptions.AuthenticationFailedException;
+import br.com.fiap.fasefood.services.exceptions.ResourceAlreadyExists;
 import br.com.fiap.fasefood.services.exceptions.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,41 +32,59 @@ public class UserService {
 
     public Page<ListUserDTO> findAllUsers(Pageable paginacao) {
         logger.info("Buscando todos os usuários ativos com paginação: {}", paginacao);
-        return userRepository.findAllByAtivoTrue(paginacao).map(ListUserDTO::new);
+        return userRepository
+                .findAllByAtivoTrue(paginacao)
+                .map(UserEntityMapper::toDomain)
+                .map(ListUserDTO::new);
     }
 
 
     public Optional<ListUserDTO> findUserById(Long id) {
         logger.info("Buscando usuário pelo ID: {}", id);
-        return userRepository.findByIdAndAtivoTrue(id).map(ListUserDTO::new);
+        return userRepository
+                .findByIdAndAtivoTrue(id)
+                .map(UserEntityMapper::toDomain)
+                .map(ListUserDTO::new);
     }
 
 
-    public ListUserDTO saveUser(CreateUserDTO createUserDTO) {
-        logger.info("Criando novo usuário com login: {}", createUserDTO.login());
-        User user = new User(createUserDTO);
-        user = userRepository.save(user);
-        logger.info("Usuário criado com ID: {}", user.getId());
-        return new ListUserDTO(user);
+    public ListUserDTO saveUser(User user) {
+        logger.info("Criando novo usuário com login: {}", user.getLogin());
+
+        Optional<UserEntity> userByEmailExists = this.getUserByEmail(user.getEmail());
+        Optional<UserEntity> userByLoginExists = this.getUserByLogin(user.getLogin());
+        if(userByEmailExists.isPresent() || userByLoginExists.isPresent()){
+            throw new ResourceAlreadyExists("Usuário já cadastrado, verifique o login ou e-mail!");
+        }
+
+        UserEntity userEntity = userRepository.save(UserEntityMapper.toEntity(user));
+        logger.info("Usuário criado com ID: {}", userEntity.getId());
+        return new ListUserDTO(UserEntityMapper.toDomain(userEntity));
     }
 
 
     public ListUserDTO updateUserDetails(UpdateUserDataDTO updateUserDTO, long id) {
         logger.info("Atualizando dados do usuário com ID: {}", id);
-        User user = getUserById(id);
-        user.atualizarInformacoes(updateUserDTO);
-        userRepository.save(user);
-        logger.info("Dados do usuário atualizados com sucesso");
-        return new ListUserDTO(user);
+        UserEntity userEntity = getUserById(id);
+
+        userEntity.setNome(updateUserDTO.nome());
+        userEntity.setEmail(updateUserDTO.email());
+        if (updateUserDTO.endereco() != null) {
+            userEntity.getEndereco()
+                    .atualizarInformacoesEndereco(updateUserDTO.endereco());
+        }
+        UserEntity saved = userRepository.save(userEntity);
+        return new ListUserDTO(UserEntityMapper.toDomain(saved));
     }
 
 
     public boolean deleteUser(Long id) {
         logger.info("Tentando excluir usuário com ID: {}", id);
         return userRepository.findByIdAndAtivoTrue(id)
-                .map(user -> {
-                    user.deleteUser();
-                    userRepository.save(user);
+                .map(userEntity -> {
+                    User userDomain = UserEntityMapper.toDomain(userEntity);
+                    userDomain.deleteUser();
+                    userRepository.save(UserEntityMapper.toEntity(userDomain));
                     logger.info("Usuário com ID: {} excluído com sucesso", id);
                     return true;
                 })
@@ -71,11 +92,19 @@ public class UserService {
     }
 
 
-    private User getUserById(Long id) {
+    private UserEntity getUserById(Long id) {
         return userRepository.findByIdAndAtivoTrue(id)
                 .orElseThrow(() -> {
                     logger.error("Usuário não encontrado com ID: {}", id);
                     return new ResourceNotFoundException("Usuário não encontrado com ID: " + id);
                 });
+    }
+
+    private Optional<UserEntity> getUserByEmail(String email) {
+        return this.userRepository.findByEmailAndAtivoTrue(email);
+    }
+
+    private Optional<UserEntity> getUserByLogin(String login) {
+        return this.userRepository.findByLoginAndAtivoTrue(login);
     }
 }
