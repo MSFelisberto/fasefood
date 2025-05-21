@@ -1,9 +1,11 @@
 package br.com.fiap.fasefood.services;
 
+import br.com.fiap.fasefood.core.domain.User;
 import br.com.fiap.fasefood.dtos.ChangeUserPasswordDTO;
 import br.com.fiap.fasefood.dtos.LoginRequestDTO;
 import br.com.fiap.fasefood.dtos.LoginResponseDTO;
 import br.com.fiap.fasefood.entities.UserEntity;
+import br.com.fiap.fasefood.entities.UserEntityMapper;
 import br.com.fiap.fasefood.repositories.UserRepository;
 import br.com.fiap.fasefood.services.exceptions.AuthenticationFailedException;
 import br.com.fiap.fasefood.services.exceptions.ResourceNotFoundException;
@@ -54,8 +56,10 @@ public class SimpleAuth implements AuthStrategy {
                     return new ResourceNotFoundException("Usuário não encontrado com ID: " + id);
                 });
 
-//        userEntity.changeUserPassword(userData);
-        userRepository.save(userEntity);
+        User userDomain = UserEntityMapper.toDomain(userEntity);
+        userDomain.changeUserPassword(userData);
+
+        userRepository.save(UserEntityMapper.toEntity(userDomain));
         logger.info("Senha do usuário alterada com sucesso");
     }
 }
