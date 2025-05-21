@@ -6,6 +6,7 @@ import br.com.fiap.fasefood.dtos.*;
 import br.com.fiap.fasefood.entities.UserEntity;
 import br.com.fiap.fasefood.entities.UserEntityMapper;
 import br.com.fiap.fasefood.repositories.UserRepository;
+import br.com.fiap.fasefood.services.exceptions.ResourceAlreadyExists;
 import br.com.fiap.fasefood.services.exceptions.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +50,12 @@ public class UserService {
 
     public ListUserDTO saveUser(User user) {
         logger.info("Criando novo usuário com login: {}", user.getLogin());
+
+        UserEntity userExists = this.getUserByEmail(user.getEmail());
+        if(userExists != null){
+            throw new ResourceAlreadyExists("Usuário já cadastrado com o email: " + user.getEmail());
+        }
+
         UserEntity userEntity = userRepository.save(UserEntityMapper.toEntity(user));
         logger.info("Usuário criado com ID: {}", userEntity.getId());
         return new ListUserDTO(UserEntityMapper.toDomain(userEntity));
@@ -89,6 +96,14 @@ public class UserService {
                 .orElseThrow(() -> {
                     logger.error("Usuário não encontrado com ID: {}", id);
                     return new ResourceNotFoundException("Usuário não encontrado com ID: " + id);
+                });
+    }
+
+    private UserEntity getUserByEmail(String email) {
+        return this.userRepository.findByEmailAndAtivoTrue(email)
+                .orElseThrow(() -> {
+                   logger.error("Usuário não encontrado com email: {}", email);
+                   return new ResourceNotFoundException("Usuário não encontrado com email: " + email);
                 });
     }
 }
