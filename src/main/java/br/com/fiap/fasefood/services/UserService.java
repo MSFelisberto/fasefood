@@ -51,9 +51,10 @@ public class UserService {
     public ListUserDTO saveUser(User user) {
         logger.info("Criando novo usuário com login: {}", user.getLogin());
 
-        UserEntity userExists = this.getUserByEmail(user.getEmail());
-        if(userExists != null){
-            throw new ResourceAlreadyExists("Usuário já cadastrado com o email: " + user.getEmail());
+        Optional<UserEntity> userByEmailExists = this.getUserByEmail(user.getEmail());
+        Optional<UserEntity> userByLoginExists = this.getUserByLogin(user.getLogin());
+        if(userByEmailExists.isPresent() || userByLoginExists.isPresent()){
+            throw new ResourceAlreadyExists("Usuário já cadastrado, verifique o login ou e-mail!");
         }
 
         UserEntity userEntity = userRepository.save(UserEntityMapper.toEntity(user));
@@ -99,11 +100,11 @@ public class UserService {
                 });
     }
 
-    private UserEntity getUserByEmail(String email) {
-        return this.userRepository.findByEmailAndAtivoTrue(email)
-                .orElseThrow(() -> {
-                   logger.error("Usuário não encontrado com email: {}", email);
-                   return new ResourceNotFoundException("Usuário não encontrado com email: " + email);
-                });
+    private Optional<UserEntity> getUserByEmail(String email) {
+        return this.userRepository.findByEmailAndAtivoTrue(email);
+    }
+
+    private Optional<UserEntity> getUserByLogin(String login) {
+        return this.userRepository.findByLoginAndAtivoTrue(login);
     }
 }

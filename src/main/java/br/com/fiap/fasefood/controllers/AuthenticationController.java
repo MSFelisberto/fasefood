@@ -4,6 +4,7 @@ import br.com.fiap.fasefood.dtos.ChangeUserPasswordDTO;
 import br.com.fiap.fasefood.dtos.LoginRequestDTO;
 import br.com.fiap.fasefood.dtos.LoginResponseDTO;
 import br.com.fiap.fasefood.services.AuthStrategy;
+import br.com.fiap.fasefood.services.SimpleAuth;
 import br.com.fiap.fasefood.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -11,6 +12,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthenticationController {
+    private static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
 
     private final AuthStrategy authStrategy;
 
@@ -54,7 +58,8 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(
             @Parameter(description = "Credenciais do usuário", required = true)
-            @RequestBody @Valid LoginRequestDTO loginRequestDTO) {
+            @RequestBody @Valid LoginRequestDTO loginRequestDTO
+    ) {
 
         LoginResponseDTO response = authStrategy.authenticate(loginRequestDTO);
         return ResponseEntity.ok(response);
