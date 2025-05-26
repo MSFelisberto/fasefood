@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "f459cb6c-babb-42a4-8275-5ca09c83cfb3",
+		"_postman_id": "a562d684-10bd-4bf5-8a54-e1502d973397",
 		"name": "fasefood - Tech Challenge",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
-		"_exporter_id": "42700566"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42700566",
+		"_collection_link": "https://www.postman.com/supply-administrator-18259322/workspace/fiap/collection/42700566-a562d684-10bd-4bf5-8a54-e1502d973397?action=share&source=collection_link&creator=42700566"
 	},
 	"item": [
 		{
@@ -46,7 +47,20 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8080/api/v1/users/1"
+				"url": {
+					"raw": "http://localhost:8080/api/v1/users/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"1"
+					]
+				}
 			},
 			"response": []
 		},
@@ -64,7 +78,19 @@
 						}
 					}
 				},
-				"url": "http://localhost:8080/api/v1/users"
+				"url": {
+					"raw": "http://localhost:8080/api/v1/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
 			},
 			"response": []
 		},
@@ -82,12 +108,24 @@
 						}
 					}
 				},
-				"url": "http://localhost:8080/api/v1/users"
+				"url": {
+					"raw": "http://localhost:8080/api/v1/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "Criar Usuário - Validação Falha Copy",
+			"name": "Criar Usuário - Validação Falha",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -111,7 +149,19 @@
 						}
 					}
 				},
-				"url": "{{base_url}}/api/v1/users",
+				"url": {
+					"raw": "http://localhost:8080/api/v1/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				},
 				"description": "Tenta criar um usuário com dados inválidos para testar validações."
 			},
 			"response": []
@@ -130,7 +180,20 @@
 						}
 					}
 				},
-				"url": "http://localhost:8080/api/v1/users/1"
+				"url": {
+					"raw": "http://localhost:8080/api/v1/users/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"1"
+					]
+				}
 			},
 			"response": []
 		},
@@ -148,12 +211,26 @@
 						}
 					}
 				},
-				"url": "http://localhost:8080/api/v1/auth/1/password"
+				"url": {
+					"raw": "http://localhost:8080/api/v1/auth/1/password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"1",
+						"password"
+					]
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "Alterar Senha - Validação Falha Copy",
+			"name": "Alterar Senha - Validação Falha",
 			"request": {
 				"method": "PATCH",
 				"header": [
@@ -172,7 +249,21 @@
 						}
 					}
 				},
-				"url": "{{base_url}}/api/v1/users/1/password",
+				"url": {
+					"raw": "http://localhost:8080/api/v1/users/1/password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"1",
+						"password"
+					]
+				},
 				"description": "Tenta alterar a senha com valor muito curto para testar validação."
 			},
 			"response": []
@@ -182,16 +273,42 @@
 			"request": {
 				"method": "DELETE",
 				"header": [],
-				"url": "http://localhost:8080/api/v1/users/1"
+				"url": {
+					"raw": "http://localhost:8080/api/v1/users/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"1"
+					]
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "Excluir Usuário - Não Encontrado Copy",
+			"name": "Excluir Usuário - Não Encontrado",
 			"request": {
 				"method": "DELETE",
 				"header": [],
-				"url": "{{base_url}}/api/v1/users/999",
+				"url": {
+					"raw": "http://localhost:8080/api/v1/users/999",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"999"
+					]
+				},
 				"description": "Tenta excluir um usuário que não existe."
 			},
 			"response": []
@@ -210,12 +327,25 @@
 						}
 					}
 				},
-				"url": "http://localhost:8080/api/v1/auth/login"
+				"url": {
+					"raw": "http://localhost:8080/api/v1/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "Login com Credenciais Inválidas Copy",
+			"name": "Login com Credenciais Inválidas",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -228,7 +358,20 @@
 						}
 					}
 				},
-				"url": "{{base_url}}/api/v1/users/login"
+				"url": {
+					"raw": "http://localhost:8080/api/v1/users/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"login"
+					]
+				}
 			},
 			"response": []
 		}
