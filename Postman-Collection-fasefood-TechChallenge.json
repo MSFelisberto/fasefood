@@ -1,0 +1,236 @@
+{
+	"info": {
+		"_postman_id": "f459cb6c-babb-42a4-8275-5ca09c83cfb3",
+		"name": "fasefood - Tech Challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "42700566"
+	},
+	"item": [
+		{
+			"name": "Recuperar todos Usuários",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/users?size=10&page=0&sort=nome",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "10"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "sort",
+							"value": "nome"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Recuperar um Usuário",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/api/v1/users/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Adicionar um Usuário Comum",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Leonardo\",\r\n    \"email\": \"leonardomattioli00@gmail.com\",\r\n    \"login\": \"leomattioli\",\r\n    \"senha\": \"123456\",\r\n    \"tipoUsuario\": \"USUARIO_COMUM\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"Av Winston Churchill\",\r\n        \"numero\": \"520\",\r\n        \"cep\": \"09614000\",\r\n        \"complemento\": \"bloco c ap 11\",\r\n        \"bairro\": \"Rudge Ramos\",\r\n        \"cidade\": \"São Bernardo do Campo\",\r\n        \"uf\": \"SP\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/api/v1/users"
+			},
+			"response": []
+		},
+		{
+			"name": "Adicionar um Usuário Administrador",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Leonardo\",\r\n    \"email\": \"leonardomattioli00@gmail.com\",\r\n    \"login\": \"leomattioli\",\r\n    \"senha\": \"123456\",\r\n    \"tipoUsuario\": \"USUARIO_COMUM\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"Av Winston Churchill\",\r\n        \"numero\": \"520\",\r\n        \"cep\": \"09614000\",\r\n        \"complemento\": \"bloco c ap 11\",\r\n        \"bairro\": \"Rudge Ramos\",\r\n        \"cidade\": \"São Bernardo do Campo\",\r\n        \"uf\": \"SP\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/api/v1/users"
+			},
+			"response": []
+		},
+		{
+			"name": "Criar Usuário - Validação Falha Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"\",\n    \"email\": \"email-invalido\",\n    \"login\": \"\",\n    \"senha\": \"123\",\n    \"tipoUsuario\": null,\n    \"endereco\": {\n        \"logradouro\": \"\",\n        \"numero\": \"\",\n        \"cep\": \"123\",\n        \"complemento\": \"Apto 101\",\n        \"bairro\": \"\",\n        \"cidade\": \"\",\n        \"uf\": \"\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}/api/v1/users",
+				"description": "Tenta criar um usuário com dados inválidos para testar validações."
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar dados Usuário",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Leonardo\",\r\n    \"email\": \"leonardomattioli100@gmail.com\",\r\n    \"login\": \"leomattioli\",\r\n    \"senha\": \"1234567\",\r\n    \"tipoUsuario\": \"USUARIO_COMUM\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"Av Winston Churchill\",\r\n        \"numero\": \"520\",\r\n        \"cep\": \"09614000\",\r\n        \"complemento\": \"bloco c ap 115\",\r\n        \"bairro\": \"Rudge Ramos\",\r\n        \"cidade\": \"São Bernardo do Campo\",\r\n        \"uf\": \"SP\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/api/v1/users/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar Senha",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"senha\": \"12345678\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/api/v1/auth/1/password"
+			},
+			"response": []
+		},
+		{
+			"name": "Alterar Senha - Validação Falha Copy",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"senha\": \"123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}/api/v1/users/1/password",
+				"description": "Tenta alterar a senha com valor muito curto para testar validação."
+			},
+			"response": []
+		},
+		{
+			"name": "Deletar um Usuário",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8080/api/v1/users/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Excluir Usuário - Não Encontrado Copy",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "{{base_url}}/api/v1/users/999",
+				"description": "Tenta excluir um usuário que não existe."
+			},
+			"response": []
+		},
+		{
+			"name": "Fazer Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"login\": \"leomattioli\",\r\n    \"senha\": \"12345678\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/api/v1/auth/login"
+			},
+			"response": []
+		},
+		{
+			"name": "Login com Credenciais Inválidas Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"login\": \"mariasilva\",\r\n    \"senha\": \"senha123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}/api/v1/users/login"
+			},
+			"response": []
+		}
+	]
+}
