@@ -71,7 +71,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"nome\": \"Leonardo\",\r\n    \"email\": \"leonardomattioli00@gmail.com\",\r\n    \"login\": \"leomattioli\",\r\n    \"senha\": \"123456\",\r\n    \"tipoUsuario\": \"USUARIO_COMUM\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"Av Winston Churchill\",\r\n        \"numero\": \"520\",\r\n        \"cep\": \"09614000\",\r\n        \"complemento\": \"bloco c ap 11\",\r\n        \"bairro\": \"Rudge Ramos\",\r\n        \"cidade\": \"São Bernardo do Campo\",\r\n        \"uf\": \"SP\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"nome\": \"Leonardo Silva\",\r\n    \"email\": \"leonardo@fiap.com\",\r\n    \"login\": \"leosilva\",\r\n    \"senha\": \"123456\",\r\n    \"tipoUsuario\": \"USUARIO_COMUM\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"Av Winston Churchill\",\r\n        \"numero\": \"520\",\r\n        \"cep\": \"09614000\",\r\n        \"complemento\": \"bloco c ap 11\",\r\n        \"bairro\": \"Rudge Ramos\",\r\n        \"cidade\": \"São Bernardo do Campo\",\r\n        \"uf\": \"SP\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -101,7 +101,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"nome\": \"Leonardo\",\r\n    \"email\": \"leonardomattioli00@gmail.com\",\r\n    \"login\": \"leomattioli\",\r\n    \"senha\": \"123456\",\r\n    \"tipoUsuario\": \"USUARIO_COMUM\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"Av Winston Churchill\",\r\n        \"numero\": \"520\",\r\n        \"cep\": \"09614000\",\r\n        \"complemento\": \"bloco c ap 11\",\r\n        \"bairro\": \"Rudge Ramos\",\r\n        \"cidade\": \"São Bernardo do Campo\",\r\n        \"uf\": \"SP\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"nome\": \"Thiago Menezes\",\r\n    \"email\": \"thiagomenezes@fiap.com\",\r\n    \"login\": \"thimenezes\",\r\n    \"senha\": \"123456\",\r\n    \"tipoUsuario\": \"ADMINISTRADOR_RESTAURANTE\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"Rua João Pessoa\",\r\n        \"numero\": \"102\",\r\n        \"cep\": \"09726000\",\r\n        \"complemento\": \"Casa 2\",\r\n        \"bairro\": \"Centro\",\r\n        \"cidade\": \"São Bernardo do Campo\",\r\n        \"uf\": \"SP\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -173,7 +173,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"nome\": \"Leonardo\",\r\n    \"email\": \"leonardomattioli100@gmail.com\",\r\n    \"login\": \"leomattioli\",\r\n    \"senha\": \"1234567\",\r\n    \"tipoUsuario\": \"USUARIO_COMUM\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"Av Winston Churchill\",\r\n        \"numero\": \"520\",\r\n        \"cep\": \"09614000\",\r\n        \"complemento\": \"bloco c ap 115\",\r\n        \"bairro\": \"Rudge Ramos\",\r\n        \"cidade\": \"São Bernardo do Campo\",\r\n        \"uf\": \"SP\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"nome\": \"Leonardo Silva\",\r\n    \"email\": \"leosilvaa@gmail.com\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"Rua Frei Gaspar\",\r\n        \"numero\": \"302\",\r\n        \"cep\": \"09715370\",\r\n        \"complemento\": \"Casa 2\",\r\n        \"bairro\": \"Centro\",\r\n        \"cidade\": \"São Bernardo do Campo\",\r\n        \"uf\": \"SP\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -204,7 +204,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"senha\": \"12345678\"\r\n}",
+					"raw": "{\r\n    \"senha\": \"1234567\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -250,7 +250,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/users/1/password",
+					"raw": "http://localhost:8080/api/v1/auth/1/password",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -259,7 +259,7 @@
 					"path": [
 						"api",
 						"v1",
-						"users",
+						"auth",
 						"1",
 						"password"
 					]
@@ -320,7 +320,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"login\": \"leomattioli\",\r\n    \"senha\": \"12345678\"\r\n}",
+					"raw": "{\r\n    \"login\": \"leosilva\",\r\n    \"senha\": \"1234567\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -359,7 +359,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/users/login",
+					"raw": "http://localhost:8080/api/v1/auth/login",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -368,7 +368,7 @@
 					"path": [
 						"api",
 						"v1",
-						"users",
+						"auth",
 						"login"
 					]
 				}
