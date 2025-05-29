@@ -200,7 +200,7 @@ O projeto visa implementar boas práticas de desenvolvimento, incluindo:
 2.  **Validação de Dados**: Utilização de anotações de validação (ex: `@NotBlank`, `@Email`, `@Size`) nos DTOs/Entidades para garantir a integridade dos dados de entrada.
 3.  **Documentação da API**: (Opcional, mas recomendado) Integração com Swagger/OpenAPI para documentação interativa dos endpoints. Se implementado, geralmente acessível em `/swagger-ui.html` ou `/v3/api-docs`.
 4.  **Tratamento de Exceções**: Implementação de handlers globais de exceção para fornecer respostas de erro consistentes e significativas.
-6.  **Containerização**: Uso de Docker para um ambiente de desenvolvimento e implantação consistente.
+5.  **Containerização**: Uso de Docker para um ambiente de desenvolvimento e implantação consistente.
 
 ## 6. Collections para Teste
 
