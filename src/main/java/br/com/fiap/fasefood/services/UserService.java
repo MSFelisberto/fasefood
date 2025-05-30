@@ -67,13 +67,12 @@ public class UserService {
         logger.info("Atualizando dados do usuário com ID: {}", id);
         UserEntity userEntity = getUserById(id);
 
-        userEntity.setNome(updateUserDTO.nome());
-        userEntity.setEmail(updateUserDTO.email());
-        if (updateUserDTO.endereco() != null) {
-            userEntity.getEndereco()
-                    .atualizarInformacoesEndereco(updateUserDTO.endereco());
-        }
-        UserEntity saved = userRepository.save(userEntity);
+        User user = UserEntityMapper.toDomain(userEntity);
+
+        user.atualizarInformacoes(updateUserDTO);
+
+        UserEntity saved = userRepository.save(UserEntityMapper.toEntity(user));
+
         return new ListUserDTO(UserEntityMapper.toDomain(saved));
     }
 
