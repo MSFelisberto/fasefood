@@ -47,8 +47,11 @@ public class User {
     }
 
     public void changeUserPassword(ChangeUserPasswordDTO userData) {
-        changePassword(userData);
-        this.dataUltimaAtualizacao = LocalDate.now();
+
+        if(senha != null) {
+            this.senha = userData.senha();
+            this.dataUltimaAtualizacao = LocalDate.now();
+        }
     }
 
     public void deleteUser() {
@@ -71,12 +74,6 @@ public class User {
     private void atualizarEndereco(EnderecoDTO endereco) {
         if (endereco != null && this.endereco != null) {
             this.endereco.atualizarInformacoesEndereco(endereco);
-        }
-    }
-
-    private void changePassword(ChangeUserPasswordDTO userData) {
-        if(senha != null) {
-            this.senha = userData.senha();
         }
     }
 
