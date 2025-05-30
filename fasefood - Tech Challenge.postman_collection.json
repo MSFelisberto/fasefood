@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "c640779d-9504-4a89-bad4-2eea0fb71c5c",
+		"_postman_id": "a562d684-10bd-4bf5-8a54-e1502d973397",
 		"name": "fasefood - Tech Challenge",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "29846211",
-		"_collection_link": "https://fiap-team.postman.co/workspace/FIAP---POS-TECH~807ac127-7790-42d7-97ff-4e7e33e8937b/collection/29846211-c640779d-9504-4a89-bad4-2eea0fb71c5c?action=share&source=collection_link&creator=29846211"
+		"_exporter_id": "42700566",
+		"_collection_link": "https://www.postman.com/supply-administrator-18259322/workspace/fiap/collection/42700566-a562d684-10bd-4bf5-8a54-e1502d973397?action=share&source=collection_link&creator=42700566"
 	},
 	"item": [
 		{
@@ -48,7 +48,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/users/2",
+					"raw": "http://localhost:8080/api/v1/users/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -58,7 +58,7 @@
 						"api",
 						"v1",
 						"users",
-						"2"
+						"1"
 					]
 				}
 			},
@@ -71,7 +71,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"nome\": \"Leonardo\",\r\n    \"email\": \"leonardomattioli00@gmail.com\",\r\n    \"login\": \"leomattioli\",\r\n    \"senha\": \"123456\",\r\n    \"tipoUsuario\": \"USUARIO_COMUM\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"Av Winston Churchill\",\r\n        \"numero\": \"520\",\r\n        \"cep\": \"09614000\",\r\n        \"complemento\": \"bloco c ap 11\",\r\n        \"bairro\": \"Rudge Ramos\",\r\n        \"cidade\": \"São Bernardo do Campo\",\r\n        \"uf\": \"SP\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"nome\": \"Leonardo Silva\",\r\n    \"email\": \"leonardo@fiap.com\",\r\n    \"login\": \"leosilva\",\r\n    \"senha\": \"123456\",\r\n    \"tipoUsuario\": \"USUARIO_COMUM\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"Av Winston Churchill\",\r\n        \"numero\": \"520\",\r\n        \"cep\": \"09614000\",\r\n        \"complemento\": \"bloco c ap 11\",\r\n        \"bairro\": \"Rudge Ramos\",\r\n        \"cidade\": \"São Bernardo do Campo\",\r\n        \"uf\": \"SP\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -101,7 +101,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"nome\": \"Leonardo\",\r\n    \"email\": \"leonardomattioli00@gmail.com\",\r\n    \"login\": \"leomattioli\",\r\n    \"senha\": \"123456\",\r\n    \"tipoUsuario\": \"USUARIO_COMUM\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"Av Winston Churchill\",\r\n        \"numero\": \"520\",\r\n        \"cep\": \"09614000\",\r\n        \"complemento\": \"bloco c ap 11\",\r\n        \"bairro\": \"Rudge Ramos\",\r\n        \"cidade\": \"São Bernardo do Campo\",\r\n        \"uf\": \"SP\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"nome\": \"Thiago Menezes\",\r\n    \"email\": \"thiagomenezes@fiap.com\",\r\n    \"login\": \"thimenezes\",\r\n    \"senha\": \"123456\",\r\n    \"tipoUsuario\": \"ADMINISTRADOR_RESTAURANTE\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"Rua João Pessoa\",\r\n        \"numero\": \"102\",\r\n        \"cep\": \"09726000\",\r\n        \"complemento\": \"Casa 2\",\r\n        \"bairro\": \"Centro\",\r\n        \"cidade\": \"São Bernardo do Campo\",\r\n        \"uf\": \"SP\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -173,7 +173,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"nome\": \"Leonardo\",\r\n    \"email\": \"leonardomattioli100@gmail.com\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"Av Winston Churchill\",\r\n        \"numero\": \"520\",\r\n        \"cep\": \"09614000\",\r\n        \"complemento\": \"bloco c ap 115\",\r\n        \"bairro\": \"Rudge Ramos\",\r\n        \"cidade\": \"São Bernardo do Campo\",\r\n        \"uf\": \"SP\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"nome\": \"Leonardo Silva\",\r\n    \"email\": \"leosilvaa@gmail.com\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"Rua Frei Gaspar\",\r\n        \"numero\": \"302\",\r\n        \"cep\": \"09715370\",\r\n        \"complemento\": \"Casa 2\",\r\n        \"bairro\": \"Centro\",\r\n        \"cidade\": \"São Bernardo do Campo\",\r\n        \"uf\": \"SP\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -204,7 +204,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"senha\": \"novaSenha456\"\r\n}",
+					"raw": "{\r\n    \"senha\": \"1234567\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -250,7 +250,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/users/1/password",
+					"raw": "http://localhost:8080/api/v1/auth/1/password",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -259,7 +259,7 @@
 					"path": [
 						"api",
 						"v1",
-						"users",
+						"auth",
 						"1",
 						"password"
 					]
@@ -320,7 +320,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"login\": \"leomattioli\",\r\n    \"senha\": \"123456\"\r\n}",
+					"raw": "{\r\n    \"login\": \"leosilva\",\r\n    \"senha\": \"1234567\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -359,7 +359,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/users/login",
+					"raw": "http://localhost:8080/api/v1/auth/login",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -368,7 +368,7 @@
 					"path": [
 						"api",
 						"v1",
-						"users",
+						"auth",
 						"login"
 					]
 				}
