@@ -1,0 +1,25 @@
+package br.com.fiap.fasefood.application.usecase.usuario;
+
+import br.com.fiap.fasefood.core.domain.entities.Usuario;
+import br.com.fiap.fasefood.core.usecase.gateways.UsuarioRepository;
+import br.com.fiap.fasefood.core.usecase.interfaces.ListarTodosUsuariosUseCase;
+import br.com.fiap.fasefood.infra.controller.dto.ListUserDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+@Service
+public class ListarTodosUsuariosUseCaseImpl implements ListarTodosUsuariosUseCase {
+
+    private final UsuarioRepository usuarioRepository;
+
+    public ListarTodosUsuariosUseCaseImpl(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+    }
+
+    @Override
+    public Page<ListUserDTO> listar(Pageable pageable) {
+        Page<Usuario> usuarios = usuarioRepository.listarTodosAtivos(pageable);
+        return usuarios.map(ListUserDTO::new);
+    }
+}
