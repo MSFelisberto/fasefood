@@ -29,10 +29,9 @@ public class Usuario {
         this.ativo = ativo;
     }
 
-    public void atualizarInformacoes(String nome, String email, Endereco novoEndereco) {
+    public void atualizarInformacoes(String nome, String email) {
         if (nome != null) this.nome = nome;
         if (email != null) this.email = email;
-        if (novoEndereco != null) this.endereco = novoEndereco;
         this.dataUltimaAtualizacao = LocalDate.now();
     }
 
@@ -56,4 +55,8 @@ public class Usuario {
     public Endereco getEndereco() { return endereco; }
     public ETipoUsuario getTipoUsuario() { return tipoUsuario; }
     public boolean isAtivo() { return ativo; }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
 }
