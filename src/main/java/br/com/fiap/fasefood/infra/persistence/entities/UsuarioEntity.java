@@ -27,7 +27,7 @@ public class UsuarioEntity {
     @Enumerated(EnumType.STRING)
     private ETipoUsuario tipoUsuario;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
     private EnderecoEntity enderecoEntity;
 
