@@ -1,6 +1,6 @@
 package br.com.fiap.fasefood.core.domain.entities;
 
-import br.com.fiap.fasefood.core.domain.enums.ETipoUsuario;
+
 import java.time.LocalDate;
 
 public class Usuario {
@@ -12,12 +12,12 @@ public class Usuario {
     private String senha;
     private LocalDate dataUltimaAtualizacao;
     private Endereco endereco;
-    private ETipoUsuario tipoUsuario;
+    private TipoUsuario tipoUsuario;
     private boolean ativo;
 
     public Usuario(Long id, String nome, String email, String login, String senha,
                    LocalDate dataUltimaAtualizacao, Endereco endereco,
-                   ETipoUsuario tipoUsuario, boolean ativo) {
+                   TipoUsuario tipoUsuario, boolean ativo) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -42,6 +42,13 @@ public class Usuario {
         }
     }
 
+    public void alterarTipoUsuario(TipoUsuario novoTipoUsuario) {
+        if (novoTipoUsuario != null) {
+            this.tipoUsuario = novoTipoUsuario;
+            this.dataUltimaAtualizacao = LocalDate.now();
+        }
+    }
+
     public void desativar() {
         this.ativo = false;
     }
@@ -53,7 +60,7 @@ public class Usuario {
     public String getSenha() { return senha; }
     public LocalDate getDataUltimaAtualizacao() { return dataUltimaAtualizacao; }
     public Endereco getEndereco() { return endereco; }
-    public ETipoUsuario getTipoUsuario() { return tipoUsuario; }
+    public TipoUsuario getTipoUsuario() { return tipoUsuario; }
     public boolean isAtivo() { return ativo; }
 
     public void setEndereco(Endereco endereco) {

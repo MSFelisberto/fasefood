@@ -1,7 +1,6 @@
 package br.com.fiap.fasefood.infra.controller.dto;
 
 
-import br.com.fiap.fasefood.core.domain.enums.ETipoUsuario;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -24,7 +23,7 @@ public record CreateUserDTO(
         String senha,
 
         @NotNull(message = "O tipo de usuário é obrigatório")
-        ETipoUsuario tipoUsuario,
+        Long tipoUsuarioId,
 
         @NotNull(message = "O endereço é obrigatório")
         @Valid

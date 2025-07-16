@@ -1,8 +1,9 @@
 package br.com.fiap.fasefood.infra.controller.dto;
 
 import br.com.fiap.fasefood.core.domain.entities.Endereco;
+import br.com.fiap.fasefood.core.domain.entities.TipoUsuario;
 import br.com.fiap.fasefood.core.domain.entities.Usuario;
-import br.com.fiap.fasefood.core.domain.enums.ETipoUsuario;
+
 
 public record ListUserDTO(
 
@@ -10,7 +11,7 @@ public record ListUserDTO(
         String nome,
         String email,
         String login,
-        ETipoUsuario tipoUsuario,
+        TipoUsuario tipoUsuario,
         Endereco endereco) {
 
     public ListUserDTO(Usuario user){
