@@ -24,8 +24,9 @@ public class UsuarioEntity {
     private String senha;
     private LocalDate dataUltimaAtualizacao;
 
-    @Enumerated(EnumType.STRING)
-    private ETipoUsuario tipoUsuario;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "tipo_usuario_id", nullable = false)
+    private TipoUsuarioEntity tipoUsuario;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id")

@@ -3,6 +3,7 @@ package br.com.fiap.fasefood.config;
 import br.com.fiap.fasefood.application.usecase.autenticacao.AlterarSenhaUseCaseImpl;
 import br.com.fiap.fasefood.application.usecase.autenticacao.AutenticarUsuarioUseCaseImpl;
 import br.com.fiap.fasefood.application.usecase.usuario.*;
+import br.com.fiap.fasefood.core.usecase.gateways.TipoUsuarioRepository;
 import br.com.fiap.fasefood.core.usecase.gateways.UsuarioRepository;
 import br.com.fiap.fasefood.core.usecase.interfaces.*;
 import org.springframework.context.annotation.Bean;
@@ -12,9 +13,9 @@ import org.springframework.context.annotation.Configuration;
 public class UsuarioConfig {
 
     @Bean
-    public CriarUsuarioUseCase criarUsuarioUseCase(UsuarioRepository usuarioRepository) {
-        return new CriarUsuarioUseCaseImpl(usuarioRepository);
-    };
+    public CriarUsuarioUseCase criarUsuarioUseCase(UsuarioRepository usuarioRepository, TipoUsuarioRepository tipoUsuarioRepository) {
+        return new CriarUsuarioUseCaseImpl(usuarioRepository, tipoUsuarioRepository);
+    }
 
     @Bean
     public AtualizarUsuarioUseCase atualizarUsuarioUseCase(UsuarioRepository usuarioRepository) {
@@ -34,5 +35,10 @@ public class UsuarioConfig {
     @Bean
     public ListarTodosUsuariosUseCase listarTodosUsuariosUseCase(UsuarioRepository usuarioRepository) {
         return new ListarTodosUsuariosUseCaseImpl(usuarioRepository);
+    }
+
+    @Bean
+    public AlterarTipoUsuarioUseCase alterarTipoUsuarioUseCase(UsuarioRepository usuarioRepository, TipoUsuarioRepository tipoUsuarioRepository) {
+        return new AlterarTipoUsuarioUseCaseImpl(usuarioRepository, tipoUsuarioRepository);
     }
 }

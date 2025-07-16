@@ -24,7 +24,7 @@ public record CreateUserDTO(
         String senha,
 
         @NotNull(message = "O tipo de usuário é obrigatório")
-        ETipoUsuario tipoUsuario,
+        Long tipoUsuarioId,
 
         @NotNull(message = "O endereço é obrigatório")
         @Valid

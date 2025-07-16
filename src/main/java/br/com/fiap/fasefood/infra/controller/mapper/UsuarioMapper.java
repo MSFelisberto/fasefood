@@ -1,12 +1,13 @@
 package br.com.fiap.fasefood.infra.controller.mapper;
 
 import br.com.fiap.fasefood.core.domain.entities.Endereco;
+import br.com.fiap.fasefood.core.domain.entities.TipoUsuario;
 import br.com.fiap.fasefood.core.domain.entities.Usuario;
 import br.com.fiap.fasefood.infra.controller.dto.CreateUserDTO;
 
 public class UsuarioMapper {
 
-    public static Usuario toDomain(CreateUserDTO dto) {
+    public static Usuario toDomain(CreateUserDTO dto, TipoUsuario tipoUsuario) {
         Endereco endereco = new Endereco(
                 null,
                 dto.endereco().logradouro(),
@@ -26,7 +27,7 @@ public class UsuarioMapper {
                 dto.senha(),
                 null, // data de atualização será definida no domínio se necessário
                 endereco,
-                dto.tipoUsuario(),
+                tipoUsuario,
                 true
         );
     }

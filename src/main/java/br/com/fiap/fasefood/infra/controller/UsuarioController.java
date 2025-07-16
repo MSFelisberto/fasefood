@@ -5,6 +5,7 @@ import br.com.fiap.fasefood.core.usecase.interfaces.*;
 import br.com.fiap.fasefood.infra.controller.dto.CreateUserDTO;
 import br.com.fiap.fasefood.infra.controller.dto.ListUserDTO;
 import br.com.fiap.fasefood.infra.controller.dto.UpdateUserDataDTO;
+import br.com.fiap.fasefood.infra.controller.dto.UpdateUserTypeDTO;
 import br.com.fiap.fasefood.infra.controller.mapper.UsuarioMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -31,18 +32,21 @@ public class UsuarioController {
     private final DeletarUsuarioUseCase deletarUsuarioUseCase;
     private final BuscarUsuarioPorIdUseCase buscarUsuarioPorIdUseCase;
     private final ListarTodosUsuariosUseCase listarTodosUsuariosUseCase;
+    private final AlterarTipoUsuarioUseCase alterarTipoUsuarioUseCase;
 
     public UsuarioController(
             CriarUsuarioUseCase criarUsuarioUseCase,
             AtualizarUsuarioUseCase atualizarUsuarioUseCase,
             DeletarUsuarioUseCase deletarUsuarioUseCase,
             BuscarUsuarioPorIdUseCase buscarUsuarioPorIdUseCase,
-            ListarTodosUsuariosUseCase listarTodosUsuariosUseCase) {
+            ListarTodosUsuariosUseCase listarTodosUsuariosUseCase,
+            AlterarTipoUsuarioUseCase alterarTipoUsuarioUseCase) {
         this.criarUsuarioUseCase = criarUsuarioUseCase;
         this.atualizarUsuarioUseCase = atualizarUsuarioUseCase;
         this.deletarUsuarioUseCase = deletarUsuarioUseCase;
         this.buscarUsuarioPorIdUseCase = buscarUsuarioPorIdUseCase;
         this.listarTodosUsuariosUseCase = listarTodosUsuariosUseCase;
+        this.alterarTipoUsuarioUseCase = alterarTipoUsuarioUseCase;
     }
 
     @Operation(
@@ -89,8 +93,7 @@ public class UsuarioController {
             @RequestBody @Valid CreateUserDTO createUserDTO,
             UriComponentsBuilder uriBuilder
     ) {
-        Usuario user = UsuarioMapper.toDomain(createUserDTO);
-        Usuario savedUser = criarUsuarioUseCase.criarUsuario(user);
+        Usuario savedUser = criarUsuarioUseCase.criarUsuario(createUserDTO);
         ListUserDTO response = new ListUserDTO(savedUser);
 
         URI location = uriBuilder.path("/api/v1/users/{id}")
@@ -129,5 +132,17 @@ public class UsuarioController {
     public ResponseEntity<Void> deletarUsuario(@PathVariable Long id) {
         deletarUsuarioUseCase.deletar(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/tipo")
+    @Transactional
+    public ResponseEntity<ListUserDTO> alterarTipoUsuario(
+            @Parameter(description = "ID do usuário a ser alterado", required = true)
+            @PathVariable Long id,
+            @Parameter(description = "ID do novo tipo de usuario", required = true)
+            @RequestBody @Valid UpdateUserTypeDTO updateUserTypeDTO
+            ) {
+        ListUserDTO usuarioAtualizado = alterarTipoUsuarioUseCase.alterarTipoUsuario(id, updateUserTypeDTO);
+        return ResponseEntity.ok(usuarioAtualizado);
     }
 }
