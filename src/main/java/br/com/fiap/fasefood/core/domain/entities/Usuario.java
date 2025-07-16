@@ -1,6 +1,6 @@
 package br.com.fiap.fasefood.core.domain.entities;
 
-import br.com.fiap.fasefood.core.domain.enums.ETipoUsuario;
+
 import java.time.LocalDate;
 
 public class Usuario {

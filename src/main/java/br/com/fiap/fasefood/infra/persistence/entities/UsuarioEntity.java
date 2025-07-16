@@ -1,6 +1,6 @@
 package br.com.fiap.fasefood.infra.persistence.entities;
 
-import br.com.fiap.fasefood.core.domain.enums.ETipoUsuario;
+
 import jakarta.persistence.*;
 import lombok.*;
 

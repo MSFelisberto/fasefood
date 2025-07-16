@@ -1,7 +1,6 @@
 package br.com.fiap.fasefood.infra.controller.dto;
 
 
-import br.com.fiap.fasefood.core.domain.enums.ETipoUsuario;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
