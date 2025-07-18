@@ -3,6 +3,8 @@ package br.com.fiap.fasefood.core.domain.entities.restaurante;
 import br.com.fiap.fasefood.core.domain.entities.Endereco;
 import br.com.fiap.fasefood.core.domain.entities.Usuario;
 import br.com.fiap.fasefood.core.domain.enums.TipoCozinha;
+import br.com.fiap.fasefood.core.exceptions.restaurante.EnderecoNaoPodeSerNuloException;
+import br.com.fiap.fasefood.core.exceptions.restaurante.TipoCozinhaNaoPodeSerNuloException;
 
 import java.time.LocalDateTime;
 
@@ -57,13 +59,13 @@ public class Restaurante {
 
     private static void validaAddress(Endereco endereco) {
         if (endereco == null) {
-            throw new IllegalArgumentException("Endereço não pode ser nulo");
+            throw new EnderecoNaoPodeSerNuloException("Endereço não pode ser nulo");
         }
     }
 
     private static void validaTipoCozinha(TipoCozinha tipoCozinha) {
         if (tipoCozinha == null) {
-            throw new IllegalArgumentException("Tipo de cozinha não pode ser nulo");
+            throw new TipoCozinhaNaoPodeSerNuloException("Tipo de cozinha não pode ser nulo");
         }
     }
 
