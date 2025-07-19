@@ -14,25 +14,25 @@ public class Restaurante {
     private Endereco endereco;
     private TipoCozinha tipoCozinha;
     private LocalDateTime horarioFuncionamento;
-    private Usuario usuario;
+    private String emailUsuario;
 
-    private Restaurante(String nome, Endereco endereco, TipoCozinha tipoCozinha, LocalDateTime horarioFuncionamento, Usuario usuario) {
+    private Restaurante(String nome, Endereco endereco, TipoCozinha tipoCozinha, LocalDateTime horarioFuncionamento, String emailUsuario) {
         this.nome = nome;
         this.endereco = endereco;
         this.tipoCozinha = tipoCozinha;
         this.horarioFuncionamento = horarioFuncionamento;
-        this.usuario = usuario;
+        this.emailUsuario = emailUsuario;
     }
-    private Restaurante(Long id, String nome, Endereco endereco, TipoCozinha tipoCozinha, LocalDateTime horarioFuncionamento, Usuario usuario) {
+    private Restaurante(Long id, String nome, Endereco endereco, TipoCozinha tipoCozinha, LocalDateTime horarioFuncionamento, String emailUsuario) {
         this.id = id;
         this.nome = nome;
         this.endereco = endereco;
         this.tipoCozinha = tipoCozinha;
         this.horarioFuncionamento = horarioFuncionamento;
-        this.usuario = usuario;
+        this.emailUsuario = emailUsuario;
     }
 
-    public static Restaurante createRestaurante(String nome, Endereco endereco, TipoCozinha tipoCozinha, LocalDateTime horarioFuncionamento, Usuario usuario) {
+    public static Restaurante createRestaurante(String nome, Endereco endereco, TipoCozinha tipoCozinha, LocalDateTime horarioFuncionamento, String emailUsuario) {
         Restaurante.validaAddress(endereco);
         Restaurante.validaTipoCozinha(tipoCozinha);
         return new Restaurante(
@@ -40,11 +40,11 @@ public class Restaurante {
                 endereco,
                 tipoCozinha,
                 horarioFuncionamento,
-                usuario
+                emailUsuario
         );
     }
 
-    public static Restaurante createRestaurante(Long id, String nome, Endereco endereco, TipoCozinha tipoCozinha, LocalDateTime horarioFuncionamento, Usuario usuario) {
+    public static Restaurante createRestaurante(Long id, String nome, Endereco endereco, TipoCozinha tipoCozinha, LocalDateTime horarioFuncionamento, String emailUsuario) {
         Restaurante.validaAddress(endereco);
         Restaurante.validaTipoCozinha(tipoCozinha);
         return new Restaurante(
@@ -53,7 +53,7 @@ public class Restaurante {
                 endereco,
                 tipoCozinha,
                 horarioFuncionamento,
-                usuario
+                emailUsuario
         );
     }
 
@@ -90,7 +90,7 @@ public class Restaurante {
         return horarioFuncionamento;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public String getEmailUsuario() {
+        return this.emailUsuario;
     }
 }
