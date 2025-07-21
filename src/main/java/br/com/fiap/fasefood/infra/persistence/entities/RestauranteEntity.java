@@ -32,7 +32,7 @@ public class RestauranteEntity {
     @Column(name = "horario_funcionamento")
     private LocalDateTime horarioFuncionamento;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")
     private UsuarioEntity usuario;
 
