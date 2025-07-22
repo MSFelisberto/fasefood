@@ -47,6 +47,16 @@ public class EnderecoEntity {
 
     }
 
+    public EnderecoEntity(EnderecoEntity endereco) {
+        this.logradouro = endereco.getLogradouro();
+        this.numero = endereco.getNumero();
+        this.cep = endereco.getCep();
+        this.complemento = endereco.getComplemento();
+        this.bairro = endereco.getBairro();
+        this.cidade = endereco.getCidade();
+        this.uf = endereco.getUf();
+    }
+
     public void atualizarInformacoesEndereco(EnderecoDTO endereco) {
         atualizarLogradouro(endereco.logradouro());
         atualizarNumero(endereco.numero());

@@ -1,4 +1,4 @@
-package br.com.fiap.fasefood.core.usecase.restaurante;
+package br.com.fiap.fasefood.application.usecase.restaurante;
 
 import br.com.fiap.fasefood.core.domain.entities.Endereco;
 import br.com.fiap.fasefood.core.domain.entities.Usuario;
@@ -6,13 +6,16 @@ import br.com.fiap.fasefood.core.domain.entities.restaurante.Restaurante;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.usecase.gateways.RestauranteRepository;
 import br.com.fiap.fasefood.core.usecase.gateways.UsuarioRepository;
+import br.com.fiap.fasefood.core.usecase.interfaces.restaurante.CriarRestauranteUsecase;
 import br.com.fiap.fasefood.infra.controller.dto.restaurante.CriarRestauranteDTO;
+import org.springframework.stereotype.Service;
 
-public class CriarRestauranteUseCase {
+@Service
+public class CriarRestauranteUseCaseImpl implements CriarRestauranteUsecase {
     private final RestauranteRepository restauranteRepository;
     private final UsuarioRepository usuarioRepository;
 
-    public CriarRestauranteUseCase(
+    public CriarRestauranteUseCaseImpl(
             RestauranteRepository restauranteRepository,
             UsuarioRepository usuarioRepository
     ) {
@@ -20,7 +23,7 @@ public class CriarRestauranteUseCase {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public Restaurante execute(CriarRestauranteDTO data) {
+    public Restaurante criarRestaurante(CriarRestauranteDTO data) {
         Usuario usuario = this.usuarioRepository.findByEmail(data.emailUsuario())
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
 

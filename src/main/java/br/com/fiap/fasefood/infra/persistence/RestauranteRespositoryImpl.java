@@ -2,12 +2,20 @@ package br.com.fiap.fasefood.infra.persistence;
 
 import br.com.fiap.fasefood.core.domain.entities.restaurante.Restaurante;
 import br.com.fiap.fasefood.core.usecase.gateways.RestauranteRepository;
+import br.com.fiap.fasefood.infra.controller.mapper.RestauranteMapper;
+import br.com.fiap.fasefood.infra.controller.mapper.UserEntityMapper;
 import br.com.fiap.fasefood.infra.persistence.entities.EnderecoEntity;
 import br.com.fiap.fasefood.infra.persistence.entities.RestauranteEntity;
 import br.com.fiap.fasefood.infra.persistence.entities.TipoUsuarioEntity;
 import br.com.fiap.fasefood.infra.persistence.entities.UsuarioEntity;
 import br.com.fiap.fasefood.infra.persistence.jpa.RestauranteJpaRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
+@Repository
 public class RestauranteRespositoryImpl implements RestauranteRepository {
 
     private final RestauranteJpaRepository restauranteJpaRepository;
@@ -45,4 +53,12 @@ public class RestauranteRespositoryImpl implements RestauranteRepository {
         restaurante.setId(restauranteEntity.getId());
         return restaurante;
     }
+
+    @Override
+    public Page<Restaurante> findAll(Pageable pageable) {
+        Page<RestauranteEntity> restauranteEntity = this.restauranteJpaRepository.findAll(pageable);
+        return restauranteEntity.map(RestauranteMapper::toDomain);
+
+    }
+
 }
