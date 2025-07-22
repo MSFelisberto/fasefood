@@ -13,4 +13,15 @@ public class RestauranteMapper {
                 UsuarioMapper.toDomain(restaurante.getUsuario())
         );
     }
+
+    public static RestauranteEntity toEntity(Restaurante restaurante) {
+        return new RestauranteEntity(
+                restaurante.getId(),
+                restaurante.getNome(),
+                EnderecoEntityMapper.toEntity(restaurante.getEndereco()),
+                restaurante.getTipoCozinha(),
+                restaurante.getHorarioFuncionamento(),
+                UsuarioMapper.toEntity(restaurante.getUsuario())
+        );
+    }
 }

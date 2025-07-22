@@ -11,4 +11,5 @@ public interface RestauranteRepository {
     Page<Restaurante> findAll(Pageable pageable);
     Optional<Restaurante> findById(Long id);
     void deleteById(Long id);
+    Restaurante updateById(Long id, Restaurante restaurante);
 }

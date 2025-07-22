@@ -51,4 +51,20 @@ public class RestauranteEntity {
         this.horarioFuncionamento = horarioFuncionamento;
         this.usuario = usuario;
     }
+
+    public RestauranteEntity(
+            Long id,
+            String nome,
+            EnderecoEntity endereco,
+            TipoCozinha tipoCozinha,
+            LocalDateTime horarioFuncionamento,
+            UsuarioEntity usuario
+    ) {
+        this.id = id;
+        this.nome = nome;
+        this.endereco = endereco;
+        this.tipoCozinha = tipoCozinha;
+        this.horarioFuncionamento = horarioFuncionamento;
+        this.usuario = usuario;
+    }
 }

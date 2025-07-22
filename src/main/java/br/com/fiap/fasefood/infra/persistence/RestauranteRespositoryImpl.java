@@ -18,7 +18,6 @@ import java.util.Optional;
 
 @Repository
 public class RestauranteRespositoryImpl implements RestauranteRepository {
-
     private final RestauranteJpaRepository restauranteJpaRepository;
 
     public RestauranteRespositoryImpl(RestauranteJpaRepository restauranteJpaRepository) {
@@ -70,6 +69,15 @@ public class RestauranteRespositoryImpl implements RestauranteRepository {
     @Override
     public void deleteById(Long id) {
         this.restauranteJpaRepository.deleteById(id);
+    }
+
+    @Override
+    public Restaurante updateById(Long id, Restaurante restaurante) {
+        restaurante.setId(id);
+
+        RestauranteEntity restauranteEntity = RestauranteMapper.toEntity(restaurante);
+        this.restauranteJpaRepository.save(restauranteEntity);
+        return restaurante;
     }
 
 }

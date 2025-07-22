@@ -50,4 +50,22 @@ public class UsuarioMapper {
                 usuario.isAtivo()
         );
     }
+
+    public static UsuarioEntity toEntity(Usuario usuario) {
+        if(usuario == null) {
+            return null;
+        }
+
+        return new UsuarioEntity(
+                usuario.getId(),
+                usuario.getNome(),
+                usuario.getEmail(),
+                usuario.getLogin(),
+                usuario.getSenha(),
+                usuario.getDataUltimaAtualizacao(),
+                TipoUsuarioMapper.toEntity(usuario.getTipoUsuario()),
+                EnderecoEntityMapper.toEntity(usuario.getEndereco()),
+                usuario.isAtivo()
+        );
+    }
 }
