@@ -5,7 +5,7 @@ import br.com.fiap.fasefood.core.domain.entities.Usuario;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.usecase.gateways.TipoUsuarioRepository;
 import br.com.fiap.fasefood.core.usecase.gateways.UsuarioRepository;
-import br.com.fiap.fasefood.core.usecase.interfaces.AlterarTipoUsuarioUseCase;
+import br.com.fiap.fasefood.core.usecase.interfaces.usuario.AlterarTipoUsuarioUseCase;
 import br.com.fiap.fasefood.infra.controller.dto.ListUserDTO;
 import br.com.fiap.fasefood.infra.controller.dto.UpdateUserTypeDTO;
 import jakarta.transaction.Transactional;

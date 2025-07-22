@@ -6,7 +6,7 @@ import br.com.fiap.fasefood.core.exceptions.ResourceAlreadyExists;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.usecase.gateways.TipoUsuarioRepository;
 import br.com.fiap.fasefood.core.usecase.gateways.UsuarioRepository;
-import br.com.fiap.fasefood.core.usecase.interfaces.CriarUsuarioUseCase;
+import br.com.fiap.fasefood.core.usecase.interfaces.usuario.CriarUsuarioUseCase;
 import br.com.fiap.fasefood.infra.controller.dto.CreateUserDTO;
 import br.com.fiap.fasefood.infra.controller.mapper.UsuarioMapper;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package br.com.fiap.fasefood.core.usecase.interfaces;
+package br.com.fiap.fasefood.core.usecase.interfaces.usuario;
 
 import br.com.fiap.fasefood.infra.controller.dto.ChangeUserPasswordDTO;
 

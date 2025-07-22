@@ -4,7 +4,7 @@ import br.com.fiap.fasefood.core.domain.entities.Endereco;
 import br.com.fiap.fasefood.core.domain.entities.Usuario;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.usecase.gateways.UsuarioRepository;
-import br.com.fiap.fasefood.core.usecase.interfaces.AtualizarUsuarioUseCase;
+import br.com.fiap.fasefood.core.usecase.interfaces.usuario.AtualizarUsuarioUseCase;
 import br.com.fiap.fasefood.infra.controller.dto.ListUserDTO;
 import br.com.fiap.fasefood.infra.controller.dto.UpdateUserDataDTO;
 import org.springframework.stereotype.Service;

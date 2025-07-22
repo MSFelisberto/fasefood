@@ -2,7 +2,7 @@ package br.com.fiap.fasefood.application.usecase.usuario;
 
 import br.com.fiap.fasefood.core.domain.entities.Usuario;
 import br.com.fiap.fasefood.core.usecase.gateways.UsuarioRepository;
-import br.com.fiap.fasefood.core.usecase.interfaces.ListarTodosUsuariosUseCase;
+import br.com.fiap.fasefood.core.usecase.interfaces.usuario.ListarTodosUsuariosUseCase;
 import br.com.fiap.fasefood.infra.controller.dto.ListUserDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

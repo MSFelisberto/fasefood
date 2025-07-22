@@ -3,7 +3,7 @@ package br.com.fiap.fasefood.application.usecase.usuario;
 import br.com.fiap.fasefood.core.domain.entities.Usuario;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.usecase.gateways.UsuarioRepository;
-import br.com.fiap.fasefood.core.usecase.interfaces.BuscarUsuarioPorIdUseCase;
+import br.com.fiap.fasefood.core.usecase.interfaces.usuario.BuscarUsuarioPorIdUseCase;
 import br.com.fiap.fasefood.infra.controller.dto.ListUserDTO;
 import org.springframework.stereotype.Service;
 

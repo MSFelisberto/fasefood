@@ -16,6 +16,8 @@ public class TipoUsuarioMapper {
         );
     }
 
+
+
     public static TipoUsuarioEntity toEntity(TipoUsuario domain) {
         if (domain == null) {
             return null;

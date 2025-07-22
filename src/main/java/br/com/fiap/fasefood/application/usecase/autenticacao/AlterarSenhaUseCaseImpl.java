@@ -3,7 +3,7 @@ package br.com.fiap.fasefood.application.usecase.autenticacao;
 import br.com.fiap.fasefood.core.domain.entities.Usuario;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.usecase.gateways.UsuarioRepository;
-import br.com.fiap.fasefood.core.usecase.interfaces.AlterarSenhaUsuarioUseCase;
+import br.com.fiap.fasefood.core.usecase.interfaces.usuario.AlterarSenhaUsuarioUseCase;
 import br.com.fiap.fasefood.infra.controller.dto.ChangeUserPasswordDTO;
 import org.springframework.stereotype.Service;
 
