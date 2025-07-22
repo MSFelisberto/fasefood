@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class RestauranteRespositoryImpl implements RestauranteRepository {
@@ -59,6 +60,16 @@ public class RestauranteRespositoryImpl implements RestauranteRepository {
         Page<RestauranteEntity> restauranteEntity = this.restauranteJpaRepository.findAll(pageable);
         return restauranteEntity.map(RestauranteMapper::toDomain);
 
+    }
+
+    @Override
+    public Optional<Restaurante> findById(Long id) {
+        return this.restauranteJpaRepository.findById(id).map(RestauranteMapper::toDomain);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        this.restauranteJpaRepository.deleteById(id);
     }
 
 }
