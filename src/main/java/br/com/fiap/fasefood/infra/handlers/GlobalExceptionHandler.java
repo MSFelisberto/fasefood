@@ -3,6 +3,7 @@ package br.com.fiap.fasefood.infra.handlers;
 import br.com.fiap.fasefood.core.exceptions.AuthenticationFailedException;
 import br.com.fiap.fasefood.core.exceptions.ResourceAlreadyExists;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
+import br.com.fiap.fasefood.core.exceptions.restaurante.UsuarioNaoPodeCriarRestauranteException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -64,6 +65,16 @@ public class GlobalExceptionHandler {
                 LocalDateTime.now()
         );
         return ResponseEntity.status(HttpStatus.CONFLICT).body(apiError);
+    }
+
+    @ExceptionHandler(UsuarioNaoPodeCriarRestauranteException.class)
+    public ResponseEntity<ApiError> handleUsuarioNaoPodeCriarRestaurante(UsuarioNaoPodeCriarRestauranteException ex) {
+        ApiError apiError = new ApiError(
+                HttpStatus.UNAUTHORIZED.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(apiError);
     }
 
     public record ApiError(

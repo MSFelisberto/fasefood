@@ -4,6 +4,7 @@ import br.com.fiap.fasefood.core.domain.entities.Endereco;
 import br.com.fiap.fasefood.core.domain.entities.Usuario;
 import br.com.fiap.fasefood.core.domain.entities.restaurante.Restaurante;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
+import br.com.fiap.fasefood.core.exceptions.restaurante.UsuarioNaoPodeCriarRestauranteException;
 import br.com.fiap.fasefood.core.usecase.gateways.RestauranteRepository;
 import br.com.fiap.fasefood.core.usecase.gateways.UsuarioRepository;
 import br.com.fiap.fasefood.core.usecase.interfaces.restaurante.CriarRestauranteUsecase;
@@ -26,6 +27,10 @@ public class CriarRestauranteUseCaseImpl implements CriarRestauranteUsecase {
     public Restaurante criarRestaurante(CriarRestauranteDTO data) {
         Usuario usuario = this.usuarioRepository.findByEmail(data.emailUsuario())
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+
+        if(usuario.getTipoUsuario().getId() != 1) {
+            throw new UsuarioNaoPodeCriarRestauranteException("Apenas administradores podem criar restaurantes");
+        }
 
         return this.restauranteRepository.create(Restaurante.createRestaurante(
                 data.nome(),
