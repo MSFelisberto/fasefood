@@ -10,5 +10,5 @@ public interface RestauranteRepository {
     Restaurante salvar(Restaurante restaurante);
     Optional<Restaurante> findById(Long id);
     Page<Restaurante> listarTodosAtivos(Pageable paginacao);
-    void deletar(Long id);
+
 }

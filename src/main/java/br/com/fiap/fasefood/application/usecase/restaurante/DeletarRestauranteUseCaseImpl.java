@@ -1,5 +1,6 @@
 package br.com.fiap.fasefood.application.usecase.restaurante;
 
+import br.com.fiap.fasefood.core.domain.entities.Restaurante;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.usecase.gateways.RestauranteRepository;
 import br.com.fiap.fasefood.core.usecase.interfaces.restaurante.DeletarRestauranteUseCase;
@@ -16,9 +17,11 @@ public class DeletarRestauranteUseCaseImpl implements DeletarRestauranteUseCase 
 
     @Override
     public void deletar(Long id) {
-        if (restauranteRepository.findById(id).isEmpty()) {
-            throw new ResourceNotFoundException("Restaurante não encontrado com ID: " + id);
-        }
-        restauranteRepository.deletar(id);
+        Restaurante restaurante = restauranteRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Restaurante não encontrado com ID: " + id));
+
+        restaurante.desativar();
+
+        restauranteRepository.salvar(restaurante);
     }
 }
