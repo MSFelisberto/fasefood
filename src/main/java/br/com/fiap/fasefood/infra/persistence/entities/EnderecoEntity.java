@@ -1,5 +1,6 @@
 package br.com.fiap.fasefood.infra.persistence.entities;
 
+import br.com.fiap.fasefood.core.domain.entities.Endereco;
 import br.com.fiap.fasefood.infra.controller.dto.EnderecoDTO;
 import jakarta.persistence.*;
 import lombok.*;
@@ -35,6 +36,26 @@ public class EnderecoEntity {
 
     }
 
+    public EnderecoEntity(Endereco endereco) {
+        this.logradouro = endereco.getLogradouro();
+        this.numero = endereco.getNumero();
+        this.cep = endereco.getCep();
+        this.complemento = endereco.getComplemento();
+        this.bairro = endereco.getBairro();
+        this.cidade = endereco.getCidade();
+        this.uf = endereco.getUf();
+
+    }
+
+    public EnderecoEntity(EnderecoEntity endereco) {
+        this.logradouro = endereco.getLogradouro();
+        this.numero = endereco.getNumero();
+        this.cep = endereco.getCep();
+        this.complemento = endereco.getComplemento();
+        this.bairro = endereco.getBairro();
+        this.cidade = endereco.getCidade();
+        this.uf = endereco.getUf();
+    }
 
     public void atualizarInformacoesEndereco(EnderecoDTO endereco) {
         atualizarLogradouro(endereco.logradouro());
