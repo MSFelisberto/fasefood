@@ -1,6 +1,6 @@
 package br.com.fiap.fasefood.infra.persistence;
 
-import br.com.fiap.fasefood.core.domain.entities.restaurante.Restaurante;
+import br.com.fiap.fasefood.core.domain.entities.Restaurante;
 import br.com.fiap.fasefood.core.usecase.gateways.RestauranteRepository;
 import br.com.fiap.fasefood.infra.controller.mapper.RestauranteEntityMapper;
 import br.com.fiap.fasefood.infra.persistence.jpa.RestauranteJpaRepository;

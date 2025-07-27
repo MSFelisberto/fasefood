@@ -1,6 +1,6 @@
 package br.com.fiap.fasefood.infra.controller.mapper.restaurante;
 
-import br.com.fiap.fasefood.core.domain.entities.restaurante.Restaurante;
+import br.com.fiap.fasefood.core.domain.entities.Restaurante;
 import br.com.fiap.fasefood.infra.controller.mapper.EnderecoEntityMapper;
 import br.com.fiap.fasefood.infra.controller.mapper.UserEntityMapper;
 import br.com.fiap.fasefood.infra.persistence.entities.RestauranteEntity;

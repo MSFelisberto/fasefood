@@ -1,7 +1,4 @@
-package br.com.fiap.fasefood.core.domain.entities.restaurante;
-
-import br.com.fiap.fasefood.core.domain.entities.Endereco;
-import br.com.fiap.fasefood.core.domain.entities.Usuario;
+package br.com.fiap.fasefood.core.domain.entities;
 
 import java.time.LocalTime;
 

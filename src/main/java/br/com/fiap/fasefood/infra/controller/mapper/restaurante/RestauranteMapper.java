@@ -1,7 +1,7 @@
 package br.com.fiap.fasefood.infra.controller.mapper.restaurante;
 
 import br.com.fiap.fasefood.core.domain.entities.Endereco;
-import br.com.fiap.fasefood.core.domain.entities.restaurante.Restaurante;
+import br.com.fiap.fasefood.core.domain.entities.Restaurante;
 import br.com.fiap.fasefood.core.domain.entities.Usuario;
 import br.com.fiap.fasefood.infra.controller.dto.restaurante.CreateRestauranteDTO;
 import br.com.fiap.fasefood.infra.controller.dto.restaurante.RestauranteResponseDTO;

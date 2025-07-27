@@ -1,6 +1,6 @@
 package br.com.fiap.fasefood.core.usecase.gateways;
 
-import br.com.fiap.fasefood.core.domain.entities.restaurante.Restaurante;
+import br.com.fiap.fasefood.core.domain.entities.Restaurante;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

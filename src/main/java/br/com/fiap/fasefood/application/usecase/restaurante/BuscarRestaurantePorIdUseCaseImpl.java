@@ -1,11 +1,11 @@
 package br.com.fiap.fasefood.application.usecase.restaurante;
 
-import br.com.fiap.fasefood.core.domain.entities.restaurante.Restaurante;
+import br.com.fiap.fasefood.core.domain.entities.Restaurante;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.usecase.gateways.RestauranteRepository;
 import br.com.fiap.fasefood.core.usecase.interfaces.restaurante.BuscarRestaurantePorIdUseCase;
 import br.com.fiap.fasefood.infra.controller.dto.restaurante.RestauranteResponseDTO;
-import br.com.fiap.fasefood.infra.controller.mapper.RestauranteMapper;
+import br.com.fiap.fasefood.infra.controller.mapper.restaurante.RestauranteMapper;
 import org.springframework.stereotype.Service;
 
 @Service

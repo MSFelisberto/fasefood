@@ -3,7 +3,7 @@ package br.com.fiap.fasefood.application.usecase.restaurante;
 import br.com.fiap.fasefood.core.usecase.gateways.RestauranteRepository;
 import br.com.fiap.fasefood.core.usecase.interfaces.restaurante.ListarRestaurantesUseCase;
 import br.com.fiap.fasefood.infra.controller.dto.restaurante.RestauranteResponseDTO;
-import br.com.fiap.fasefood.infra.controller.mapper.RestauranteMapper;
+import br.com.fiap.fasefood.infra.controller.mapper.restaurante.RestauranteMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
