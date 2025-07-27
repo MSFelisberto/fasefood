@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Configuration;
 public class CardapioConfig {
 
     @Bean
-    public CriarCardapioUseCase criarCardapioUseCase(CardapioRepository cardapioRepo, RestauranteRepository restauranteRepo) {
-        return new CriarCardapioUseCaseImpl(cardapioRepo, restauranteRepo);
+    public CriarCardapioUseCase criarCardapioUseCase(CardapioRepository cardapioRepo, RestauranteRepository restauranteRepo, CardapioItemRepository itemRepo) {
+        return new CriarCardapioUseCaseImpl(cardapioRepo, restauranteRepo, itemRepo);
     }
 
     @Bean
@@ -24,6 +24,11 @@ public class CardapioConfig {
     @Bean
     public CriarCardapioItemUseCase criarCardapioItemUseCase(CardapioItemRepository itemRepo, CardapioRepository cardapioRepo) {
         return new CriarCardapioItemUseCaseImpl(itemRepo, cardapioRepo);
+    }
+
+    @Bean
+    public CriarCardapioItemsBatchUseCase criarCardapioItemsBatchUseCase(CardapioRepository cardapioRepo, CardapioItemRepository itemRepo) {
+        return new CriarCardapioItemsBatchUseCaseImpl(cardapioRepo, itemRepo);
     }
 
     @Bean

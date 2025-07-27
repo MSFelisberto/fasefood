@@ -2,6 +2,7 @@ package br.com.fiap.fasefood.infra.controller.docs;
 
 import br.com.fiap.fasefood.infra.controller.dto.cardapio.CardapioItemResponseDTO;
 import br.com.fiap.fasefood.infra.controller.dto.cardapio.CreateCardapioItemDTO;
+import br.com.fiap.fasefood.infra.controller.dto.cardapio.CreateCardapioItemsBatchDTO;
 import br.com.fiap.fasefood.infra.controller.dto.cardapio.UpdateCardapioItemDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -11,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.List;
 
 @Tag(name = "Itens de Cardápio", description = "Endpoints para gerenciamento de itens específicos de um cardápio")
 public interface CardapioItemControllerDocs {
@@ -26,6 +29,18 @@ public interface CardapioItemControllerDocs {
     ResponseEntity<CardapioItemResponseDTO> criarItem(
             @Parameter(description = "Dados para criação do item") CreateCardapioItemDTO dto,
             UriComponentsBuilder uriBuilder
+    );
+
+    @Operation(
+            summary = "Criar múltiplos itens no cardápio",
+            description = "Cadastra uma lista de novos itens e os associa a um cardápio existente em uma única requisição.",
+            responses = {
+                    @ApiResponse(responseCode = "201", description = "Itens criados com sucesso"),
+                    @ApiResponse(responseCode = "404", description = "Cardápio não encontrado")
+            }
+    )
+    ResponseEntity<List<CardapioItemResponseDTO>> criarItensEmLote(
+            @Parameter(description = "Dados para criação dos itens em lote") CreateCardapioItemsBatchDTO dto
     );
 
     @Operation(

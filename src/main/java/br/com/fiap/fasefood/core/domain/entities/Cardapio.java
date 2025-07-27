@@ -1,5 +1,8 @@
 package br.com.fiap.fasefood.core.domain.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Cardapio {
 
     private Long id;
@@ -7,6 +10,7 @@ public class Cardapio {
     private String nome;
     private String descricao;
     private boolean ativo;
+    private List<CardapioItem> itens = new ArrayList<>();
 
     public Cardapio(Long id, Restaurante restaurante, String nome, String descricao, boolean ativo) {
         this.id = id;
@@ -25,10 +29,12 @@ public class Cardapio {
         this.ativo = false;
     }
 
-    // Getters
     public Long getId() { return id; }
     public Restaurante getRestaurante() { return restaurante; }
     public String getNome() { return nome; }
     public String getDescricao() { return descricao; }
     public boolean isAtivo() { return ativo; }
+    public List<CardapioItem> getItens() { return itens; }
+
+    public void setItens(List<CardapioItem> itens) { this.itens = itens; }
 }

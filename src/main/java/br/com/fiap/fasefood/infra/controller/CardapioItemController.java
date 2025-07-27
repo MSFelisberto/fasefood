@@ -1,22 +1,22 @@
 package br.com.fiap.fasefood.infra.controller;
 
-import br.com.fiap.fasefood.core.usecase.interfaces.cardapio.AtualizarCardapioItemUseCase;
-import br.com.fiap.fasefood.core.usecase.interfaces.cardapio.CriarCardapioItemUseCase;
-import br.com.fiap.fasefood.core.usecase.interfaces.cardapio.DeletarCardapioItemUseCase;
-import br.com.fiap.fasefood.core.usecase.interfaces.cardapio.ListarCardapioItensUseCase;
+import br.com.fiap.fasefood.core.usecase.interfaces.cardapio.*;
 import br.com.fiap.fasefood.infra.controller.docs.CardapioItemControllerDocs;
 import br.com.fiap.fasefood.infra.controller.dto.cardapio.CardapioItemResponseDTO;
 import br.com.fiap.fasefood.infra.controller.dto.cardapio.CreateCardapioItemDTO;
+import br.com.fiap.fasefood.infra.controller.dto.cardapio.CreateCardapioItemsBatchDTO;
 import br.com.fiap.fasefood.infra.controller.dto.cardapio.UpdateCardapioItemDTO;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/cardapio")
@@ -26,12 +26,14 @@ public class CardapioItemController implements CardapioItemControllerDocs {
     private final ListarCardapioItensUseCase listarUseCase;
     private final AtualizarCardapioItemUseCase atualizarUseCase;
     private final DeletarCardapioItemUseCase deletarUseCase;
+    private final CriarCardapioItemsBatchUseCase criarEmLoteUseCase;
 
-    public CardapioItemController(CriarCardapioItemUseCase criarUseCase, ListarCardapioItensUseCase listarUseCase, AtualizarCardapioItemUseCase atualizarUseCase, DeletarCardapioItemUseCase deletarUseCase) {
+    public CardapioItemController(CriarCardapioItemUseCase criarUseCase, ListarCardapioItensUseCase listarUseCase, AtualizarCardapioItemUseCase atualizarUseCase, DeletarCardapioItemUseCase deletarUseCase, CriarCardapioItemsBatchUseCase criarEmLoteUseCase) {
         this.criarUseCase = criarUseCase;
         this.listarUseCase = listarUseCase;
         this.atualizarUseCase = atualizarUseCase;
         this.deletarUseCase = deletarUseCase;
+        this.criarEmLoteUseCase = criarEmLoteUseCase;
     }
 
     @Override
@@ -40,6 +42,13 @@ public class CardapioItemController implements CardapioItemControllerDocs {
         var response = criarUseCase.criar(dto);
         URI location = uriBuilder.path("/api/v1/cardapio/{id}").buildAndExpand(response.id()).toUri();
         return ResponseEntity.created(location).body(response);
+    }
+
+    @Override
+    @PostMapping("/itens/batch")
+    public ResponseEntity<List<CardapioItemResponseDTO>> criarItensEmLote(@RequestBody @Valid CreateCardapioItemsBatchDTO dto) {
+        List<CardapioItemResponseDTO> response = criarEmLoteUseCase.criarEmLote(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @Override
