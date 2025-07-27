@@ -1,0 +1,67 @@
+package br.com.fiap.fasefood.infra.controller.docs;
+
+import br.com.fiap.fasefood.infra.controller.dto.cardapio.CardapioItemResponseDTO;
+import br.com.fiap.fasefood.infra.controller.dto.cardapio.CreateCardapioItemDTO;
+import br.com.fiap.fasefood.infra.controller.dto.cardapio.UpdateCardapioItemDTO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.util.UriComponentsBuilder;
+
+@Tag(name = "Itens de Cardápio", description = "Endpoints para gerenciamento de itens específicos de um cardápio")
+public interface CardapioItemControllerDocs {
+
+    @Operation(
+            summary = "Criar item no cardápio",
+            description = "Cadastra um novo item e o associa a um cardápio existente.",
+            responses = {
+                    @ApiResponse(responseCode = "201", description = "Item criado com sucesso"),
+                    @ApiResponse(responseCode = "404", description = "Cardápio não encontrado")
+            }
+    )
+    ResponseEntity<CardapioItemResponseDTO> criarItem(
+            @Parameter(description = "Dados para criação do item") CreateCardapioItemDTO dto,
+            UriComponentsBuilder uriBuilder
+    );
+
+    @Operation(
+            summary = "Listar itens de um cardápio",
+            description = "Lista todos os itens ativos de um cardápio específico.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Itens listados com sucesso")
+            }
+    )
+    ResponseEntity<Page<CardapioItemResponseDTO>> listarItens(
+            @Parameter(description = "ID do cardápio") Long cardapioId,
+            Pageable pageable
+    );
+
+    @Operation(
+            summary = "Atualizar item do cardápio",
+            description = "Atualiza os dados de um item de cardápio existente.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Item atualizado com sucesso"),
+                    @ApiResponse(responseCode = "404", description = "Item não encontrado")
+            }
+    )
+    ResponseEntity<CardapioItemResponseDTO> atualizarItem(
+            @Parameter(description = "ID do item a ser atualizado") Long id,
+            @Parameter(description = "Novos dados do item") UpdateCardapioItemDTO dto
+    );
+
+    @Operation(
+            summary = "Deletar item do cardápio",
+            description = "Desativa um item de um cardápio (soft delete).",
+            responses = {
+                    @ApiResponse(responseCode = "204", description = "Item desativado com sucesso"),
+                    @ApiResponse(responseCode = "404", description = "Item não encontrado")
+            }
+    )
+    ResponseEntity<Void> deletarItem(
+            @Parameter(description = "ID do item a ser deletado") Long id
+    );
+}
