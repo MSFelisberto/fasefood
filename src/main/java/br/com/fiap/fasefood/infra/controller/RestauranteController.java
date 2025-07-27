@@ -1,6 +1,7 @@
 package br.com.fiap.fasefood.infra.controller;
 
 import br.com.fiap.fasefood.core.usecase.interfaces.restaurante.*;
+import br.com.fiap.fasefood.infra.controller.docs.RestauranteControllerDocs;
 import br.com.fiap.fasefood.infra.controller.dto.restaurante.CreateRestauranteDTO;
 import br.com.fiap.fasefood.infra.controller.dto.restaurante.RestauranteResponseDTO;
 import br.com.fiap.fasefood.infra.controller.dto.restaurante.UpdateRestauranteDTO;
@@ -18,7 +19,7 @@ import java.net.URI;
 @Tag(name = "Restaurantes", description = "Endpoints para gerenciamento de restaurantes")
 @RestController
 @RequestMapping("/api/v1/restaurantes")
-public class RestauranteController {
+public class RestauranteController implements RestauranteControllerDocs {
 
     private final CriarRestauranteUseCase criarRestauranteUseCase;
     private final AtualizarRestauranteUseCase atualizarRestauranteUseCase;
@@ -39,6 +40,7 @@ public class RestauranteController {
         this.listarRestaurantesUseCase = listarRestaurantesUseCase;
     }
 
+    @Override
     @PostMapping
     public ResponseEntity<RestauranteResponseDTO> criarRestaurante(
             @RequestBody @Valid CreateRestauranteDTO dto,
@@ -50,6 +52,7 @@ public class RestauranteController {
         return ResponseEntity.created(location).body(response);
     }
 
+    @Override
     @GetMapping
     public ResponseEntity<Page<RestauranteResponseDTO>> listarRestaurantes(
             @PageableDefault(size = 10, sort = {"nome"}) Pageable pageable
@@ -58,12 +61,14 @@ public class RestauranteController {
         return ResponseEntity.ok(restaurantes);
     }
 
+    @Override
     @GetMapping("/{id}")
     public ResponseEntity<RestauranteResponseDTO> buscarRestaurantePorId(@PathVariable Long id) {
         RestauranteResponseDTO restaurante = buscarRestaurantePorIdUseCase.buscarPorId(id);
         return ResponseEntity.ok(restaurante);
     }
 
+    @Override
     @PutMapping("/{id}")
     public ResponseEntity<RestauranteResponseDTO> atualizarRestaurante(
             @PathVariable Long id,
@@ -73,6 +78,7 @@ public class RestauranteController {
         return ResponseEntity.ok(restaurante);
     }
 
+    @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarRestaurante(@PathVariable Long id) {
         deletarRestauranteUseCase.deletar(id);
