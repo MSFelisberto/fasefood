@@ -4,7 +4,6 @@ import br.com.fiap.fasefood.core.domain.entities.Endereco;
 import br.com.fiap.fasefood.core.domain.entities.TipoUsuario;
 import br.com.fiap.fasefood.core.domain.entities.Usuario;
 import br.com.fiap.fasefood.infra.controller.dto.CreateUserDTO;
-import br.com.fiap.fasefood.infra.persistence.entities.UsuarioEntity;
 
 public class UsuarioMapper {
 
@@ -30,42 +29,6 @@ public class UsuarioMapper {
                 endereco,
                 tipoUsuario,
                 true
-        );
-    }
-
-    public static Usuario toDomain(UsuarioEntity usuario) {
-        if(usuario == null) {
-            return null;
-        }
-
-        return new Usuario(
-                usuario.getId(),
-                usuario.getNome(),
-                usuario.getEmail(),
-                usuario.getLogin(),
-                usuario.getSenha(),
-                usuario.getDataUltimaAtualizacao(),
-                EnderecoEntityMapper.toDomain(usuario.getEnderecoEntity()),
-                TipoUsuarioMapper.toDomain(usuario.getTipoUsuario()),
-                usuario.isAtivo()
-        );
-    }
-
-    public static UsuarioEntity toEntity(Usuario usuario) {
-        if(usuario == null) {
-            return null;
-        }
-
-        return new UsuarioEntity(
-                usuario.getId(),
-                usuario.getNome(),
-                usuario.getEmail(),
-                usuario.getLogin(),
-                usuario.getSenha(),
-                usuario.getDataUltimaAtualizacao(),
-                TipoUsuarioMapper.toEntity(usuario.getTipoUsuario()),
-                EnderecoEntityMapper.toEntity(usuario.getEndereco()),
-                usuario.isAtivo()
         );
     }
 }

@@ -1,7 +1,6 @@
 package br.com.fiap.fasefood.infra.controller.mapper;
 
 import br.com.fiap.fasefood.core.domain.entities.Endereco;
-import br.com.fiap.fasefood.infra.controller.dto.EnderecoDTO;
 import br.com.fiap.fasefood.infra.persistence.entities.EnderecoEntity;
 
 public class EnderecoEntityMapper {
@@ -19,22 +18,6 @@ public class EnderecoEntityMapper {
             entity.getBairro(),
             entity.getCidade(),
             entity.getUf()
-        );
-    }
-
-    public static Endereco toDomain(EnderecoDTO endereco, Long id) {
-        if (endereco == null) {
-            return null;
-        }
-        return new Endereco(
-                id,
-                endereco.logradouro(),
-                endereco.numero(),
-                endereco.cep(),
-                endereco.complemento(),
-                endereco.bairro(),
-                endereco.cidade(),
-                endereco.uf()
         );
     }
 
