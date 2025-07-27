@@ -94,7 +94,7 @@ public class UsuarioController {
             UriComponentsBuilder uriBuilder
     ) {
         Usuario savedUser = criarUsuarioUseCase.criarUsuario(createUserDTO);
-        ListUserDTO response = new ListUserDTO(savedUser);
+        ListUserDTO response = UsuarioMapper.toListUserDTO(savedUser);
 
         URI location = uriBuilder.path("/api/v1/users/{id}")
                 .buildAndExpand(savedUser.getId()).toUri();
@@ -141,7 +141,7 @@ public class UsuarioController {
             @PathVariable Long id,
             @Parameter(description = "ID do novo tipo de usuario", required = true)
             @RequestBody @Valid UpdateUserTypeDTO updateUserTypeDTO
-            ) {
+    ) {
         ListUserDTO usuarioAtualizado = alterarTipoUsuarioUseCase.alterarTipoUsuario(id, updateUserTypeDTO);
         return ResponseEntity.ok(usuarioAtualizado);
     }

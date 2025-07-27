@@ -4,6 +4,7 @@ import br.com.fiap.fasefood.core.domain.entities.Endereco;
 import br.com.fiap.fasefood.core.domain.entities.TipoUsuario;
 import br.com.fiap.fasefood.core.domain.entities.Usuario;
 import br.com.fiap.fasefood.infra.controller.dto.CreateUserDTO;
+import br.com.fiap.fasefood.infra.controller.dto.ListUserDTO;
 
 public class UsuarioMapper {
 
@@ -31,4 +32,19 @@ public class UsuarioMapper {
                 true
         );
     }
+
+    public static ListUserDTO toListUserDTO(Usuario usuario) {
+        if (usuario == null) {
+            return null;
+        }
+        return new ListUserDTO(
+                usuario.getId(),
+                usuario.getNome(),
+                usuario.getEmail(),
+                usuario.getLogin(),
+                usuario.getTipoUsuario(),
+                usuario.getEndereco()
+        );
+    }
+
 }

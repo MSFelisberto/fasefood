@@ -8,6 +8,7 @@ import br.com.fiap.fasefood.core.usecase.gateways.UsuarioRepository;
 import br.com.fiap.fasefood.core.usecase.interfaces.AlterarTipoUsuarioUseCase;
 import br.com.fiap.fasefood.infra.controller.dto.ListUserDTO;
 import br.com.fiap.fasefood.infra.controller.dto.UpdateUserTypeDTO;
+import br.com.fiap.fasefood.infra.controller.mapper.UsuarioMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +36,6 @@ public class AlterarTipoUsuarioUseCaseImpl implements AlterarTipoUsuarioUseCase 
 
         Usuario usuarioAtualizado = usuarioRepository.salvar(usuario);
 
-        return new ListUserDTO(usuarioAtualizado);
+        return UsuarioMapper.toListUserDTO(usuarioAtualizado);
     }
 }

@@ -2,8 +2,6 @@ package br.com.fiap.fasefood.infra.controller.dto;
 
 import br.com.fiap.fasefood.core.domain.entities.Endereco;
 import br.com.fiap.fasefood.core.domain.entities.TipoUsuario;
-import br.com.fiap.fasefood.core.domain.entities.Usuario;
-
 
 public record ListUserDTO(
 
@@ -14,7 +12,4 @@ public record ListUserDTO(
         TipoUsuario tipoUsuario,
         Endereco endereco) {
 
-    public ListUserDTO(Usuario user){
-        this(user.getId(), user.getNome(), user.getEmail(), user.getLogin(), user.getTipoUsuario(), user.getEndereco());
-    }
 }
