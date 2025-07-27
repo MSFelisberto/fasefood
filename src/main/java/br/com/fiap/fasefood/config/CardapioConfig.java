@@ -42,6 +42,11 @@ public class CardapioConfig {
     }
 
     @Bean
+    public AtualizarCardapioItensBatchUseCase atualizarCardapioItensBatchUseCase(CardapioItemRepository itemRepo) {
+        return new AtualizarCardapioItensBatchUseCaseImpl(itemRepo);
+    }
+
+    @Bean
     public DeletarCardapioItemUseCase deletarCardapioItemUseCase(CardapioItemRepository itemRepo) {
         return new DeletarCardapioItemUseCaseImpl(itemRepo);
     }

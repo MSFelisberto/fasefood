@@ -2,10 +2,7 @@ package br.com.fiap.fasefood.infra.controller;
 
 import br.com.fiap.fasefood.core.usecase.interfaces.cardapio.*;
 import br.com.fiap.fasefood.infra.controller.docs.CardapioItemControllerDocs;
-import br.com.fiap.fasefood.infra.controller.dto.cardapio.CardapioItemResponseDTO;
-import br.com.fiap.fasefood.infra.controller.dto.cardapio.CreateCardapioItemDTO;
-import br.com.fiap.fasefood.infra.controller.dto.cardapio.CreateCardapioItemsBatchDTO;
-import br.com.fiap.fasefood.infra.controller.dto.cardapio.UpdateCardapioItemDTO;
+import br.com.fiap.fasefood.infra.controller.dto.cardapio.*;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,13 +24,15 @@ public class CardapioItemController implements CardapioItemControllerDocs {
     private final AtualizarCardapioItemUseCase atualizarUseCase;
     private final DeletarCardapioItemUseCase deletarUseCase;
     private final CriarCardapioItemsBatchUseCase criarEmLoteUseCase;
+    private final AtualizarCardapioItensBatchUseCase atualizarEmLoteUseCase;
 
-    public CardapioItemController(CriarCardapioItemUseCase criarUseCase, ListarCardapioItensUseCase listarUseCase, AtualizarCardapioItemUseCase atualizarUseCase, DeletarCardapioItemUseCase deletarUseCase, CriarCardapioItemsBatchUseCase criarEmLoteUseCase) {
+    public CardapioItemController(CriarCardapioItemUseCase criarUseCase, ListarCardapioItensUseCase listarUseCase, AtualizarCardapioItemUseCase atualizarUseCase, DeletarCardapioItemUseCase deletarUseCase, CriarCardapioItemsBatchUseCase criarEmLoteUseCase, AtualizarCardapioItensBatchUseCase atualizarEmLoteUseCase) {
         this.criarUseCase = criarUseCase;
         this.listarUseCase = listarUseCase;
         this.atualizarUseCase = atualizarUseCase;
         this.deletarUseCase = deletarUseCase;
         this.criarEmLoteUseCase = criarEmLoteUseCase;
+        this.atualizarEmLoteUseCase = atualizarEmLoteUseCase;
     }
 
     @Override
@@ -62,6 +61,13 @@ public class CardapioItemController implements CardapioItemControllerDocs {
     @PutMapping("/{id}")
     public ResponseEntity<CardapioItemResponseDTO> atualizarItem(@PathVariable Long id, @RequestBody @Valid UpdateCardapioItemDTO dto) {
         var response = atualizarUseCase.atualizar(id, dto);
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
+    @PutMapping("/itens/batch")
+    public ResponseEntity<List<CardapioItemResponseDTO>> atualizarItensEmLote(@RequestBody @Valid UpdateCardapioItemsBatchDTO dto) {
+        List<CardapioItemResponseDTO> response = atualizarEmLoteUseCase.atualizarEmLote(dto);
         return ResponseEntity.ok(response);
     }
 

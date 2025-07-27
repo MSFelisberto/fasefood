@@ -1,9 +1,6 @@
 package br.com.fiap.fasefood.infra.controller.docs;
 
-import br.com.fiap.fasefood.infra.controller.dto.cardapio.CardapioItemResponseDTO;
-import br.com.fiap.fasefood.infra.controller.dto.cardapio.CreateCardapioItemDTO;
-import br.com.fiap.fasefood.infra.controller.dto.cardapio.CreateCardapioItemsBatchDTO;
-import br.com.fiap.fasefood.infra.controller.dto.cardapio.UpdateCardapioItemDTO;
+import br.com.fiap.fasefood.infra.controller.dto.cardapio.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -66,6 +63,18 @@ public interface CardapioItemControllerDocs {
     ResponseEntity<CardapioItemResponseDTO> atualizarItem(
             @Parameter(description = "ID do item a ser atualizado") Long id,
             @Parameter(description = "Novos dados do item") UpdateCardapioItemDTO dto
+    );
+
+    @Operation(
+            summary = "Atualizar múltiplos itens do cardápio",
+            description = "Atualiza uma lista de itens de cardápio existentes em uma única requisição.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Itens atualizados com sucesso"),
+                    @ApiResponse(responseCode = "404", description = "Um ou mais itens não foram encontrados")
+            }
+    )
+    ResponseEntity<List<CardapioItemResponseDTO>> atualizarItensEmLote(
+            @Parameter(description = "Dados para atualização dos itens em lote") UpdateCardapioItemsBatchDTO dto
     );
 
     @Operation(
