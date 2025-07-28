@@ -26,7 +26,7 @@ import java.util.Optional;
 @ExtendWith(MockitoExtension.class)
 public class AutenticarUsuarioUseCaseImplTest {
 
-    @Mock
+
     private UsuarioRepository usuarioRepository;
 
     @InjectMocks
@@ -74,15 +74,19 @@ public class AutenticarUsuarioUseCaseImplTest {
 
         assertEquals("Login ou senha incorretos", exception.getMessage());
     }
-
+    private TipoUsuario buildTipoUsuario() {
+        return new TipoUsuario(1L, "teste tipo usuario");
+    }
     private Usuario buildUsuario(String login , String senha){
-        TipoUsuario tipoUsuario = new TipoUsuario(1L, "teste tipo usuario");
-        Endereco endereco = new Endereco(1L, "logradouro", "01", "0000001", "complemento", "bairro","cidade", "uf");
-
+        TipoUsuario tipoUsuario = buildTipoUsuario();
+        Endereco endereco = buildEndereco();
         Usuario usuario = new Usuario(1L, "teste","teste@teste.com", login,senha, LocalDate.now(),endereco, tipoUsuario, true);
 
         return usuario;
 
     }
 
+    private Endereco buildEndereco(){
+        return new Endereco(1L, "logradouro", "01", "0000001", "complemento", "bairro","cidade", "uf");
+    }
 }
