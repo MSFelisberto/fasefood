@@ -11,6 +11,7 @@ public class Endereco {
     private String cidade;
     private String uf;
 
+
     public Endereco(Long id, String logradouro, String numero, String cep, String complemento,
                     String bairro, String cidade, String uf) {
         this.id = id;
