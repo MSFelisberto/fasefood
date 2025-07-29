@@ -8,10 +8,8 @@ import br.com.fiap.fasefood.core.usecase.interfaces.AtualizarUsuarioUseCase;
 import br.com.fiap.fasefood.infra.controller.dto.ListUserDTO;
 import br.com.fiap.fasefood.infra.controller.dto.UpdateUserDataDTO;
 import br.com.fiap.fasefood.infra.controller.mapper.UsuarioMapper;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
 public class AtualizarUsuarioUseCaseImpl implements AtualizarUsuarioUseCase {
     private final UsuarioRepository usuarioRepository;
 

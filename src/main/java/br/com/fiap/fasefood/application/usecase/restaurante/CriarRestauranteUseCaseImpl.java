@@ -10,9 +10,8 @@ import br.com.fiap.fasefood.core.usecase.interfaces.restaurante.CriarRestaurante
 import br.com.fiap.fasefood.infra.controller.dto.restaurante.CreateRestauranteDTO;
 import br.com.fiap.fasefood.infra.controller.dto.restaurante.RestauranteResponseDTO;
 import br.com.fiap.fasefood.infra.controller.mapper.restaurante.RestauranteMapper;
-import org.springframework.stereotype.Service;
 
-@Service
+
 public class CriarRestauranteUseCaseImpl implements CriarRestauranteUseCase {
 
     private final RestauranteRepository restauranteRepository;

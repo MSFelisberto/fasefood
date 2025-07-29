@@ -9,9 +9,8 @@ import br.com.fiap.fasefood.core.usecase.gateways.UsuarioRepository;
 import br.com.fiap.fasefood.core.usecase.interfaces.CriarUsuarioUseCase;
 import br.com.fiap.fasefood.infra.controller.dto.CreateUserDTO;
 import br.com.fiap.fasefood.infra.controller.mapper.UsuarioMapper;
-import org.springframework.stereotype.Service;
 
-@Service
+
 public class CriarUsuarioUseCaseImpl implements CriarUsuarioUseCase {
 
     private final UsuarioRepository usuarioRepository;

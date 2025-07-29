@@ -7,9 +7,8 @@ import br.com.fiap.fasefood.infra.controller.dto.ListUserDTO;
 import br.com.fiap.fasefood.infra.controller.mapper.UsuarioMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
-@Service
+
 public class ListarTodosUsuariosUseCaseImpl implements ListarTodosUsuariosUseCase {
 
     private final UsuarioRepository usuarioRepository;

@@ -10,9 +10,8 @@ import br.com.fiap.fasefood.infra.controller.dto.ListUserDTO;
 import br.com.fiap.fasefood.infra.controller.dto.UpdateUserTypeDTO;
 import br.com.fiap.fasefood.infra.controller.mapper.UsuarioMapper;
 import jakarta.transaction.Transactional;
-import org.springframework.stereotype.Service;
 
-@Service
+
 public class AlterarTipoUsuarioUseCaseImpl implements AlterarTipoUsuarioUseCase {
 
     private final UsuarioRepository usuarioRepository;

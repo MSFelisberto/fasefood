@@ -6,9 +6,8 @@ import br.com.fiap.fasefood.core.usecase.gateways.RestauranteRepository;
 import br.com.fiap.fasefood.core.usecase.interfaces.restaurante.BuscarRestaurantePorIdUseCase;
 import br.com.fiap.fasefood.infra.controller.dto.restaurante.RestauranteResponseDTO;
 import br.com.fiap.fasefood.infra.controller.mapper.restaurante.RestauranteMapper;
-import org.springframework.stereotype.Service;
 
-@Service
+
 public class BuscarRestaurantePorIdUseCaseImpl implements BuscarRestaurantePorIdUseCase {
 
     private final RestauranteRepository restauranteRepository;

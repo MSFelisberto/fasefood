@@ -6,9 +6,9 @@ import br.com.fiap.fasefood.core.usecase.gateways.UsuarioRepository;
 import br.com.fiap.fasefood.core.usecase.interfaces.BuscarUsuarioPorIdUseCase;
 import br.com.fiap.fasefood.infra.controller.dto.ListUserDTO;
 import br.com.fiap.fasefood.infra.controller.mapper.UsuarioMapper;
-import org.springframework.stereotype.Service;
 
-@Service
+
+
 public class BuscarUsuarioPorIdUseCaseImpl implements BuscarUsuarioPorIdUseCase {
 
     private final UsuarioRepository usuarioRepository;

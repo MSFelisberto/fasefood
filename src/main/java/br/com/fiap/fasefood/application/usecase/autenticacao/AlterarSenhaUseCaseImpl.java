@@ -5,9 +5,7 @@ import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.usecase.gateways.UsuarioRepository;
 import br.com.fiap.fasefood.core.usecase.interfaces.AlterarSenhaUsuarioUseCase;
 import br.com.fiap.fasefood.infra.controller.dto.ChangeUserPasswordDTO;
-import org.springframework.stereotype.Service;
 
-@Service
 public class AlterarSenhaUseCaseImpl implements AlterarSenhaUsuarioUseCase {
 
     private final UsuarioRepository usuarioRepository;

@@ -4,9 +4,8 @@ import br.com.fiap.fasefood.core.domain.entities.Restaurante;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.usecase.gateways.RestauranteRepository;
 import br.com.fiap.fasefood.core.usecase.interfaces.restaurante.DeletarRestauranteUseCase;
-import org.springframework.stereotype.Service;
 
-@Service
+
 public class DeletarRestauranteUseCaseImpl implements DeletarRestauranteUseCase {
 
     private final RestauranteRepository restauranteRepository;

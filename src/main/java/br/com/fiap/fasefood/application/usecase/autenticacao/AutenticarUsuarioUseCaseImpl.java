@@ -6,9 +6,8 @@ import br.com.fiap.fasefood.core.usecase.gateways.UsuarioRepository;
 import br.com.fiap.fasefood.core.usecase.interfaces.AutenticarUsuarioUseCase;
 import br.com.fiap.fasefood.infra.controller.dto.LoginRequestDTO;
 import br.com.fiap.fasefood.infra.controller.dto.LoginResponseDTO;
-import org.springframework.stereotype.Service;
 
-@Service
+
 public class AutenticarUsuarioUseCaseImpl implements AutenticarUsuarioUseCase {
 
     private final UsuarioRepository usuarioRepository;
