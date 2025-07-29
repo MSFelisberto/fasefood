@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface TipoUsuarioRepository {
 
     Optional<TipoUsuario> findById(Long id);
+    Optional<TipoUsuario> findByNome(String nome);
     List<TipoUsuario> findAll();
     TipoUsuario salvar(TipoUsuario tipoUsuario);
 }

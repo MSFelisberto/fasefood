@@ -2,6 +2,7 @@ package br.com.fiap.fasefood.infra.controller;
 
 import br.com.fiap.fasefood.core.domain.entities.Usuario;
 import br.com.fiap.fasefood.core.usecase.interfaces.*;
+import br.com.fiap.fasefood.infra.controller.docs.UsuarioControllerDocs;
 import br.com.fiap.fasefood.infra.controller.dto.CreateUserDTO;
 import br.com.fiap.fasefood.infra.controller.dto.ListUserDTO;
 import br.com.fiap.fasefood.infra.controller.dto.UpdateUserDataDTO;
@@ -25,7 +26,7 @@ import java.net.URI;
 @Tag(name = "Usuários", description = "Controller para crud de usuários")
 @RestController
 @RequestMapping("/api/v1/users")
-public class UsuarioController {
+public class UsuarioController implements UsuarioControllerDocs {
 
     private final CriarUsuarioUseCase criarUsuarioUseCase;
     private final AtualizarUsuarioUseCase atualizarUsuarioUseCase;
@@ -49,84 +50,39 @@ public class UsuarioController {
         this.alterarTipoUsuarioUseCase = alterarTipoUsuarioUseCase;
     }
 
-    @Operation(
-            summary = "Listar usuários",
-            description = "Lista todos os usuários ativos com paginação",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Usuários listados com sucesso")
-            }
-    )
+    @Override
     @GetMapping
-    public ResponseEntity<Page<ListUserDTO>> listarTodos(
-            @Parameter(description = "Parâmetros de paginação")
-            @PageableDefault(size = 10, sort = {"nome"}) Pageable pageable) {
-
+    public ResponseEntity<Page<ListUserDTO>> listarTodos(@PageableDefault(size = 10, sort = {"nome"}) Pageable pageable) {
         Page<ListUserDTO> usuarios = listarTodosUsuariosUseCase.listar(pageable);
         return ResponseEntity.ok(usuarios);
     }
 
-    @Operation(
-            summary = "Buscar usuário por ID",
-            description = "Busca os dados de um usuário pelo ID",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Usuário encontrado"),
-                    @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
-            }
-    )
+    @Override
     @GetMapping("/{id}")
     public ResponseEntity<ListUserDTO> buscarUsuarioPorId(@PathVariable Long id) {
         ListUserDTO usuario = buscarUsuarioPorIdUseCase.buscarPorId(id);
         return ResponseEntity.ok(usuario);
     }
 
-    @Operation(
-            summary = "Cadastrar um novo usuário",
-            description = "Cadastrar um novo usuário no sistema",
-            responses = {
-                    @ApiResponse(description = "Criado", responseCode = "201")
-            }
-    )
+    @Override
     @PostMapping
     @Transactional
-    public ResponseEntity<ListUserDTO> saveUser(
-            @Parameter(description = "Dados para criação do usuário", required = true)
-            @RequestBody @Valid CreateUserDTO createUserDTO,
-            UriComponentsBuilder uriBuilder
-    ) {
+    public ResponseEntity<ListUserDTO> saveUser(@RequestBody @Valid CreateUserDTO createUserDTO, UriComponentsBuilder uriBuilder) {
         Usuario savedUser = criarUsuarioUseCase.criarUsuario(createUserDTO);
-        ListUserDTO response = new ListUserDTO(savedUser);
-
-        URI location = uriBuilder.path("/api/v1/users/{id}")
-                .buildAndExpand(savedUser.getId()).toUri();
-
+        ListUserDTO response = UsuarioMapper.toListUserDTO(savedUser);
+        URI location = uriBuilder.path("/api/v1/users/{id}").buildAndExpand(savedUser.getId()).toUri();
         return ResponseEntity.created(location).body(response);
     }
 
-    @Operation(
-            summary = "Atualizar usuário",
-            description = "Atualiza os dados de um usuário com base no ID",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Usuário atualizado com sucesso"),
-                    @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
-            }
-    )
+    @Override
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<ListUserDTO> atualizarUsuario(
-            @PathVariable Long id,
-            @RequestBody @Valid UpdateUserDataDTO dados) {
+    public ResponseEntity<ListUserDTO> atualizarUsuario(@PathVariable Long id, @RequestBody @Valid UpdateUserDataDTO dados) {
         ListUserDTO atualizado = atualizarUsuarioUseCase.atualizar(id, dados);
         return ResponseEntity.ok(atualizado);
     }
 
-    @Operation(
-            summary = "Deletar usuário",
-            description = "Desativa um usuário pelo ID",
-            responses = {
-                    @ApiResponse(responseCode = "204", description = "Usuário desativado com sucesso"),
-                    @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
-            }
-    )
+    @Override
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<Void> deletarUsuario(@PathVariable Long id) {
@@ -134,14 +90,10 @@ public class UsuarioController {
         return ResponseEntity.noContent().build();
     }
 
+    @Override
     @PatchMapping("/{id}/tipo")
     @Transactional
-    public ResponseEntity<ListUserDTO> alterarTipoUsuario(
-            @Parameter(description = "ID do usuário a ser alterado", required = true)
-            @PathVariable Long id,
-            @Parameter(description = "ID do novo tipo de usuario", required = true)
-            @RequestBody @Valid UpdateUserTypeDTO updateUserTypeDTO
-            ) {
+    public ResponseEntity<ListUserDTO> alterarTipoUsuario(@PathVariable Long id, @RequestBody @Valid UpdateUserTypeDTO updateUserTypeDTO) {
         ListUserDTO usuarioAtualizado = alterarTipoUsuarioUseCase.alterarTipoUsuario(id, updateUserTypeDTO);
         return ResponseEntity.ok(usuarioAtualizado);
     }

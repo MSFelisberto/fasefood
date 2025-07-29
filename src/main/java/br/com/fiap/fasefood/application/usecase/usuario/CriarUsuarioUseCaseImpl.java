@@ -29,8 +29,8 @@ public class CriarUsuarioUseCaseImpl implements CriarUsuarioUseCase {
             throw new ResourceAlreadyExists("Usuário já cadastrado");
         }
 
-        TipoUsuario tipoUsuario = tipoUsuarioRepository.findById(dto.tipoUsuarioId())
-                .orElseThrow(() -> new ResourceNotFoundException("Tipo de usuário com ID: " + dto.tipoUsuarioId() + " não encontrado"));
+        TipoUsuario tipoUsuario = tipoUsuarioRepository.findByNome(dto.tipoUsuarioNome())
+                .orElseThrow(() -> new ResourceNotFoundException("Tipo de usuário '" + dto.tipoUsuarioNome() + "' não encontrado"));
         Usuario usuario = UsuarioMapper.toDomain(dto, tipoUsuario);
 
         return usuarioRepository.salvar(usuario);

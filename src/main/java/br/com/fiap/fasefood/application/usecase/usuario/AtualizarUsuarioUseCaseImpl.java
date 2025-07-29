@@ -7,6 +7,7 @@ import br.com.fiap.fasefood.core.usecase.gateways.UsuarioRepository;
 import br.com.fiap.fasefood.core.usecase.interfaces.AtualizarUsuarioUseCase;
 import br.com.fiap.fasefood.infra.controller.dto.ListUserDTO;
 import br.com.fiap.fasefood.infra.controller.dto.UpdateUserDataDTO;
+import br.com.fiap.fasefood.infra.controller.mapper.UsuarioMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,6 +46,6 @@ public class AtualizarUsuarioUseCaseImpl implements AtualizarUsuarioUseCase {
 
         Usuario atualizado = usuarioRepository.salvar(usuario);
 
-        return new ListUserDTO(atualizado);
+        return UsuarioMapper.toListUserDTO(atualizado);
     }
 }

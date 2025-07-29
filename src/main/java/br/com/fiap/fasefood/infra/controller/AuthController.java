@@ -2,6 +2,7 @@ package br.com.fiap.fasefood.infra.controller;
 
 import br.com.fiap.fasefood.core.usecase.interfaces.AlterarSenhaUsuarioUseCase;
 import br.com.fiap.fasefood.core.usecase.interfaces.AutenticarUsuarioUseCase;
+import br.com.fiap.fasefood.infra.controller.docs.AuthControllerDocs;
 import br.com.fiap.fasefood.infra.controller.dto.ChangeUserPasswordDTO;
 import br.com.fiap.fasefood.infra.controller.dto.LoginRequestDTO;
 import br.com.fiap.fasefood.infra.controller.dto.LoginResponseDTO;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/auth")
 @Tag(name = "Autenticação", description = "Endpoints de autenticação de usuários")
-public class AuthController {
+public class AuthController implements AuthControllerDocs {
     private final AutenticarUsuarioUseCase autenticarUseCase;
     private final AlterarSenhaUsuarioUseCase alterarSenhaUseCase;
 
@@ -28,34 +29,16 @@ public class AuthController {
         this.alterarSenhaUseCase = alterarSenhaUseCase;
     }
 
-    @Operation(
-            summary = "Realizar login",
-            description = "Autentica o usuário com login e senha válidos",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Login realizado com sucesso"),
-                    @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
-            }
-    )
+    @Override
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(
-            @Parameter(description = "Credenciais de login", required = true)
-            @RequestBody @Valid LoginRequestDTO loginRequest
-    ) {
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginRequestDTO loginRequest) {
         return ResponseEntity.ok(autenticarUseCase.autenticar(loginRequest));
     }
 
-    @Operation(
-            summary = "Alterar senha do usuário",
-            description = "Altera a senha de um usuário ativo pelo ID",
-            responses = {
-                    @ApiResponse(responseCode = "204", description = "Senha alterada com sucesso"),
-                    @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
-            }
-    )
+    @Override
     @PatchMapping("/{id}/password")
     public ResponseEntity<Void> alterarSenha(
-            @Parameter(description = "ID do usuário", required = true) @PathVariable Long id,
-            @Parameter(description = "Nova senha", required = true)
+            @PathVariable Long id,
             @RequestBody @Valid ChangeUserPasswordDTO senha
     ) {
         alterarSenhaUseCase.alterarSenha(id, senha);

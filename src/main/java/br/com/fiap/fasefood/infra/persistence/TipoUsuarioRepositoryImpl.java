@@ -26,6 +26,11 @@ public class TipoUsuarioRepositoryImpl implements TipoUsuarioRepository {
     }
 
     @Override
+    public Optional<TipoUsuario> findByNome(String nome) {
+        return tipoUsuarioJpaRepository.findByNome(nome).map(TipoUsuarioMapper::toDomain);
+    }
+
+    @Override
     public List<TipoUsuario> findAll() {
         return tipoUsuarioJpaRepository.findAll().stream()
                 .map(TipoUsuarioMapper::toDomain)

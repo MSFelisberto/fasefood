@@ -24,7 +24,7 @@ public class UsuarioEntity {
     private String senha;
     private LocalDate dataUltimaAtualizacao;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tipo_usuario_id", nullable = false)
     private TipoUsuarioEntity tipoUsuario;
 

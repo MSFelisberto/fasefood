@@ -22,8 +22,8 @@ public record CreateUserDTO(
         @Size(min = 6, message = "A senha deve ter no mínimo 6 caracteres")
         String senha,
 
-        @NotNull(message = "O tipo de usuário é obrigatório")
-        Long tipoUsuarioId,
+        @NotBlank(message = "O tipo de usuário é obrigatório")
+        String tipoUsuarioNome,
 
         @NotNull(message = "O endereço é obrigatório")
         @Valid

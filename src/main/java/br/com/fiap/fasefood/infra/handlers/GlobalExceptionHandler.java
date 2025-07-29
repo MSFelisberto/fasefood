@@ -1,6 +1,7 @@
 package br.com.fiap.fasefood.infra.handlers;
 
 import br.com.fiap.fasefood.core.exceptions.AuthenticationFailedException;
+import br.com.fiap.fasefood.core.exceptions.RegraDeNegocioException;
 import br.com.fiap.fasefood.core.exceptions.ResourceAlreadyExists;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -64,6 +65,16 @@ public class GlobalExceptionHandler {
                 LocalDateTime.now()
         );
         return ResponseEntity.status(HttpStatus.CONFLICT).body(apiError);
+    }
+
+    @ExceptionHandler(RegraDeNegocioException.class)
+    public ResponseEntity<ApiError> handleBusinessRuleException(RegraDeNegocioException ex) {
+        ApiError apiError = new ApiError(
+                HttpStatus.BAD_REQUEST.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
     }
 
     public record ApiError(
