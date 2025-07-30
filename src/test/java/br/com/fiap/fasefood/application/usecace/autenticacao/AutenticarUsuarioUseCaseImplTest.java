@@ -1,7 +1,7 @@
 package br.com.fiap.fasefood.application.usecace.autenticacao;
 
 
-import br.com.fiap.fasefood.application.usecase.autenticacao.AutenticarUsuarioUseCaseImpl;
+import br.com.fiap.fasefood.application.usecase.autenticacao.autenticar.AutenticarUsuarioUseCaseImpl;
 import br.com.fiap.fasefood.core.domain.entities.Endereco;
 import br.com.fiap.fasefood.core.domain.entities.TipoUsuario;
 import br.com.fiap.fasefood.core.domain.entities.Usuario;
@@ -13,7 +13,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 

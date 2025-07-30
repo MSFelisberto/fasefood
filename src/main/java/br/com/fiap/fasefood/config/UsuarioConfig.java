@@ -1,11 +1,19 @@
 package br.com.fiap.fasefood.config;
 
-import br.com.fiap.fasefood.application.usecase.autenticacao.AlterarSenhaUseCaseImpl;
-import br.com.fiap.fasefood.application.usecase.autenticacao.AutenticarUsuarioUseCaseImpl;
-import br.com.fiap.fasefood.application.usecase.usuario.*;
+import br.com.fiap.fasefood.application.usecase.usuario.alterar.AlterarTipoUsuarioUseCase;
+import br.com.fiap.fasefood.application.usecase.usuario.alterar.AlterarTipoUsuarioUseCaseImpl;
+import br.com.fiap.fasefood.application.usecase.usuario.alterar.AtualizarUsuarioUseCase;
+import br.com.fiap.fasefood.application.usecase.usuario.alterar.AtualizarUsuarioUseCaseImpl;
+import br.com.fiap.fasefood.application.usecase.usuario.criar.CriarUsuarioUseCase;
+import br.com.fiap.fasefood.application.usecase.usuario.criar.CriarUsuarioUseCaseImpl;
+import br.com.fiap.fasefood.application.usecase.usuario.deletar.DeletarUsuarioUseCase;
+import br.com.fiap.fasefood.application.usecase.usuario.deletar.DeletarUsuarioUseCaseImpl;
+import br.com.fiap.fasefood.application.usecase.usuario.listar.BuscarUsuarioPorIdUseCase;
+import br.com.fiap.fasefood.application.usecase.usuario.listar.BuscarUsuarioPorIdUseCaseImpl;
+import br.com.fiap.fasefood.application.usecase.usuario.listar.ListarTodosUsuariosUseCase;
+import br.com.fiap.fasefood.application.usecase.usuario.listar.ListarTodosUsuariosUseCaseImpl;
 import br.com.fiap.fasefood.core.usecase.gateways.TipoUsuarioRepository;
 import br.com.fiap.fasefood.core.usecase.gateways.UsuarioRepository;
-import br.com.fiap.fasefood.core.usecase.interfaces.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

@@ -1,10 +1,19 @@
 package br.com.fiap.fasefood.config;
 
-import br.com.fiap.fasefood.application.usecase.cardapio.*;
+import br.com.fiap.fasefood.application.usecase.cardapio.atualizar.AtualizarCardapioItemUseCase;
+import br.com.fiap.fasefood.application.usecase.cardapio.atualizar.AtualizarCardapioItemUseCaseImpl;
+import br.com.fiap.fasefood.application.usecase.cardapio.atualizar.AtualizarCardapioItensBatchUseCase;
+import br.com.fiap.fasefood.application.usecase.cardapio.atualizar.AtualizarCardapioItensBatchUseCaseImpl;
+import br.com.fiap.fasefood.application.usecase.cardapio.criar.*;
+import br.com.fiap.fasefood.application.usecase.cardapio.deletar.DeletarCardapioItemUseCase;
+import br.com.fiap.fasefood.application.usecase.cardapio.deletar.DeletarCardapioItemUseCaseImpl;
+import br.com.fiap.fasefood.application.usecase.cardapio.listar.ListarCardapioItensUseCase;
+import br.com.fiap.fasefood.application.usecase.cardapio.listar.ListarCardapioItensUseCaseImpl;
+import br.com.fiap.fasefood.application.usecase.cardapio.listar.ListarCardapiosUseCase;
+import br.com.fiap.fasefood.application.usecase.cardapio.listar.ListarCardapiosUseCaseImpl;
 import br.com.fiap.fasefood.core.usecase.gateways.CardapioItemRepository;
 import br.com.fiap.fasefood.core.usecase.gateways.CardapioRepository;
 import br.com.fiap.fasefood.core.usecase.gateways.RestauranteRepository;
-import br.com.fiap.fasefood.core.usecase.interfaces.cardapio.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

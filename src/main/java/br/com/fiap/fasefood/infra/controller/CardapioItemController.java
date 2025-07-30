@@ -1,6 +1,11 @@
 package br.com.fiap.fasefood.infra.controller;
 
-import br.com.fiap.fasefood.core.usecase.interfaces.cardapio.*;
+import br.com.fiap.fasefood.application.usecase.cardapio.atualizar.AtualizarCardapioItemUseCase;
+import br.com.fiap.fasefood.application.usecase.cardapio.atualizar.AtualizarCardapioItensBatchUseCase;
+import br.com.fiap.fasefood.application.usecase.cardapio.criar.CriarCardapioItemUseCase;
+import br.com.fiap.fasefood.application.usecase.cardapio.criar.CriarCardapioItemsBatchUseCase;
+import br.com.fiap.fasefood.application.usecase.cardapio.deletar.DeletarCardapioItemUseCase;
+import br.com.fiap.fasefood.application.usecase.cardapio.listar.ListarCardapioItensUseCase;
 import br.com.fiap.fasefood.infra.controller.docs.CardapioItemControllerDocs;
 import br.com.fiap.fasefood.infra.controller.dto.cardapio.*;
 import jakarta.validation.Valid;

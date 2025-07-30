@@ -1,7 +1,7 @@
 package br.com.fiap.fasefood.infra.controller;
 
-import br.com.fiap.fasefood.core.usecase.interfaces.cardapio.CriarCardapioUseCase;
-import br.com.fiap.fasefood.core.usecase.interfaces.cardapio.ListarCardapiosUseCase;
+import br.com.fiap.fasefood.application.usecase.cardapio.criar.CriarCardapioUseCase;
+import br.com.fiap.fasefood.application.usecase.cardapio.listar.ListarCardapiosUseCase;
 import br.com.fiap.fasefood.infra.controller.dto.cardapio.CardapioResponseDTO;
 import br.com.fiap.fasefood.infra.controller.dto.cardapio.CreateCardapioDTO;
 import jakarta.validation.Valid;

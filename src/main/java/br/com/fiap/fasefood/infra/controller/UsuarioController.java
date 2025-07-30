@@ -1,16 +1,18 @@
 package br.com.fiap.fasefood.infra.controller;
 
+import br.com.fiap.fasefood.application.usecase.usuario.alterar.AlterarTipoUsuarioUseCase;
+import br.com.fiap.fasefood.application.usecase.usuario.alterar.AtualizarUsuarioUseCase;
+import br.com.fiap.fasefood.application.usecase.usuario.criar.CriarUsuarioUseCase;
+import br.com.fiap.fasefood.application.usecase.usuario.deletar.DeletarUsuarioUseCase;
+import br.com.fiap.fasefood.application.usecase.usuario.listar.BuscarUsuarioPorIdUseCase;
+import br.com.fiap.fasefood.application.usecase.usuario.listar.ListarTodosUsuariosUseCase;
 import br.com.fiap.fasefood.core.domain.entities.Usuario;
-import br.com.fiap.fasefood.core.usecase.interfaces.*;
 import br.com.fiap.fasefood.infra.controller.docs.UsuarioControllerDocs;
 import br.com.fiap.fasefood.infra.controller.dto.CreateUserDTO;
 import br.com.fiap.fasefood.infra.controller.dto.ListUserDTO;
 import br.com.fiap.fasefood.infra.controller.dto.UpdateUserDataDTO;
 import br.com.fiap.fasefood.infra.controller.dto.UpdateUserTypeDTO;
 import br.com.fiap.fasefood.infra.controller.mapper.UsuarioMapper;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;

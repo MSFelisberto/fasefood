@@ -1,6 +1,6 @@
 package br.com.fiap.fasefood.application.usecace.cardapio;
 
-import br.com.fiap.fasefood.application.usecase.cardapio.AtualizarCardapioItensBatchUseCaseImpl;
+import br.com.fiap.fasefood.application.usecase.cardapio.atualizar.AtualizarCardapioItensBatchUseCaseImpl;
 import br.com.fiap.fasefood.core.domain.entities.Cardapio;
 import br.com.fiap.fasefood.core.domain.entities.CardapioItem;
 import br.com.fiap.fasefood.core.domain.entities.Endereco;
@@ -10,7 +10,6 @@ import br.com.fiap.fasefood.core.domain.entities.Usuario;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.usecase.gateways.CardapioItemRepository;
 import br.com.fiap.fasefood.infra.controller.dto.cardapio.CardapioItemResponseDTO;
-import br.com.fiap.fasefood.infra.controller.dto.cardapio.UpdateCardapioItemDTO;
 import br.com.fiap.fasefood.infra.controller.dto.cardapio.UpdateCardapioItemRequestDTO;
 import br.com.fiap.fasefood.infra.controller.dto.cardapio.UpdateCardapioItemsBatchDTO;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +28,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

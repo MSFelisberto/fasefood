@@ -1,6 +1,6 @@
 package br.com.fiap.fasefood.application.usecace.cardapio;
 
-import br.com.fiap.fasefood.application.usecase.cardapio.AtualizarCardapioItemUseCaseImpl;
+import br.com.fiap.fasefood.application.usecase.cardapio.atualizar.AtualizarCardapioItemUseCaseImpl;
 import br.com.fiap.fasefood.core.domain.entities.Cardapio;
 import br.com.fiap.fasefood.core.domain.entities.CardapioItem;
 import br.com.fiap.fasefood.core.domain.entities.Endereco;

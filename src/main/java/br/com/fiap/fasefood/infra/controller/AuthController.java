@@ -1,14 +1,11 @@
 package br.com.fiap.fasefood.infra.controller;
 
-import br.com.fiap.fasefood.core.usecase.interfaces.AlterarSenhaUsuarioUseCase;
-import br.com.fiap.fasefood.core.usecase.interfaces.AutenticarUsuarioUseCase;
+import br.com.fiap.fasefood.application.usecase.autenticacao.atualizar.AlterarSenhaUsuarioUseCase;
+import br.com.fiap.fasefood.application.usecase.autenticacao.autenticar.AutenticarUsuarioUseCase;
 import br.com.fiap.fasefood.infra.controller.docs.AuthControllerDocs;
 import br.com.fiap.fasefood.infra.controller.dto.ChangeUserPasswordDTO;
 import br.com.fiap.fasefood.infra.controller.dto.LoginRequestDTO;
 import br.com.fiap.fasefood.infra.controller.dto.LoginResponseDTO;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

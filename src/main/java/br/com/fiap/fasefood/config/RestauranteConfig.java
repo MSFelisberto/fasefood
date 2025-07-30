@@ -1,9 +1,17 @@
 package br.com.fiap.fasefood.config;
 
-import br.com.fiap.fasefood.application.usecase.restaurante.*;
+import br.com.fiap.fasefood.application.usecase.restaurante.atualizar.AtualizarRestauranteUseCase;
+import br.com.fiap.fasefood.application.usecase.restaurante.atualizar.AtualizarRestauranteUseCaseImpl;
+import br.com.fiap.fasefood.application.usecase.restaurante.criar.CriarRestauranteUseCase;
+import br.com.fiap.fasefood.application.usecase.restaurante.criar.CriarRestauranteUseCaseImpl;
+import br.com.fiap.fasefood.application.usecase.restaurante.deletar.DeletarRestauranteUseCase;
+import br.com.fiap.fasefood.application.usecase.restaurante.deletar.DeletarRestauranteUseCaseImpl;
+import br.com.fiap.fasefood.application.usecase.restaurante.listar.BuscarRestaurantePorIdUseCase;
+import br.com.fiap.fasefood.application.usecase.restaurante.listar.BuscarRestaurantePorIdUseCaseImpl;
+import br.com.fiap.fasefood.application.usecase.restaurante.listar.ListarRestaurantesUseCase;
+import br.com.fiap.fasefood.application.usecase.restaurante.listar.ListarRestaurantesUseCaseImpl;
 import br.com.fiap.fasefood.core.usecase.gateways.RestauranteRepository;
 import br.com.fiap.fasefood.core.usecase.gateways.UsuarioRepository;
-import br.com.fiap.fasefood.core.usecase.interfaces.restaurante.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

@@ -1,6 +1,10 @@
 package br.com.fiap.fasefood.infra.controller;
 
-import br.com.fiap.fasefood.core.usecase.interfaces.restaurante.*;
+import br.com.fiap.fasefood.application.usecase.restaurante.atualizar.AtualizarRestauranteUseCase;
+import br.com.fiap.fasefood.application.usecase.restaurante.criar.CriarRestauranteUseCase;
+import br.com.fiap.fasefood.application.usecase.restaurante.deletar.DeletarRestauranteUseCase;
+import br.com.fiap.fasefood.application.usecase.restaurante.listar.BuscarRestaurantePorIdUseCase;
+import br.com.fiap.fasefood.application.usecase.restaurante.listar.ListarRestaurantesUseCase;
 import br.com.fiap.fasefood.infra.controller.docs.RestauranteControllerDocs;
 import br.com.fiap.fasefood.infra.controller.dto.restaurante.CreateRestauranteDTO;
 import br.com.fiap.fasefood.infra.controller.dto.restaurante.RestauranteResponseDTO;
