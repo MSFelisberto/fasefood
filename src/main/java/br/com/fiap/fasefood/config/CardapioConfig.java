@@ -23,7 +23,7 @@ public class CardapioConfig {
 
     @Bean
     public CriarCardapioItemUseCase criarCardapioItemUseCase(CardapioItemRepository itemRepo, CardapioRepository cardapioRepo) {
-        return new CriarCardapioItemUseCaseImpl(itemRepo, cardapioRepo);
+        return new CriarCardapioItemUseCaseImpl(cardapioRepo, itemRepo);
     }
 
     @Bean

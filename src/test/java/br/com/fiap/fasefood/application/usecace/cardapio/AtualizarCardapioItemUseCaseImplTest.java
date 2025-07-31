@@ -9,13 +9,11 @@ import br.com.fiap.fasefood.core.domain.entities.TipoUsuario;
 import br.com.fiap.fasefood.core.domain.entities.Usuario;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.usecase.gateways.CardapioItemRepository;
-import br.com.fiap.fasefood.infra.controller.dto.cardapio.CardapioItemResponseDTO;
 import br.com.fiap.fasefood.infra.controller.dto.cardapio.UpdateCardapioItemDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
@@ -23,6 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
 
+import static org.mockito.Mockito.mock;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -40,7 +39,7 @@ public class AtualizarCardapioItemUseCaseImplTest {
 
     @BeforeEach
     public void setUp() {
-        cardapioItemRepository = Mockito.mock(CardapioItemRepository.class);
+        cardapioItemRepository = mock(CardapioItemRepository.class);
         atualizarCardapioItemUseCaseTest = new AtualizarCardapioItemUseCaseImpl(cardapioItemRepository);
     }
 
@@ -51,7 +50,7 @@ public class AtualizarCardapioItemUseCaseImplTest {
         when(cardapioItemRepository.findById(1L)).thenReturn(Optional.of(cardapioItem));
         when(cardapioItemRepository.salvar(any())).thenReturn(any());
 
-        CardapioItemResponseDTO response = atualizarCardapioItemUseCaseTest.atualizar(1L, updateCardapioItemDTO);
+        atualizarCardapioItemUseCaseTest.atualizar(1L, updateCardapioItemDTO);
 
         verify(cardapioItemRepository, times(1)).salvar(any());
     }
@@ -61,9 +60,7 @@ public class AtualizarCardapioItemUseCaseImplTest {
         UpdateCardapioItemDTO updateCardapioItemDTO = buildUpdateCardapioItemDTO();
 
         when(cardapioItemRepository.findById(1L)).thenReturn(Optional.empty());
-        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
-            atualizarCardapioItemUseCaseTest.atualizar(1L, updateCardapioItemDTO);
-        });
+        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> atualizarCardapioItemUseCaseTest.atualizar(1L, updateCardapioItemDTO));
 
         assertEquals("Item de cardápio com ID: 1 não encontrado.", exception.getMessage());
     }

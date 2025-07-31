@@ -13,6 +13,8 @@ public class CardapioItem {
     private String caminhoFoto;
     private boolean ativo;
 
+    public CardapioItem(){}
+
     public CardapioItem(Long id, Cardapio cardapio, String nome, String descricao, BigDecimal preco, boolean apenasNoLocal, String caminhoFoto, boolean ativo) {
         this.id = id;
         this.cardapio = cardapio;

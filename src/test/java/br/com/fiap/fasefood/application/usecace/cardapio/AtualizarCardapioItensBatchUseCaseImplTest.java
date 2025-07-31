@@ -10,7 +10,6 @@ import br.com.fiap.fasefood.core.domain.entities.Usuario;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.usecase.gateways.CardapioItemRepository;
 import br.com.fiap.fasefood.infra.controller.dto.cardapio.CardapioItemResponseDTO;
-import br.com.fiap.fasefood.infra.controller.dto.cardapio.UpdateCardapioItemDTO;
 import br.com.fiap.fasefood.infra.controller.dto.cardapio.UpdateCardapioItemRequestDTO;
 import br.com.fiap.fasefood.infra.controller.dto.cardapio.UpdateCardapioItemsBatchDTO;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +28,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -62,7 +60,7 @@ public class AtualizarCardapioItensBatchUseCaseImplTest {
     }
 
     @Test
-    public void deveLancarExcecao_QuandoCardapioNaoEncontrado() {
+    public void deveLancarExcecaoQuandoCardapioNaoEncontrado() {
         UpdateCardapioItemsBatchDTO updateCardapioItemDTO = buildUpdateCardapioItemsBatchDTO();
 
         when(cardapioItemRepository.findById(1L)).thenReturn(Optional.empty());

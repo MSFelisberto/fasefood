@@ -1,7 +1,12 @@
 package br.com.fiap.fasefood.application.usecace.autenticacao;
 
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.any;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Optional;
 
@@ -12,54 +17,50 @@ import br.com.fiap.fasefood.core.usecase.gateways.UsuarioRepository;
 import br.com.fiap.fasefood.infra.controller.dto.ChangeUserPasswordDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class AlterarSenhaUseCaseImplTest {
 
-    @InjectMocks
     private AlterarSenhaUseCaseImpl alterarSenhaUseCase;
-
-    @Mock
     private UsuarioRepository usuarioRepository;
 
     private Usuario usuario;
     private ChangeUserPasswordDTO changePasswordDTO;
 
+    private final static Long USER_ID = 1L;
+
     @BeforeEach
     void setUp() {
+        usuarioRepository = mock(UsuarioRepository.class);
+        alterarSenhaUseCase = new AlterarSenhaUseCaseImpl(usuarioRepository);
+
         usuario = mock(Usuario.class);
         changePasswordDTO = new ChangeUserPasswordDTO("novaSenha123");
     }
 
     @Test
     void deveAlterarSenhaDoUsuarioQuandoUsuarioExiste() {
-        Long userId = 1L;
+        when(usuarioRepository.findById(USER_ID)).thenReturn(Optional.of(usuario));
 
-        when(usuarioRepository.findById(userId)).thenReturn(Optional.of(usuario));
+        alterarSenhaUseCase.alterarSenha(USER_ID, changePasswordDTO);
 
-        alterarSenhaUseCase.alterarSenha(userId, changePasswordDTO);
-
-        verify(usuarioRepository).findById(userId);
+        verify(usuarioRepository).findById(USER_ID);
         verify(usuario).alterarSenha("novaSenha123");
         verify(usuarioRepository).salvar(usuario);
     }
 
     @Test
     void deveLancarExcecaoQuandoUsuarioNaoEncontrado() {
-        Long userId = 1L;
 
-        when(usuarioRepository.findById(userId)).thenReturn(Optional.empty());
-
+        when(usuarioRepository.findById(USER_ID)).thenReturn(Optional.empty());
         ResourceNotFoundException thrown = assertThrows(
                 ResourceNotFoundException.class,
-                () -> alterarSenhaUseCase.alterarSenha(userId, changePasswordDTO)
+                () -> alterarSenhaUseCase.alterarSenha(USER_ID, changePasswordDTO)
         );
-
-        assertEquals("Usuário não encontrado com ID: " + userId, thrown.getMessage());
-        verify(usuarioRepository).findById(userId);
+        assertEquals("Usuário não encontrado com ID: " + USER_ID, thrown.getMessage());
+        verify(usuarioRepository).findById(USER_ID);
         verify(usuarioRepository, never()).salvar(any());
     }
 }

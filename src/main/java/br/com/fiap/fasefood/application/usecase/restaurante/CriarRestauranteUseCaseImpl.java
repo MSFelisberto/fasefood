@@ -28,10 +28,9 @@ public class CriarRestauranteUseCaseImpl implements CriarRestauranteUseCase {
         Usuario dono = usuarioRepository.findById(dto.donoId())
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário com ID: " + dto.donoId() + " não encontrado."));
 
-        if (!"DONO_RESTAURANTE".equals(dono.getTipoUsuario().getNome())) {
+        if (Boolean.FALSE.equals("DONO_RESTAURANTE".equals(dono.getTipoUsuario().getNome()))) {
             throw new RegraDeNegocioException("Apenas usuários do tipo DONO_RESTAURANTE podem ser donos de um restaurante.");
         }
-
 
         Restaurante restaurante = RestauranteMapper.toDomain(dto, dono);
         Restaurante novoRestaurante = restauranteRepository.salvar(restaurante);

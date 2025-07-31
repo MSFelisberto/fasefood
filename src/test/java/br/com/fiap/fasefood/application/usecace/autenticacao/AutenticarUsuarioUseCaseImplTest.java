@@ -2,8 +2,6 @@ package br.com.fiap.fasefood.application.usecace.autenticacao;
 
 
 import br.com.fiap.fasefood.application.usecase.autenticacao.AutenticarUsuarioUseCaseImpl;
-import br.com.fiap.fasefood.core.domain.entities.Endereco;
-import br.com.fiap.fasefood.core.domain.entities.TipoUsuario;
 import br.com.fiap.fasefood.core.domain.entities.Usuario;
 import br.com.fiap.fasefood.core.exceptions.AuthenticationFailedException;
 import br.com.fiap.fasefood.core.usecase.gateways.UsuarioRepository;
@@ -12,81 +10,69 @@ import br.com.fiap.fasefood.infra.controller.dto.LoginResponseDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 public class AutenticarUsuarioUseCaseImplTest {
 
-
+    private AutenticarUsuarioUseCaseImpl autenticarUsuario;
     private UsuarioRepository usuarioRepository;
 
-    @InjectMocks
-    private AutenticarUsuarioUseCaseImpl autenticarUsuario;
+
+    private LoginRequestDTO loginRequest;
+    private Usuario usuario;
+
+    private final static String SENHA_IGUAIS = "1010";
+    private final static String SENHA_DIFERENTE = "10";
 
     @BeforeEach
     public void setUp() {
-        usuarioRepository = Mockito.mock(UsuarioRepository.class);
+        usuarioRepository = mock(UsuarioRepository.class);
         autenticarUsuario = new AutenticarUsuarioUseCaseImpl(usuarioRepository);
+
+        loginRequest = mock(LoginRequestDTO.class);
+        usuario = mock(Usuario.class);
     }
 
     @Test
     public void deveAutenticarComSucesso() {
-        LoginRequestDTO request = new LoginRequestDTO("admin", "123");
-        Usuario usuario = buildUsuario("admin","123");
+        when(usuarioRepository.findByLogin(loginRequest.login())).thenReturn(Optional.of(usuario));
+        when(usuario.getSenha()).thenReturn(SENHA_IGUAIS);
+        when(loginRequest.senha()).thenReturn(SENHA_IGUAIS);
 
-        when(usuarioRepository.findByLogin("admin")).thenReturn(Optional.of(usuario));
-
-        LoginResponseDTO response = autenticarUsuario.autenticar(request);
+        LoginResponseDTO response = autenticarUsuario.autenticar(loginRequest);
 
         assertTrue(response.sucesso());
         assertEquals("Login realizado com sucesso", response.mensagem());
     }
 
     @Test
-    public void deveLancarExcecao_QuandoUsuarioNaoEncontrado() {
-        LoginRequestDTO request = new LoginRequestDTO("admin", "123");
-        when(usuarioRepository.findByLogin("admin")).thenReturn(Optional.empty());
+    public void deveLancarExcecaoQuandoUsuarioNaoEncontrado() {
+        when(usuarioRepository.findByLogin(loginRequest.login())).thenReturn(Optional.empty());
 
-        AuthenticationFailedException exception = assertThrows(AuthenticationFailedException.class, () -> {
-            autenticarUsuario.autenticar(request);
-        });
+        AuthenticationFailedException exception = assertThrows(AuthenticationFailedException.class,
+                () -> autenticarUsuario.autenticar(loginRequest));
 
         assertEquals("Login ou senha incorretos", exception.getMessage());
     }
 
     @Test
-    public void deveLancarExcecao_QuandoSenhaIncorreta() {
-        LoginRequestDTO request = new LoginRequestDTO("admin", "senhaErrada");
-        Usuario usuario = buildUsuario("admin","senhaCorreta");
-        when(usuarioRepository.findByLogin("admin")).thenReturn(Optional.of(usuario));
-        AuthenticationFailedException exception = assertThrows(AuthenticationFailedException.class, () -> {
-            autenticarUsuario.autenticar(request);
-        });
+    public void deveLancarExcecaoQuandoSenhaIncorreta() {
+        when(usuarioRepository.findByLogin(loginRequest.login())).thenReturn(Optional.of(usuario));
+        when(usuario.getSenha()).thenReturn(SENHA_IGUAIS);
+        when(loginRequest.senha()).thenReturn(SENHA_DIFERENTE);
+
+        AuthenticationFailedException exception = assertThrows(AuthenticationFailedException.class,
+                () -> autenticarUsuario.autenticar(loginRequest));
 
         assertEquals("Login ou senha incorretos", exception.getMessage());
-    }
-    private TipoUsuario buildTipoUsuario() {
-        return new TipoUsuario(1L, "teste tipo usuario");
-    }
-    private Usuario buildUsuario(String login , String senha){
-        TipoUsuario tipoUsuario = buildTipoUsuario();
-        Endereco endereco = buildEndereco();
-        Usuario usuario = new Usuario(1L, "teste","teste@teste.com", login,senha, LocalDate.now(),endereco, tipoUsuario, true);
-
-        return usuario;
-
-    }
-
-    private Endereco buildEndereco(){
-        return new Endereco(1L, "logradouro", "01", "0000001", "complemento", "bairro","cidade", "uf");
     }
 }

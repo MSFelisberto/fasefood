@@ -16,7 +16,7 @@ public class CriarCardapioItemUseCaseImpl implements CriarCardapioItemUseCase {
     private final CardapioItemRepository cardapioItemRepository;
     private final CardapioRepository cardapioRepository;
 
-    public CriarCardapioItemUseCaseImpl(CardapioItemRepository cardapioItemRepository, CardapioRepository cardapioRepository) {
+    public CriarCardapioItemUseCaseImpl(CardapioRepository cardapioRepository, CardapioItemRepository cardapioItemRepository) {
         this.cardapioItemRepository = cardapioItemRepository;
         this.cardapioRepository = cardapioRepository;
     }
