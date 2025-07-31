@@ -24,12 +24,12 @@ public class AlterarTipoUsuarioUseCaseImpl implements AlterarTipoUsuarioUseCase 
 
     @Override
     @Transactional
-    public ListUserOutput alterarTipoUsuario(Long usuarioId, UpdateUserTypeDTO dto) {
+    public ListUserOutput alterarTipoUsuario(Long usuarioId, UpdateUserTypeInput updateUserTypeInput) {
         Usuario usuario = usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado com ID: " + usuarioId));
 
-        TipoUsuario novoTipoUsuario = tipoUsuarioRepository.findById(dto.tipoUsuarioId())
-                .orElseThrow(() -> new ResourceNotFoundException("Tipo de usuário não encontrado com ID: " + dto.tipoUsuarioId()));
+        TipoUsuario novoTipoUsuario = tipoUsuarioRepository.findById(updateUserTypeInput.tipoUsuarioId())
+                .orElseThrow(() -> new ResourceNotFoundException("Tipo de usuário não encontrado com ID: " + updateUserTypeInput.tipoUsuarioId()));
 
         usuario.alterarTipoUsuario(novoTipoUsuario);
 

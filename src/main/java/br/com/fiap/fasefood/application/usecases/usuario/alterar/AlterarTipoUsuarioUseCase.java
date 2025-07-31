@@ -5,5 +5,5 @@ import br.com.fiap.fasefood.infra.controllers.dto.ListUserDTO;
 import br.com.fiap.fasefood.infra.controllers.dto.UpdateUserTypeDTO;
 
 public interface AlterarTipoUsuarioUseCase {
-    ListUserOutput alterarTipoUsuario(Long usuarioId, UpdateUserTypeDTO updateUserTypeDTO);
+    ListUserOutput alterarTipoUsuario(Long usuarioId, UpdateUserTypeInput updateUserTypeInput);
 }

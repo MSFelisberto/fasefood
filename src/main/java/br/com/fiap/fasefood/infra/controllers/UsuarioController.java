@@ -98,8 +98,14 @@ public class UsuarioController implements UsuarioControllerDocs {
     @Override
     @PatchMapping("/{id}/tipo")
     @Transactional
-    public ResponseEntity<ListUserDTO> alterarTipoUsuario(@PathVariable Long id, @RequestBody @Valid UpdateUserTypeDTO updateUserTypeDTO) {
-        ListUserOutput usuarioAtualizado = alterarTipoUsuarioUseCase.alterarTipoUsuario(id, updateUserTypeDTO);
+    public ResponseEntity<ListUserDTO> alterarTipoUsuario(
+            @PathVariable Long id,
+            @RequestBody @Valid UpdateUserTypeDTO updateUserTypeDTO
+    ) {
+        ListUserOutput usuarioAtualizado = alterarTipoUsuarioUseCase.alterarTipoUsuario(
+                id,
+                UsuarioMapper.toUpdateUserTypeInput(updateUserTypeDTO)
+        );
         return ResponseEntity.ok(UsuarioMapper.toListUserDTO(usuarioAtualizado));
     }
 }

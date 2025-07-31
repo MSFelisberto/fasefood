@@ -2,6 +2,7 @@ package br.com.fiap.fasefood.infra.controllers.mapper.usuario;
 
 import br.com.fiap.fasefood.application.usecases.shared.endereco.EnderecoInput;
 import br.com.fiap.fasefood.application.usecases.usuario.alterar.UpdateUserDataInput;
+import br.com.fiap.fasefood.application.usecases.usuario.alterar.UpdateUserTypeInput;
 import br.com.fiap.fasefood.application.usecases.usuario.criar.CriarUsuarioInput;
 import br.com.fiap.fasefood.application.usecases.usuario.criar.CriarUsuarioOutput;
 import br.com.fiap.fasefood.application.usecases.usuario.listar.ListUserOutput;
@@ -11,6 +12,7 @@ import br.com.fiap.fasefood.core.entities.Usuario;
 import br.com.fiap.fasefood.infra.controllers.dto.CreateUserDTO;
 import br.com.fiap.fasefood.infra.controllers.dto.ListUserDTO;
 import br.com.fiap.fasefood.infra.controllers.dto.UpdateUserDataDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.UpdateUserTypeDTO;
 import br.com.fiap.fasefood.infra.controllers.mapper.endereco.EnderecoMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -84,6 +86,10 @@ public class UsuarioMapper {
                 dto.email(),
                 EnderecoMapper.toEnderecoInput(dto.endereco())
         );
+    }
+
+    public static UpdateUserTypeInput toUpdateUserTypeInput(UpdateUserTypeDTO dto) {
+        return new UpdateUserTypeInput(dto.tipoUsuarioId());
     }
 
 }
