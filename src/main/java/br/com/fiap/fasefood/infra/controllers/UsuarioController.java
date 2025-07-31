@@ -46,7 +46,8 @@ public class UsuarioController implements UsuarioControllerDocs {
             DeletarUsuarioUseCase deletarUsuarioUseCase,
             BuscarUsuarioPorIdUseCase buscarUsuarioPorIdUseCase,
             ListarTodosUsuariosUseCase listarTodosUsuariosUseCase,
-            AlterarTipoUsuarioUseCase alterarTipoUsuarioUseCase) {
+            AlterarTipoUsuarioUseCase alterarTipoUsuarioUseCase
+    ) {
         this.criarUsuarioUseCase = criarUsuarioUseCase;
         this.atualizarUsuarioUseCase = atualizarUsuarioUseCase;
         this.deletarUsuarioUseCase = deletarUsuarioUseCase;
@@ -57,7 +58,9 @@ public class UsuarioController implements UsuarioControllerDocs {
 
     @Override
     @GetMapping
-    public ResponseEntity<Page<ListUserDTO>> listarTodos(@PageableDefault(size = 10, sort = {"nome"}) Pageable pageable) {
+    public ResponseEntity<Page<ListUserDTO>> listarTodos(
+            @PageableDefault(size = 10, sort = {"nome"}) Pageable pageable
+    ) {
         Page<ListUserOutput> usuarios = listarTodosUsuariosUseCase.listar(pageable);
         return ResponseEntity.ok(UsuarioMapper.toListUserOutputPaginacao(usuarios));
     }
@@ -72,8 +75,13 @@ public class UsuarioController implements UsuarioControllerDocs {
     @Override
     @PostMapping
     @Transactional
-    public ResponseEntity<ListUserDTO> saveUser(@RequestBody @Valid CreateUserDTO createUserDTO, UriComponentsBuilder uriBuilder) {
-        CriarUsuarioOutput savedUser = criarUsuarioUseCase.criarUsuario(UsuarioMapper.toCriarUsuarioInput(createUserDTO));
+    public ResponseEntity<ListUserDTO> saveUser(
+            @RequestBody @Valid CreateUserDTO createUserDTO,
+            UriComponentsBuilder uriBuilder
+    ) {
+        CriarUsuarioOutput savedUser = criarUsuarioUseCase.criarUsuario(
+                UsuarioMapper.toCriarUsuarioInput(createUserDTO)
+        );
         ListUserDTO response = UsuarioMapper.toListUserDTO(savedUser);
         URI location = uriBuilder.path("/api/v1/users/{id}").buildAndExpand(savedUser.id()).toUri();
         return ResponseEntity.created(location).body(response);
@@ -82,8 +90,14 @@ public class UsuarioController implements UsuarioControllerDocs {
     @Override
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<ListUserDTO> atualizarUsuario(@PathVariable Long id, @RequestBody @Valid UpdateUserDataDTO dados) {
-        ListUserOutput atualizado = atualizarUsuarioUseCase.atualizar(id, UsuarioMapper.toUpdateUserDataInput(dados));
+    public ResponseEntity<ListUserDTO> atualizarUsuario(
+            @PathVariable Long id,
+            @RequestBody @Valid UpdateUserDataDTO dados
+    ) {
+        ListUserOutput atualizado = atualizarUsuarioUseCase.atualizar(
+                id,
+                UsuarioMapper.toUpdateUserDataInput(dados)
+        );
         return ResponseEntity.ok(ListUserMapper.toDTO(atualizado));
     }
 
