@@ -1,8 +1,7 @@
 package br.com.fiap.fasefood.application.usecases.restaurante.criar;
 
-import br.com.fiap.fasefood.infra.controllers.dto.restaurante.CreateRestauranteDTO;
-import br.com.fiap.fasefood.infra.controllers.dto.restaurante.RestauranteResponseDTO;
+import br.com.fiap.fasefood.application.usecases.restaurante.RestauranteOutput;
 
 public interface CriarRestauranteUseCase {
-    RestauranteResponseDTO criar(CreateRestauranteDTO dto);
+    RestauranteOutput criar(CriarRestauranteInput criarRestauranteInput);
 }

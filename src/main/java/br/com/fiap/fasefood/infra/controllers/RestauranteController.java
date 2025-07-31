@@ -1,5 +1,6 @@
 package br.com.fiap.fasefood.infra.controllers;
 
+import br.com.fiap.fasefood.application.usecases.restaurante.RestauranteOutput;
 import br.com.fiap.fasefood.application.usecases.restaurante.atualizar.AtualizarRestauranteUseCase;
 import br.com.fiap.fasefood.application.usecases.restaurante.criar.CriarRestauranteUseCase;
 import br.com.fiap.fasefood.application.usecases.restaurante.deletar.DeletarRestauranteUseCase;
@@ -9,6 +10,7 @@ import br.com.fiap.fasefood.infra.controllers.docs.RestauranteControllerDocs;
 import br.com.fiap.fasefood.infra.controllers.dto.restaurante.CreateRestauranteDTO;
 import br.com.fiap.fasefood.infra.controllers.dto.restaurante.RestauranteResponseDTO;
 import br.com.fiap.fasefood.infra.controllers.dto.restaurante.UpdateRestauranteDTO;
+import br.com.fiap.fasefood.infra.controllers.mapper.restaurante.RestauranteMapper;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -36,7 +38,8 @@ public class RestauranteController implements RestauranteControllerDocs {
             AtualizarRestauranteUseCase atualizarRestauranteUseCase,
             DeletarRestauranteUseCase deletarRestauranteUseCase,
             BuscarRestaurantePorIdUseCase buscarRestaurantePorIdUseCase,
-            ListarRestaurantesUseCase listarRestaurantesUseCase) {
+            ListarRestaurantesUseCase listarRestaurantesUseCase
+    ) {
         this.criarRestauranteUseCase = criarRestauranteUseCase;
         this.atualizarRestauranteUseCase = atualizarRestauranteUseCase;
         this.deletarRestauranteUseCase = deletarRestauranteUseCase;
@@ -50,10 +53,12 @@ public class RestauranteController implements RestauranteControllerDocs {
             @RequestBody @Valid CreateRestauranteDTO dto,
             UriComponentsBuilder uriBuilder
     ) {
-        RestauranteResponseDTO response = criarRestauranteUseCase.criar(dto);
+        RestauranteOutput response = criarRestauranteUseCase.criar(
+                RestauranteMapper.toCriarRestauranteInput(dto)
+        );
         URI location = uriBuilder.path("/api/v1/restaurantes/{id}")
                 .buildAndExpand(response.id()).toUri();
-        return ResponseEntity.created(location).body(response);
+        return ResponseEntity.created(location).body(RestauranteMapper.toResponseDTO(response));
     }
 
     @Override

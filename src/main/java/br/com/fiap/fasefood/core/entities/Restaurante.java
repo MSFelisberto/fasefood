@@ -13,7 +13,7 @@ public class Restaurante {
     private Usuario dono;
     private boolean ativo;
 
-    public Restaurante(Long id, String nome, Endereco endereco, String tipoCozinha, LocalTime horarioAbertura, LocalTime horarioFechamento, Usuario dono, boolean ativo) {
+    private Restaurante(Long id, String nome, Endereco endereco, String tipoCozinha, LocalTime horarioAbertura, LocalTime horarioFechamento, Usuario dono, boolean ativo) {
         this.id = id;
         this.nome = nome;
         this.endereco = endereco;
@@ -22,6 +22,19 @@ public class Restaurante {
         this.horarioFechamento = horarioFechamento;
         this.dono = dono;
         this.ativo = ativo;
+    }
+
+    public static Restaurante create(Long id, String nome, Endereco endereco, String tipoCozinha, LocalTime horarioAbertura, LocalTime horarioFechamento, Usuario dono, boolean ativo) {
+        return new Restaurante(
+                id,
+                nome,
+                endereco,
+                tipoCozinha,
+                horarioAbertura,
+                horarioFechamento,
+                dono,
+                ativo
+        );
     }
 
     public void atualizarInformacoes(String nome, String tipoCozinha, LocalTime horarioAbertura, LocalTime horarioFechamento) {

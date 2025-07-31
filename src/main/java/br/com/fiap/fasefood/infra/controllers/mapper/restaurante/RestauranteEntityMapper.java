@@ -13,7 +13,7 @@ public class RestauranteEntityMapper {
             return null;
         }
 
-        return new Restaurante(
+        return Restaurante.create(
                 entity.getId(),
                 entity.getNome(),
                 Endereco.criarEndereco(

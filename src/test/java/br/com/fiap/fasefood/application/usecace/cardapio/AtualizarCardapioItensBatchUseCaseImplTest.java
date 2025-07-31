@@ -96,7 +96,7 @@ public class AtualizarCardapioItensBatchUseCaseImplTest {
     private Restaurante buildRestaurante(){
         Endereco endereco = buildEndereco();
         Usuario dono = buildUsuario();
-        return  new Restaurante(1L, "teste", endereco, "teste", LocalTime.now(),LocalTime.now(),dono, true);
+        return Restaurante.create(1L, "teste", endereco, "teste", LocalTime.now(),LocalTime.now(),dono, true);
     }
 
     private Endereco buildEndereco(){
