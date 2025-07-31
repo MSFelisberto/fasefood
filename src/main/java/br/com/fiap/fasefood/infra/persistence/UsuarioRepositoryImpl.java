@@ -1,8 +1,8 @@
 package br.com.fiap.fasefood.infra.persistence;
 
-import br.com.fiap.fasefood.core.domain.entities.Usuario;
-import br.com.fiap.fasefood.core.usecase.gateways.UsuarioRepository;
-import br.com.fiap.fasefood.infra.controller.mapper.UserEntityMapper;
+import br.com.fiap.fasefood.core.entities.Usuario;
+import br.com.fiap.fasefood.core.gateways.UsuarioRepository;
+import br.com.fiap.fasefood.infra.controllers.mapper.UserEntityMapper;
 import br.com.fiap.fasefood.infra.persistence.entities.UsuarioEntity;
 import br.com.fiap.fasefood.infra.persistence.jpa.UserJpaRepository;
 import org.springframework.data.domain.Page;

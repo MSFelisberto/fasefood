@@ -1,6 +1,6 @@
 package br.com.fiap.fasefood.infra.persistence.entities;
 
-import br.com.fiap.fasefood.infra.controller.dto.EnderecoDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.EnderecoDTO;
 import jakarta.persistence.*;
 import lombok.*;
 

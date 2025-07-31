@@ -1,9 +1,9 @@
 package br.com.fiap.fasefood.infra.persistence;
 
-import br.com.fiap.fasefood.core.domain.entities.CardapioItem;
+import br.com.fiap.fasefood.core.entities.CardapioItem;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
-import br.com.fiap.fasefood.core.usecase.gateways.CardapioItemRepository;
-import br.com.fiap.fasefood.infra.controller.mapper.cardapio.CardapioItemEntityMapper;
+import br.com.fiap.fasefood.core.gateways.CardapioItemRepository;
+import br.com.fiap.fasefood.infra.controllers.mapper.cardapio.CardapioItemEntityMapper;
 import br.com.fiap.fasefood.infra.persistence.jpa.CardapioItemJpaRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,8 +1,8 @@
 package br.com.fiap.fasefood.infra.persistence;
 
-import br.com.fiap.fasefood.core.domain.entities.Restaurante;
-import br.com.fiap.fasefood.core.usecase.gateways.RestauranteRepository;
-import br.com.fiap.fasefood.infra.controller.mapper.restaurante.RestauranteEntityMapper;
+import br.com.fiap.fasefood.core.entities.Restaurante;
+import br.com.fiap.fasefood.core.gateways.RestauranteRepository;
+import br.com.fiap.fasefood.infra.controllers.mapper.restaurante.RestauranteEntityMapper;
 import br.com.fiap.fasefood.infra.persistence.jpa.RestauranteJpaRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

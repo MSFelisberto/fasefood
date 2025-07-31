@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Optional;
 
-import br.com.fiap.fasefood.application.usecase.autenticacao.atualizar.AlterarSenhaUseCaseImpl;
-import br.com.fiap.fasefood.core.domain.entities.Usuario;
+import br.com.fiap.fasefood.application.usecases.autenticacao.atualizar.AlterarSenhaUseCaseImpl;
+import br.com.fiap.fasefood.core.entities.Usuario;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
-import br.com.fiap.fasefood.core.usecase.gateways.UsuarioRepository;
-import br.com.fiap.fasefood.infra.controller.dto.ChangeUserPasswordDTO;
+import br.com.fiap.fasefood.core.gateways.UsuarioRepository;
+import br.com.fiap.fasefood.infra.controllers.dto.ChangeUserPasswordDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;

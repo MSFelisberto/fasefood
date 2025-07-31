@@ -1,14 +1,14 @@
 package br.com.fiap.fasefood.application.usecace.autenticacao;
 
 
-import br.com.fiap.fasefood.application.usecase.autenticacao.autenticar.AutenticarUsuarioUseCaseImpl;
-import br.com.fiap.fasefood.core.domain.entities.Endereco;
-import br.com.fiap.fasefood.core.domain.entities.TipoUsuario;
-import br.com.fiap.fasefood.core.domain.entities.Usuario;
+import br.com.fiap.fasefood.application.usecases.autenticacao.autenticar.AutenticarUsuarioUseCaseImpl;
+import br.com.fiap.fasefood.core.entities.Endereco;
+import br.com.fiap.fasefood.core.entities.TipoUsuario;
+import br.com.fiap.fasefood.core.entities.Usuario;
 import br.com.fiap.fasefood.core.exceptions.AuthenticationFailedException;
-import br.com.fiap.fasefood.core.usecase.gateways.UsuarioRepository;
-import br.com.fiap.fasefood.infra.controller.dto.LoginRequestDTO;
-import br.com.fiap.fasefood.infra.controller.dto.LoginResponseDTO;
+import br.com.fiap.fasefood.core.gateways.UsuarioRepository;
+import br.com.fiap.fasefood.infra.controllers.dto.LoginRequestDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.LoginResponseDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -79,13 +79,13 @@ public class AutenticarUsuarioUseCaseImplTest {
     private Usuario buildUsuario(String login , String senha){
         TipoUsuario tipoUsuario = buildTipoUsuario();
         Endereco endereco = buildEndereco();
-        Usuario usuario = new Usuario(1L, "teste","teste@teste.com", login,senha, LocalDate.now(),endereco, tipoUsuario, true);
+        Usuario usuario = Usuario.criarUsuario(1L, "teste","teste@teste.com", login,senha, LocalDate.now(),endereco, tipoUsuario, true);
 
         return usuario;
 
     }
 
     private Endereco buildEndereco(){
-        return new Endereco(1L, "logradouro", "01", "0000001", "complemento", "bairro","cidade", "uf");
+        return Endereco.criarEndereco(1L, "logradouro", "01", "0000001", "complemento", "bairro","cidade", "uf");
     }
 }

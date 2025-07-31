@@ -1,16 +1,16 @@
 package br.com.fiap.fasefood.application.usecace.cardapio;
 
-import br.com.fiap.fasefood.application.usecase.cardapio.atualizar.AtualizarCardapioItemUseCaseImpl;
-import br.com.fiap.fasefood.core.domain.entities.Cardapio;
-import br.com.fiap.fasefood.core.domain.entities.CardapioItem;
-import br.com.fiap.fasefood.core.domain.entities.Endereco;
-import br.com.fiap.fasefood.core.domain.entities.Restaurante;
-import br.com.fiap.fasefood.core.domain.entities.TipoUsuario;
-import br.com.fiap.fasefood.core.domain.entities.Usuario;
+import br.com.fiap.fasefood.application.usecases.cardapio.atualizar.AtualizarCardapioItemUseCaseImpl;
+import br.com.fiap.fasefood.core.entities.Cardapio;
+import br.com.fiap.fasefood.core.entities.CardapioItem;
+import br.com.fiap.fasefood.core.entities.Endereco;
+import br.com.fiap.fasefood.core.entities.Restaurante;
+import br.com.fiap.fasefood.core.entities.TipoUsuario;
+import br.com.fiap.fasefood.core.entities.Usuario;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
-import br.com.fiap.fasefood.core.usecase.gateways.CardapioItemRepository;
-import br.com.fiap.fasefood.infra.controller.dto.cardapio.CardapioItemResponseDTO;
-import br.com.fiap.fasefood.infra.controller.dto.cardapio.UpdateCardapioItemDTO;
+import br.com.fiap.fasefood.core.gateways.CardapioItemRepository;
+import br.com.fiap.fasefood.infra.controllers.dto.cardapio.CardapioItemResponseDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.cardapio.UpdateCardapioItemDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -68,7 +68,7 @@ public class AtualizarCardapioItemUseCaseImplTest {
         assertEquals("Item de cardápio com ID: 1 não encontrado.", exception.getMessage());
     }
     private Endereco buildEndereco(){
-        return new Endereco(1L, "logradouro", "01", "0000001", "complemento", "bairro","cidade", "uf");
+        return Endereco.criarEndereco(1L, "logradouro", "01", "0000001", "complemento", "bairro","cidade", "uf");
     }
     private Restaurante buildRestaurante(){
         Endereco endereco = buildEndereco();
@@ -94,7 +94,7 @@ public class AtualizarCardapioItemUseCaseImplTest {
     private Usuario buildUsuario(){
         Endereco endereco = buildEndereco();
         TipoUsuario tipoUsuario = buildTipoUsuario();
-        return  new Usuario(1L, "teste","teste@teste.com", "dono", "123", LocalDate.now(),endereco, tipoUsuario, true);
+        return Usuario.criarUsuario(1L, "teste","teste@teste.com", "dono", "123", LocalDate.now(),endereco, tipoUsuario, true);
     }
 
     private UpdateCardapioItemDTO buildUpdateCardapioItemDTO(){
