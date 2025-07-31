@@ -17,14 +17,14 @@ public class AutenticarUsuarioUseCaseImpl implements AutenticarUsuarioUseCase {
     }
 
     @Override
-    public LoginResponseDTO autenticar(LoginRequestDTO loginRequest) {
-        Usuario usuario = usuarioRepository.findByLogin(loginRequest.login())
+    public LoginResponseOutput autenticar(LoginRequestInput loginInput) {
+        Usuario usuario = usuarioRepository.findByLogin(loginInput.login())
                 .orElseThrow(() -> new AuthenticationFailedException("Login ou senha incorretos"));
 
-        if (!usuario.getSenha().equals(loginRequest.senha())) {
+        if (!usuario.getSenha().equals(loginInput.senha())) {
             throw new AuthenticationFailedException("Login ou senha incorretos");
         }
 
-        return new LoginResponseDTO(true, "Login realizado com sucesso");
+        return new LoginResponseOutput(true, "Login realizado com sucesso");
     }
 }

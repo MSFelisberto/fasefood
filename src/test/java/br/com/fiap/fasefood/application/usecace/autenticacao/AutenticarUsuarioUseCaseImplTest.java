@@ -2,6 +2,7 @@ package br.com.fiap.fasefood.application.usecace.autenticacao;
 
 
 import br.com.fiap.fasefood.application.usecases.autenticacao.autenticar.AutenticarUsuarioUseCaseImpl;
+import br.com.fiap.fasefood.application.usecases.autenticacao.autenticar.LoginResponseOutput;
 import br.com.fiap.fasefood.core.entities.Endereco;
 import br.com.fiap.fasefood.core.entities.TipoUsuario;
 import br.com.fiap.fasefood.core.entities.Usuario;
@@ -9,6 +10,7 @@ import br.com.fiap.fasefood.core.exceptions.AuthenticationFailedException;
 import br.com.fiap.fasefood.core.gateways.UsuarioRepository;
 import br.com.fiap.fasefood.infra.controllers.dto.LoginRequestDTO;
 import br.com.fiap.fasefood.infra.controllers.dto.LoginResponseDTO;
+import br.com.fiap.fasefood.infra.controllers.mapper.autenticar.AutenticarMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -44,7 +46,7 @@ public class AutenticarUsuarioUseCaseImplTest {
 
         when(usuarioRepository.findByLogin("admin")).thenReturn(Optional.of(usuario));
 
-        LoginResponseDTO response = autenticarUsuario.autenticar(request);
+        LoginResponseOutput response = autenticarUsuario.autenticar(AutenticarMapper.toRequestInput(request));
 
         assertTrue(response.sucesso());
         assertEquals("Login realizado com sucesso", response.mensagem());
@@ -56,7 +58,7 @@ public class AutenticarUsuarioUseCaseImplTest {
         when(usuarioRepository.findByLogin("admin")).thenReturn(Optional.empty());
 
         AuthenticationFailedException exception = assertThrows(AuthenticationFailedException.class, () -> {
-            autenticarUsuario.autenticar(request);
+            autenticarUsuario.autenticar(AutenticarMapper.toRequestInput(request));
         });
 
         assertEquals("Login ou senha incorretos", exception.getMessage());
@@ -68,7 +70,7 @@ public class AutenticarUsuarioUseCaseImplTest {
         Usuario usuario = buildUsuario("admin","senhaCorreta");
         when(usuarioRepository.findByLogin("admin")).thenReturn(Optional.of(usuario));
         AuthenticationFailedException exception = assertThrows(AuthenticationFailedException.class, () -> {
-            autenticarUsuario.autenticar(request);
+            autenticarUsuario.autenticar(AutenticarMapper.toRequestInput(request));
         });
 
         assertEquals("Login ou senha incorretos", exception.getMessage());

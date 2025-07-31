@@ -26,12 +26,12 @@ class AlterarSenhaUseCaseImplTest {
     private UsuarioRepository usuarioRepository;
 
     private Usuario usuario;
-    private ChangeUserPasswordDTO changePasswordDTO;
+    private String senha;
 
     @BeforeEach
     void setUp() {
         usuario = mock(Usuario.class);
-        changePasswordDTO = new ChangeUserPasswordDTO("novaSenha123");
+        senha = "novaSenha123";
     }
 
     @Test
@@ -40,7 +40,7 @@ class AlterarSenhaUseCaseImplTest {
 
         when(usuarioRepository.findById(userId)).thenReturn(Optional.of(usuario));
 
-        alterarSenhaUseCase.alterarSenha(userId, changePasswordDTO);
+        alterarSenhaUseCase.alterarSenha(userId, senha);
 
         verify(usuarioRepository).findById(userId);
         verify(usuario).alterarSenha("novaSenha123");
@@ -55,7 +55,7 @@ class AlterarSenhaUseCaseImplTest {
 
         ResourceNotFoundException thrown = assertThrows(
                 ResourceNotFoundException.class,
-                () -> alterarSenhaUseCase.alterarSenha(userId, changePasswordDTO)
+                () -> alterarSenhaUseCase.alterarSenha(userId, senha)
         );
 
         assertEquals("Usuário não encontrado com ID: " + userId, thrown.getMessage());

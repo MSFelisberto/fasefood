@@ -66,15 +66,15 @@ public class RestauranteController implements RestauranteControllerDocs {
     public ResponseEntity<Page<RestauranteResponseDTO>> listarRestaurantes(
             @PageableDefault(size = 10, sort = {"nome"}) Pageable pageable
     ) {
-        Page<RestauranteResponseDTO> restaurantes = listarRestaurantesUseCase.listar(pageable);
-        return ResponseEntity.ok(restaurantes);
+        Page<RestauranteOutput> restaurantes = listarRestaurantesUseCase.listar(pageable);
+        return ResponseEntity.ok(RestauranteMapper.toRestauranteDtoPaginacao(restaurantes));
     }
 
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<RestauranteResponseDTO> buscarRestaurantePorId(@PathVariable Long id) {
-        RestauranteResponseDTO restaurante = buscarRestaurantePorIdUseCase.buscarPorId(id);
-        return ResponseEntity.ok(restaurante);
+        RestauranteOutput restaurante = buscarRestaurantePorIdUseCase.buscarPorId(id);
+        return ResponseEntity.ok(RestauranteMapper.toResponseDTO(restaurante));
     }
 
     @Override
@@ -83,8 +83,11 @@ public class RestauranteController implements RestauranteControllerDocs {
             @PathVariable Long id,
             @RequestBody @Valid UpdateRestauranteDTO dto
     ) {
-        RestauranteResponseDTO restaurante = atualizarRestauranteUseCase.atualizar(id, dto);
-        return ResponseEntity.ok(restaurante);
+        RestauranteOutput restaurante = atualizarRestauranteUseCase.atualizar(
+                id,
+                RestauranteMapper.toUpdateRestauranteInput(dto)
+        );
+        return ResponseEntity.ok(RestauranteMapper.toResponseDTO(restaurante));
     }
 
     @Override

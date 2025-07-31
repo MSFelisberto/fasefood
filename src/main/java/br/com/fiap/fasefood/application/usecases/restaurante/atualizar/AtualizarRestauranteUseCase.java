@@ -1,8 +1,7 @@
 package br.com.fiap.fasefood.application.usecases.restaurante.atualizar;
 
-import br.com.fiap.fasefood.infra.controllers.dto.restaurante.UpdateRestauranteDTO;
-import br.com.fiap.fasefood.infra.controllers.dto.restaurante.RestauranteResponseDTO;
+import br.com.fiap.fasefood.application.usecases.restaurante.RestauranteOutput;
 
 public interface AtualizarRestauranteUseCase {
-    RestauranteResponseDTO atualizar(Long id, UpdateRestauranteDTO dto);
+    RestauranteOutput atualizar(Long id, UpdateRestauranteInput input);
 }

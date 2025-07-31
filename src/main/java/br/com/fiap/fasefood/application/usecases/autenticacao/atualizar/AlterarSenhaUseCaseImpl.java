@@ -16,11 +16,11 @@ public class AlterarSenhaUseCaseImpl implements AlterarSenhaUsuarioUseCase {
     }
 
     @Override
-    public void alterarSenha(Long id, ChangeUserPasswordDTO userData) {
+    public void alterarSenha(Long id, String senha) {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado com ID: " + id));
 
-        usuario.alterarSenha(userData.senha());
+        usuario.alterarSenha(senha);
 
         usuarioRepository.salvar(usuario);
     }

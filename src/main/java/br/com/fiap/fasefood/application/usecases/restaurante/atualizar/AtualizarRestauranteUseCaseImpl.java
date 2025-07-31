@@ -1,11 +1,10 @@
 package br.com.fiap.fasefood.application.usecases.restaurante.atualizar;
 
+import br.com.fiap.fasefood.application.usecases.restaurante.RestauranteOutput;
+import br.com.fiap.fasefood.application.usecases.usuario.UsuarioOutput;
 import br.com.fiap.fasefood.core.entities.Restaurante;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.gateways.RestauranteRepository;
-import br.com.fiap.fasefood.infra.controllers.dto.restaurante.UpdateRestauranteDTO;
-import br.com.fiap.fasefood.infra.controllers.dto.restaurante.RestauranteResponseDTO;
-import br.com.fiap.fasefood.infra.controllers.mapper.restaurante.RestauranteMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,30 +19,43 @@ public class AtualizarRestauranteUseCaseImpl implements AtualizarRestauranteUseC
 
     @Override
     @Transactional
-    public RestauranteResponseDTO atualizar(Long id, UpdateRestauranteDTO dto) {
+    public RestauranteOutput atualizar(Long id, UpdateRestauranteInput input) {
         Restaurante restaurante = restauranteRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Restaurante não encontrado com ID: " + id));
 
         restaurante.atualizarInformacoes(
-                dto.nome(),
-                dto.tipoCozinha(),
-                dto.horarioAbertura(),
-                dto.horarioFechamento()
+                input.nome(),
+                input.tipoCozinha(),
+                input.horarioAbertura(),
+                input.horarioFechamento()
         );
 
-        if (dto.endereco() != null) {
+        if (input.endereco() != null) {
             restaurante.getEndereco().atualizar(
-                    dto.endereco().logradouro(),
-                    dto.endereco().numero(),
-                    dto.endereco().cep(),
-                    dto.endereco().complemento(),
-                    dto.endereco().bairro(),
-                    dto.endereco().cidade(),
-                    dto.endereco().uf()
+                    input.endereco().logradouro(),
+                    input.endereco().numero(),
+                    input.endereco().cep(),
+                    input.endereco().complemento(),
+                    input.endereco().bairro(),
+                    input.endereco().cidade(),
+                    input.endereco().uf()
             );
         }
 
         Restaurante restauranteAtualizado = restauranteRepository.salvar(restaurante);
-        return RestauranteMapper.toResponseDTO(restauranteAtualizado);
+        return new RestauranteOutput(
+                restauranteAtualizado.getId(),
+                restauranteAtualizado.getNome(),
+                restauranteAtualizado.getEndereco(),
+                restauranteAtualizado.getTipoCozinha(),
+                restauranteAtualizado.getHorarioAbertura(),
+                restauranteAtualizado.getHorarioFechamento(),
+                new UsuarioOutput(
+                        restauranteAtualizado.getDono().getId(),
+                        restauranteAtualizado.getDono().getNome(),
+                        restauranteAtualizado.getDono().getEmail(),
+                        restauranteAtualizado.getDono().getLogin()
+                )
+        );
     }
 }

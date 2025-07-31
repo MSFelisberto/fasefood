@@ -1,8 +1,9 @@
 package br.com.fiap.fasefood.application.usecases.restaurante.listar;
 
+import br.com.fiap.fasefood.application.usecases.restaurante.RestauranteOutput;
+import br.com.fiap.fasefood.application.usecases.restaurante.mappers.RestauranteOutputMapper;
+import br.com.fiap.fasefood.core.entities.Restaurante;
 import br.com.fiap.fasefood.core.gateways.RestauranteRepository;
-import br.com.fiap.fasefood.infra.controllers.dto.restaurante.RestauranteResponseDTO;
-import br.com.fiap.fasefood.infra.controllers.mapper.restaurante.RestauranteMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,9 @@ public class ListarRestaurantesUseCaseImpl implements ListarRestaurantesUseCase 
     }
 
     @Override
-    public Page<RestauranteResponseDTO> listar(Pageable pageable) {
-        return restauranteRepository.listarTodosAtivos(pageable)
-                .map(RestauranteMapper::toResponseDTO);
+    public Page<RestauranteOutput> listar(Pageable pageable) {
+        Page<Restaurante> restaurantePaginado =  restauranteRepository.listarTodosAtivos(pageable);
+        return restaurantePaginado.map(RestauranteOutputMapper::toRestauranteOutput);
+
     }
 }
