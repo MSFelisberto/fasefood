@@ -31,18 +31,36 @@ public class CriarCardapioUseCaseImpl implements CriarCardapioUseCase {
 
     @Override
     @Transactional
-    public CardapioResponseDTO criar(CreateCardapioDTO dto) {
-        Restaurante restaurante = restauranteRepository.findById(dto.restauranteId())
-                .orElseThrow(() -> new ResourceNotFoundException("Restaurante com ID: " + dto.restauranteId() + " não encontrado."));
+    public CardapioResponseDTO criar(CriarCardapioInput criarCardapioInput) {
+        Restaurante restaurante = restauranteRepository.findById(criarCardapioInput.restauranteId())
+                .orElseThrow(() -> new ResourceNotFoundException("Restaurante com ID: " + criarCardapioInput.restauranteId() + " não encontrado."));
 
-        Cardapio cardapio = CardapioMapper.toDomain(dto, restaurante);
-        Cardapio novoCardapio = cardapioRepository.salvar(cardapio);
+        Cardapio novoCardapio = cardapioRepository.salvar(Cardapio.create(
+                null,
+                restaurante,
+                criarCardapioInput.nome(),
+                criarCardapioInput.descricao(),
+                true
+        ));
 
         List<CardapioItem> itensSalvos = new ArrayList<>();
-        if (dto.itens() != null && !dto.itens().isEmpty()) {
-            for (ItensCreateCardapioItemDTO itemDTO : dto.itens()) {
-                CardapioItem item = CardapioItemMapper.toDomain(itemDTO, novoCardapio);
-                itensSalvos.add(cardapioItemRepository.salvar(item));
+        if (criarCardapioInput.itens() != null && !criarCardapioInput.itens().isEmpty()) {
+
+            for (CriarCardapioItemInput item : criarCardapioInput.itens()) {
+                itensSalvos.add(
+                        cardapioItemRepository.salvar(
+                                CardapioItem.create(
+                                        null,
+                                        novoCardapio,
+                                        item.nome(),
+                                        item.descricao(),
+                                        item.preco(),
+                                        item.apenasNoLocal(),
+                                        item.caminhoFoto(),
+                                        true
+                                )
+                        )
+                );
             }
         }
         novoCardapio.setItens(itensSalvos);

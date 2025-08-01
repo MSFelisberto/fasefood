@@ -78,13 +78,13 @@ public class AtualizarCardapioItemUseCaseImplTest {
 
     private Cardapio buildCardapio(){
         Restaurante restaurante = buildRestaurante();
-        return new Cardapio(1L, restaurante, "teste", "teste coverage", true );
+        return Cardapio.create(1L, restaurante, "teste", "teste coverage", true );
     }
 
     private CardapioItem buildCardapioItem(){
         Cardapio cardapio = buildCardapio();
         BigDecimal bigDecimal = new BigDecimal(10);
-        return new CardapioItem(1L, cardapio, "teste item cardapio", "coverage",bigDecimal, true,"testePath", true );
+        return CardapioItem.create(1L, cardapio, "teste item cardapio", "coverage",bigDecimal, true,"testePath", true );
     }
 
     private TipoUsuario buildTipoUsuario() {

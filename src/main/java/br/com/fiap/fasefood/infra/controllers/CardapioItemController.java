@@ -8,6 +8,7 @@ import br.com.fiap.fasefood.application.usecases.cardapio.deletar.DeletarCardapi
 import br.com.fiap.fasefood.application.usecases.cardapio.listar.ListarCardapioItensUseCase;
 import br.com.fiap.fasefood.infra.controllers.docs.CardapioItemControllerDocs;
 import br.com.fiap.fasefood.infra.controllers.dto.cardapio.*;
+import br.com.fiap.fasefood.infra.controllers.mapper.cardapio.CardapioItemMapper;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +22,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/cardapio")
+@RequestMapping("/api/v1/item-cardapio")
 public class CardapioItemController implements CardapioItemControllerDocs {
 
     private final CriarCardapioItemUseCase criarUseCase;
@@ -43,9 +44,9 @@ public class CardapioItemController implements CardapioItemControllerDocs {
     @Override
     @PostMapping
     public ResponseEntity<CardapioItemResponseDTO> criarItem(@RequestBody @Valid CreateCardapioItemDTO dto, UriComponentsBuilder uriBuilder) {
-        var response = criarUseCase.criar(dto);
-        URI location = uriBuilder.path("/api/v1/cardapio/{id}").buildAndExpand(response.id()).toUri();
-        return ResponseEntity.created(location).body(response);
+        var response = criarUseCase.criar(CardapioItemMapper.toCriarCardapioItemInput(dto));
+        URI location = uriBuilder.path("/api/v1/item-cardapio/{id}").buildAndExpand(response.id()).toUri();
+        return ResponseEntity.created(location).body(CardapioItemMapper.toCardapioItemResponseDTO(response));
     }
 
     @Override

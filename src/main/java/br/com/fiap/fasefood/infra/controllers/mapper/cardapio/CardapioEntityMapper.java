@@ -7,7 +7,7 @@ import br.com.fiap.fasefood.infra.persistence.entities.CardapioEntity;
 public class CardapioEntityMapper {
     public static Cardapio toDomain(CardapioEntity entity) {
         if (entity == null) return null;
-        return new Cardapio(entity.getId(), RestauranteEntityMapper.toDomain(entity.getRestaurante()), entity.getNome(), entity.getDescricao(), entity.isAtivo());
+        return Cardapio.create(entity.getId(), RestauranteEntityMapper.toDomain(entity.getRestaurante()), entity.getNome(), entity.getDescricao(), entity.isAtivo());
     }
 
     public static CardapioEntity toEntity(Cardapio domain) {

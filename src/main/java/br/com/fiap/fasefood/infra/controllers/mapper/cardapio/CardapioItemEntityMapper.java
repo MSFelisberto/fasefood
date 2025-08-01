@@ -7,7 +7,7 @@ public class CardapioItemEntityMapper {
 
     public static CardapioItem toDomain(CardapioItemEntity entity) {
         if (entity == null) return null;
-        return new CardapioItem(entity.getId(), CardapioEntityMapper.toDomain(entity.getCardapio()), entity.getNome(), entity.getDescricao(), entity.getPreco(), entity.isApenasNoLocal(), entity.getCaminhoFoto(), entity.isAtivo());
+        return CardapioItem.create(entity.getId(), CardapioEntityMapper.toDomain(entity.getCardapio()), entity.getNome(), entity.getDescricao(), entity.getPreco(), entity.isApenasNoLocal(), entity.getCaminhoFoto(), entity.isAtivo());
     }
 
     public static CardapioItemEntity toEntity(CardapioItem domain) {

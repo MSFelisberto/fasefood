@@ -21,13 +21,31 @@ public class CriarCardapioItemUseCaseImpl implements CriarCardapioItemUseCase {
     }
 
     @Override
-    public CardapioItemResponseDTO criar(CreateCardapioItemDTO dto) {
-        Cardapio cardapio = cardapioRepository.findById(dto.cardapioId())
-                .orElseThrow(() -> new ResourceNotFoundException("Cardápio com ID: " + dto.cardapioId() + " não encontrado."));
+    public CriarCardapioItemOutput criar(CriarCardapioItemInput input) {
+        Cardapio cardapio = cardapioRepository.findById(input.cardapioId())
+                .orElseThrow(() -> new ResourceNotFoundException("Cardápio com ID: " + input.cardapioId() + " não encontrado."));
 
-        CardapioItem item = CardapioItemMapper.toDomain(dto, cardapio);
-        CardapioItem novoItem = cardapioItemRepository.salvar(item);
+        CardapioItem novoItem = cardapioItemRepository.salvar(
+                CardapioItem.create(
+                        null,
+                        cardapio,
+                        input.nome(),
+                        input.descricao(),
+                        input.preco(),
+                        input.apenasNoLocal(),
+                        input.caminhoFoto(),
+                        true
+                )
+        );
 
-        return CardapioItemMapper.toResponseDTO(novoItem);
+        return new CriarCardapioItemOutput(
+                novoItem.getId(),
+                novoItem.getCardapio().getId(),
+                novoItem.getNome(),
+                novoItem.getDescricao(),
+                novoItem.getPreco(),
+                novoItem.isApenasNoLocal(),
+                novoItem.getCaminhoFoto()
+        );
     }
 }

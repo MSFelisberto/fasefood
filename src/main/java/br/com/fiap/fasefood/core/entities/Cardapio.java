@@ -12,12 +12,16 @@ public class Cardapio {
     private boolean ativo;
     private List<CardapioItem> itens = new ArrayList<>();
 
-    public Cardapio(Long id, Restaurante restaurante, String nome, String descricao, boolean ativo) {
+    private Cardapio(Long id, Restaurante restaurante, String nome, String descricao, boolean ativo) {
         this.id = id;
         this.restaurante = restaurante;
         this.nome = nome;
         this.descricao = descricao;
         this.ativo = ativo;
+    }
+
+    public static Cardapio create(Long id, Restaurante restaurante, String nome, String descricao, boolean ativo) {
+        return new Cardapio(id, restaurante, nome, descricao, ativo);
     }
 
     public void atualizar(String nome, String descricao) {

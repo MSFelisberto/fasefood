@@ -13,7 +13,7 @@ public class CardapioItem {
     private String caminhoFoto;
     private boolean ativo;
 
-    public CardapioItem(Long id, Cardapio cardapio, String nome, String descricao, BigDecimal preco, boolean apenasNoLocal, String caminhoFoto, boolean ativo) {
+    private CardapioItem(Long id, Cardapio cardapio, String nome, String descricao, BigDecimal preco, boolean apenasNoLocal, String caminhoFoto, boolean ativo) {
         this.id = id;
         this.cardapio = cardapio;
         this.nome = nome;
@@ -22,6 +22,19 @@ public class CardapioItem {
         this.apenasNoLocal = apenasNoLocal;
         this.caminhoFoto = caminhoFoto;
         this.ativo = ativo;
+    }
+
+    public static CardapioItem create(Long id, Cardapio cardapio, String nome, String descricao, BigDecimal preco, boolean apenasNoLocal, String caminhoFoto, boolean ativo) {
+        return new CardapioItem(
+                id,
+                cardapio,
+                nome,
+                descricao,
+                preco,
+                apenasNoLocal,
+                caminhoFoto,
+                ativo
+        );
     }
 
     public void atualizar(String nome, String descricao, BigDecimal preco, Boolean apenasNoLocal, String caminhoFoto) {
