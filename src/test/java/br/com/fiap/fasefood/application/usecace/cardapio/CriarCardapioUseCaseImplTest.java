@@ -10,13 +10,11 @@ import br.com.fiap.fasefood.core.usecase.gateways.CardapioRepository;
 import br.com.fiap.fasefood.core.usecase.gateways.RestauranteRepository;
 import br.com.fiap.fasefood.infra.controller.dto.cardapio.CreateCardapioDTO;
 import br.com.fiap.fasefood.infra.controller.dto.cardapio.ItensCreateCardapioItemDTO;
-import br.com.fiap.fasefood.infra.controller.dto.restaurante.UpdateRestauranteDTO;
 import br.com.fiap.fasefood.infra.controller.mapper.cardapio.CardapioItemMapper;
 import br.com.fiap.fasefood.infra.controller.mapper.cardapio.CardapioMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -36,7 +34,6 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class CriarCardapioUseCaseImplTest {
 
-    @InjectMocks
     private CriarCardapioUseCaseImpl criarCardapioUseCaseTeste;
 
     private CardapioRepository cardapioRepository;
@@ -83,9 +80,7 @@ public class CriarCardapioUseCaseImplTest {
         CreateCardapioDTO createCardapioDTO =  buildCreateCardapioDTO();
 
         when(restauranteRepository.findById(restauranteID)).thenReturn(Optional.empty());
-        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
-            criarCardapioUseCaseTeste.criar(createCardapioDTO);
-        });
+        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> criarCardapioUseCaseTeste.criar(createCardapioDTO));
 
         assertEquals("Restaurante com ID: 1 não encontrado.", exception.getMessage());
     }
@@ -94,10 +89,6 @@ public class CriarCardapioUseCaseImplTest {
     private CreateCardapioDTO buildCreateCardapioDTO(){
         return new CreateCardapioDTO(1L, "teste", "teste descricao", List.of(buildItensCreateCardapioItemDTO()));
     }
-    private List<ItensCreateCardapioItemDTO> buildItensCreateCardapio(){
-        return List.of(buildItensCreateCardapioItemDTO());
-    }
-
     private ItensCreateCardapioItemDTO buildItensCreateCardapioItemDTO(){
         BigDecimal bigDecimal = new BigDecimal(10);
         return new ItensCreateCardapioItemDTO("teste", "descricao teste", bigDecimal, true, "testePath" );

@@ -7,8 +7,6 @@ import br.com.fiap.fasefood.infra.controller.dto.cardapio.CardapioItemResponseDT
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -26,10 +24,8 @@ import static org.mockito.Mockito.mock;
 @ExtendWith(MockitoExtension.class)
 public class ListarCardapioItensUseCaseImplTest {
 
-    @InjectMocks
-    private ListarCardapioItensUseCaseImpl listarCardapioItensUseCaseTest;
 
-    @Mock
+    private ListarCardapioItensUseCaseImpl listarCardapioItensUseCaseTest;
     private CardapioItemRepository cardapioItemRepository;
 
 
@@ -41,7 +37,7 @@ public class ListarCardapioItensUseCaseImplTest {
 
 
     @Test
-    void deveListarItensDoCardapio() {
+    void deveListarItensDoCardapioPaginadoComSucesso() {
         Long cardapioId = 1L;
         Pageable pageable = PageRequest.of(0, 10);
 

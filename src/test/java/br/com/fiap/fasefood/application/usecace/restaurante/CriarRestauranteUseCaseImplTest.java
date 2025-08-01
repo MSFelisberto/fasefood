@@ -14,7 +14,6 @@ import br.com.fiap.fasefood.infra.controller.mapper.restaurante.RestauranteMappe
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -29,18 +28,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(MockitoExtension.class)
 public class CriarRestauranteUseCaseImplTest {
 
-    @InjectMocks
     private CriarRestauranteUseCaseImpl criarRestauranteUseCase;
-
     private CreateRestauranteDTO createRestauranteDTO;
     private TipoUsuario tipoUsuario;
-
     private RestauranteRepository restauranteRepository;
     private UsuarioRepository usuarioRepository;
     private Usuario dono;
 
-    private final static String NOME_DONO_RESTAURANTE = "DONO_RESTAURANTE";
-    private final static String NOME_USUARIO = "USUARIO";
+    private static final String NOME_DONO_RESTAURANTE = "DONO_RESTAURANTE";
+    private static final String NOME_USUARIO = "USUARIO";
 
     @BeforeEach
     public void setUp() {
@@ -81,9 +77,7 @@ public class CriarRestauranteUseCaseImplTest {
     public void deveLancarExcecaoResourceNotFoundException() {
 
         when(usuarioRepository.findById(createRestauranteDTO.donoId())).thenReturn(Optional.empty());
-        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
-            criarRestauranteUseCase.criar(createRestauranteDTO);
-        });
+        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> criarRestauranteUseCase.criar(createRestauranteDTO));
         assertEquals("Usuário com ID: 0 não encontrado.", exception.getMessage());
     }
 
@@ -94,9 +88,7 @@ public class CriarRestauranteUseCaseImplTest {
         when(dono.getTipoUsuario()).thenReturn(tipoUsuario);
         when(tipoUsuario.getNome()).thenReturn(NOME_USUARIO);
 
-        RegraDeNegocioException exception = assertThrows(RegraDeNegocioException.class, () -> {
-            criarRestauranteUseCase.criar(createRestauranteDTO);
-        });
+        RegraDeNegocioException exception = assertThrows(RegraDeNegocioException.class, () -> criarRestauranteUseCase.criar(createRestauranteDTO));
         assertEquals("Apenas usuários do tipo DONO_RESTAURANTE podem ser donos de um restaurante.", exception.getMessage());
     }
 }

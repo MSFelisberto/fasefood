@@ -29,7 +29,7 @@ class AlterarSenhaUseCaseImplTest {
     private Usuario usuario;
     private ChangeUserPasswordDTO changePasswordDTO;
 
-    private final static Long USER_ID = 1L;
+    private static final Long USER_ID = 1L;
 
     @BeforeEach
     void setUp() {

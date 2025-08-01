@@ -30,8 +30,8 @@ public class AutenticarUsuarioUseCaseImplTest {
     private LoginRequestDTO loginRequest;
     private Usuario usuario;
 
-    private final static String SENHA_IGUAIS = "1010";
-    private final static String SENHA_DIFERENTE = "10";
+    private static final String SENHA_IGUAIS = "1010";
+    private static final String SENHA_DIFERENTE = "10";
 
     @BeforeEach
     public void setUp() {
