@@ -2,7 +2,7 @@ package br.com.fiap.fasefood.infra.controllers.mapper.usuario;
 
 import br.com.fiap.fasefood.application.usecases.shared.endereco.EnderecoInput;
 import br.com.fiap.fasefood.application.usecases.usuario.listar.ListUserOutput;
-import br.com.fiap.fasefood.infra.controllers.dto.ListUserDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.usuario.ListUserDTO;
 
 public class ListUserMapper {
     public static ListUserDTO toDTO(ListUserOutput listUserOutput) {

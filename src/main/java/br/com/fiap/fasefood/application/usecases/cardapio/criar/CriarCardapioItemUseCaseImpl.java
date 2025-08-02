@@ -5,9 +5,6 @@ import br.com.fiap.fasefood.core.entities.CardapioItem;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.gateways.CardapioItemRepository;
 import br.com.fiap.fasefood.core.gateways.CardapioRepository;
-import br.com.fiap.fasefood.infra.controllers.dto.cardapio.CardapioItemResponseDTO;
-import br.com.fiap.fasefood.infra.controllers.dto.cardapio.CreateCardapioItemDTO;
-import br.com.fiap.fasefood.infra.controllers.mapper.cardapio.CardapioItemMapper;
 
 
 public class CriarCardapioItemUseCaseImpl implements CriarCardapioItemUseCase {

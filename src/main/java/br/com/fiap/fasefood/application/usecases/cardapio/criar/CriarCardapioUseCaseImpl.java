@@ -7,11 +7,6 @@ import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.gateways.CardapioItemRepository;
 import br.com.fiap.fasefood.core.gateways.CardapioRepository;
 import br.com.fiap.fasefood.core.gateways.RestauranteRepository;
-import br.com.fiap.fasefood.infra.controllers.dto.cardapio.CardapioResponseDTO;
-import br.com.fiap.fasefood.infra.controllers.dto.cardapio.CreateCardapioDTO;
-import br.com.fiap.fasefood.infra.controllers.dto.cardapio.ItensCreateCardapioItemDTO;
-import br.com.fiap.fasefood.infra.controllers.mapper.cardapio.CardapioItemMapper;
-import br.com.fiap.fasefood.infra.controllers.mapper.cardapio.CardapioMapper;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -31,7 +26,7 @@ public class CriarCardapioUseCaseImpl implements CriarCardapioUseCase {
 
     @Override
     @Transactional
-    public CardapioResponseDTO criar(CriarCardapioInput criarCardapioInput) {
+    public CriarCardapioOutput criar(CriarCardapioInput criarCardapioInput) {
         Restaurante restaurante = restauranteRepository.findById(criarCardapioInput.restauranteId())
                 .orElseThrow(() -> new ResourceNotFoundException("Restaurante com ID: " + criarCardapioInput.restauranteId() + " não encontrado."));
 
@@ -65,6 +60,8 @@ public class CriarCardapioUseCaseImpl implements CriarCardapioUseCase {
         }
         novoCardapio.setItens(itensSalvos);
 
-        return CardapioMapper.toResponseDTO(novoCardapio);
+        return new CriarCardapioOutput(
+                novoCardapio.getId()
+        );
     }
 }

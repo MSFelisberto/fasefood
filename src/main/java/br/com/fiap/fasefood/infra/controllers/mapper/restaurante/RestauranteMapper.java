@@ -9,7 +9,7 @@ import br.com.fiap.fasefood.core.entities.Restaurante;
 import br.com.fiap.fasefood.core.entities.Usuario;
 import br.com.fiap.fasefood.infra.controllers.dto.restaurante.CreateRestauranteDTO;
 import br.com.fiap.fasefood.infra.controllers.dto.restaurante.RestauranteResponseDTO;
-import br.com.fiap.fasefood.infra.controllers.dto.UsuarioResponseDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.usuario.UsuarioResponseDTO;
 import br.com.fiap.fasefood.infra.controllers.dto.restaurante.UpdateRestauranteDTO;
 import br.com.fiap.fasefood.infra.controllers.mapper.endereco.EnderecoMapper;
 import org.springframework.data.domain.Page;

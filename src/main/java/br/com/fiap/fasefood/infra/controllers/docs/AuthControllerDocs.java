@@ -1,8 +1,8 @@
 package br.com.fiap.fasefood.infra.controllers.docs;
 
-import br.com.fiap.fasefood.infra.controllers.dto.ChangeUserPasswordDTO;
-import br.com.fiap.fasefood.infra.controllers.dto.LoginRequestDTO;
-import br.com.fiap.fasefood.infra.controllers.dto.LoginResponseDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.usuario.ChangeUserPasswordDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.autenticacao.LoginRequestDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.autenticacao.LoginResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

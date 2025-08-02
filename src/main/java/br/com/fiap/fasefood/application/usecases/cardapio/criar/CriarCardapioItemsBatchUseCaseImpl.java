@@ -5,7 +5,6 @@ import br.com.fiap.fasefood.core.entities.CardapioItem;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.gateways.CardapioItemRepository;
 import br.com.fiap.fasefood.core.gateways.CardapioRepository;
-import br.com.fiap.fasefood.infra.controllers.dto.cardapio.CardapioItemResponseDTO;
 import br.com.fiap.fasefood.infra.controllers.dto.cardapio.CreateCardapioItemsBatchDTO;
 import br.com.fiap.fasefood.infra.controllers.dto.cardapio.ItensCreateCardapioItemDTO;
 import br.com.fiap.fasefood.infra.controllers.mapper.cardapio.CardapioItemMapper;
@@ -27,18 +26,18 @@ public class CriarCardapioItemsBatchUseCaseImpl implements CriarCardapioItemsBat
 
     @Override
     @Transactional
-    public List<CardapioItemResponseDTO> criarEmLote(CreateCardapioItemsBatchDTO dto) {
-        Cardapio cardapio = cardapioRepository.findById(dto.cardapioId())
-                .orElseThrow(() -> new ResourceNotFoundException("Cardápio com ID: " + dto.cardapioId() + " não encontrado."));
+    public List<CriarCardapioItemOutput> criarEmLote(CriarCardapioItemsBatchInput input) {
+        Cardapio cardapio = cardapioRepository.findById(input.cardapioId())
+                .orElseThrow(() -> new ResourceNotFoundException("Cardápio com ID: " + input.cardapioId() + " não encontrado."));
 
         List<CardapioItem> itensSalvos = new ArrayList<>();
-        for (ItensCreateCardapioItemDTO itemDTO : dto.itens()) {
-            CardapioItem item = CardapioItemMapper.toDomain(itemDTO, cardapio);
+        for (ItemCardapioInput itemInput : input.itens()) {
+            CardapioItem item = CardapioItemMapper.toDomain(itemInput, cardapio);
             itensSalvos.add(cardapioItemRepository.salvar(item));
         }
 
         return itensSalvos.stream()
-                .map(CardapioItemMapper::toResponseDTO)
+                .map(CardapioItemMapper::toCriarCardapioItemOutput)
                 .collect(Collectors.toList());
     }
 }

@@ -1,7 +1,7 @@
 package br.com.fiap.fasefood.infra.controllers.dto.restaurante;
 
 import br.com.fiap.fasefood.core.entities.Endereco;
-import br.com.fiap.fasefood.infra.controllers.dto.UsuarioResponseDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.usuario.UsuarioResponseDTO;
 
 import java.time.LocalTime;
 

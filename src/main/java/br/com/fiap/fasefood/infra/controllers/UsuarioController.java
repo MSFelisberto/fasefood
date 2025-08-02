@@ -8,12 +8,11 @@ import br.com.fiap.fasefood.application.usecases.usuario.deletar.DeletarUsuarioU
 import br.com.fiap.fasefood.application.usecases.usuario.listar.BuscarUsuarioPorIdUseCase;
 import br.com.fiap.fasefood.application.usecases.usuario.listar.ListUserOutput;
 import br.com.fiap.fasefood.application.usecases.usuario.listar.ListarTodosUsuariosUseCase;
-import br.com.fiap.fasefood.core.entities.Usuario;
 import br.com.fiap.fasefood.infra.controllers.docs.UsuarioControllerDocs;
-import br.com.fiap.fasefood.infra.controllers.dto.CreateUserDTO;
-import br.com.fiap.fasefood.infra.controllers.dto.ListUserDTO;
-import br.com.fiap.fasefood.infra.controllers.dto.UpdateUserDataDTO;
-import br.com.fiap.fasefood.infra.controllers.dto.UpdateUserTypeDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.usuario.CreateUserDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.usuario.ListUserDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.usuario.UpdateUserDataDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.usuario.UpdateUserTypeDTO;
 import br.com.fiap.fasefood.infra.controllers.mapper.usuario.ListUserMapper;
 import br.com.fiap.fasefood.infra.controllers.mapper.usuario.UsuarioMapper;
 import io.swagger.v3.oas.annotations.tags.Tag;

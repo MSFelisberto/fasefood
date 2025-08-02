@@ -1,5 +1,6 @@
 package br.com.fiap.fasefood.application.usecases.cardapio.atualizar;
 
+import br.com.fiap.fasefood.application.usecases.cardapio.criar.CriarCardapioItemOutput;
 import br.com.fiap.fasefood.core.entities.CardapioItem;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.gateways.CardapioItemRepository;
@@ -18,13 +19,14 @@ public class AtualizarCardapioItemUseCaseImpl implements AtualizarCardapioItemUs
 
     @Override
     @Transactional
-    public CardapioItemResponseDTO atualizar(Long id, UpdateCardapioItemDTO dto) {
+    public CriarCardapioItemOutput atualizar(Long id, AtualizarCardapioItemInput input) {
         CardapioItem item = cardapioItemRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Item de cardápio com ID: " + id + " não encontrado."));
 
-        item.atualizar(dto.nome(), dto.descricao(), dto.preco(), dto.apenasNoLocal(), dto.caminhoFoto());
+        item.atualizar(input.nome(), input.descricao(), input.preco(), input.apenasNoLocal(), input.caminhoFoto());
 
         CardapioItem itemAtualizado = cardapioItemRepository.salvar(item);
-        return CardapioItemMapper.toResponseDTO(itemAtualizado);
+
+        return CardapioItemMapper.toCriarCardapioItemOutput(itemAtualizado);
     }
 }

@@ -4,9 +4,9 @@ import br.com.fiap.fasefood.application.usecases.autenticacao.atualizar.AlterarS
 import br.com.fiap.fasefood.application.usecases.autenticacao.autenticar.AutenticarUsuarioUseCase;
 import br.com.fiap.fasefood.application.usecases.autenticacao.autenticar.LoginResponseOutput;
 import br.com.fiap.fasefood.infra.controllers.docs.AuthControllerDocs;
-import br.com.fiap.fasefood.infra.controllers.dto.ChangeUserPasswordDTO;
-import br.com.fiap.fasefood.infra.controllers.dto.LoginRequestDTO;
-import br.com.fiap.fasefood.infra.controllers.dto.LoginResponseDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.usuario.ChangeUserPasswordDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.autenticacao.LoginRequestDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.autenticacao.LoginResponseDTO;
 import br.com.fiap.fasefood.infra.controllers.mapper.autenticar.AutenticarMapper;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

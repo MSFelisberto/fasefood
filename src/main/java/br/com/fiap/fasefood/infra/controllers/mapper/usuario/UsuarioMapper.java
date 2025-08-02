@@ -6,13 +6,10 @@ import br.com.fiap.fasefood.application.usecases.usuario.alterar.UpdateUserTypeI
 import br.com.fiap.fasefood.application.usecases.usuario.criar.CriarUsuarioInput;
 import br.com.fiap.fasefood.application.usecases.usuario.criar.CriarUsuarioOutput;
 import br.com.fiap.fasefood.application.usecases.usuario.listar.ListUserOutput;
-import br.com.fiap.fasefood.core.entities.Endereco;
-import br.com.fiap.fasefood.core.entities.TipoUsuario;
-import br.com.fiap.fasefood.core.entities.Usuario;
-import br.com.fiap.fasefood.infra.controllers.dto.CreateUserDTO;
-import br.com.fiap.fasefood.infra.controllers.dto.ListUserDTO;
-import br.com.fiap.fasefood.infra.controllers.dto.UpdateUserDataDTO;
-import br.com.fiap.fasefood.infra.controllers.dto.UpdateUserTypeDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.usuario.CreateUserDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.usuario.ListUserDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.usuario.UpdateUserDataDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.usuario.UpdateUserTypeDTO;
 import br.com.fiap.fasefood.infra.controllers.mapper.endereco.EnderecoMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

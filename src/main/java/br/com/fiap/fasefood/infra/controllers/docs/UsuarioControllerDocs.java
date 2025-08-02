@@ -1,9 +1,9 @@
 package br.com.fiap.fasefood.infra.controllers.docs;
 
-import br.com.fiap.fasefood.infra.controllers.dto.CreateUserDTO;
-import br.com.fiap.fasefood.infra.controllers.dto.ListUserDTO;
-import br.com.fiap.fasefood.infra.controllers.dto.UpdateUserDataDTO;
-import br.com.fiap.fasefood.infra.controllers.dto.UpdateUserTypeDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.usuario.CreateUserDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.usuario.ListUserDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.usuario.UpdateUserDataDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.usuario.UpdateUserTypeDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

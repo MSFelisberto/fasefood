@@ -1,9 +1,9 @@
 package br.com.fiap.fasefood.application.usecases.cardapio.listar;
 
-import br.com.fiap.fasefood.infra.controllers.dto.cardapio.CardapioItemResponseDTO;
+import br.com.fiap.fasefood.application.usecases.cardapio.criar.CriarCardapioItemOutput;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface ListarCardapioItensUseCase {
-    Page<CardapioItemResponseDTO> listar(Long restauranteId, Pageable pageable);
+    Page<CriarCardapioItemOutput> listar(Long cardapioId, Pageable pageable);
 }

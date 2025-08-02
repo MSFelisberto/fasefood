@@ -32,7 +32,12 @@ public class CardapioItemController implements CardapioItemControllerDocs {
     private final CriarCardapioItemsBatchUseCase criarEmLoteUseCase;
     private final AtualizarCardapioItensBatchUseCase atualizarEmLoteUseCase;
 
-    public CardapioItemController(CriarCardapioItemUseCase criarUseCase, ListarCardapioItensUseCase listarUseCase, AtualizarCardapioItemUseCase atualizarUseCase, DeletarCardapioItemUseCase deletarUseCase, CriarCardapioItemsBatchUseCase criarEmLoteUseCase, AtualizarCardapioItensBatchUseCase atualizarEmLoteUseCase) {
+    public CardapioItemController(CriarCardapioItemUseCase criarUseCase,
+                                  ListarCardapioItensUseCase listarUseCase,
+                                  AtualizarCardapioItemUseCase atualizarUseCase,
+                                  DeletarCardapioItemUseCase deletarUseCase,
+                                  CriarCardapioItemsBatchUseCase criarEmLoteUseCase,
+                                  AtualizarCardapioItensBatchUseCase atualizarEmLoteUseCase) {
         this.criarUseCase = criarUseCase;
         this.listarUseCase = listarUseCase;
         this.atualizarUseCase = atualizarUseCase;
@@ -43,7 +48,8 @@ public class CardapioItemController implements CardapioItemControllerDocs {
 
     @Override
     @PostMapping
-    public ResponseEntity<CardapioItemResponseDTO> criarItem(@RequestBody @Valid CreateCardapioItemDTO dto, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<CardapioItemResponseDTO> criarItem(@RequestBody @Valid CreateCardapioItemDTO dto,
+                                                             UriComponentsBuilder uriBuilder) {
         var response = criarUseCase.criar(CardapioItemMapper.toCriarCardapioItemInput(dto));
         URI location = uriBuilder.path("/api/v1/item-cardapio/{id}").buildAndExpand(response.id()).toUri();
         return ResponseEntity.created(location).body(CardapioItemMapper.toCardapioItemResponseDTO(response));
@@ -51,29 +57,46 @@ public class CardapioItemController implements CardapioItemControllerDocs {
 
     @Override
     @PostMapping("/itens/batch")
-    public ResponseEntity<List<CardapioItemResponseDTO>> criarItensEmLote(@RequestBody @Valid CreateCardapioItemsBatchDTO dto) {
-        List<CardapioItemResponseDTO> response = criarEmLoteUseCase.criarEmLote(dto);
+    public ResponseEntity<List<CardapioItemResponseDTO>> criarItensEmLote(
+            @RequestBody @Valid CreateCardapioItemsBatchDTO dto)
+    {
+        var inputs = CardapioItemMapper.toCriarCardapioItemsBatchInput(dto);
+        var outputs = criarEmLoteUseCase.criarEmLote(inputs);
+
+        List<CardapioItemResponseDTO> response = CardapioItemMapper.toResponseDTOList(outputs);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @Override
     @GetMapping("/cardapio/{cardapioId}")
-    public ResponseEntity<Page<CardapioItemResponseDTO>> listarItens(@PathVariable Long cardapioId, @PageableDefault(size = 10, sort = {"nome"}) Pageable pageable) {
-        var page = listarUseCase.listar(cardapioId, pageable);
-        return ResponseEntity.ok(page);
+    public ResponseEntity<Page<CardapioItemResponseDTO>> listarItens(@PathVariable Long cardapioId,
+                                                                     @PageableDefault(size = 10, sort = {"nome"}) Pageable pageable)
+    {
+        var outputPage = listarUseCase.listar(cardapioId, pageable);
+        var responsePage = CardapioItemMapper.toCardapioItemResponseDTOPage(outputPage);
+
+        return ResponseEntity.ok(responsePage);
     }
 
     @Override
     @PutMapping("/{id}")
-    public ResponseEntity<CardapioItemResponseDTO> atualizarItem(@PathVariable Long id, @RequestBody @Valid UpdateCardapioItemDTO dto) {
-        var response = atualizarUseCase.atualizar(id, dto);
+    public ResponseEntity<CardapioItemResponseDTO> atualizarItem(@PathVariable Long id,
+                                                                 @RequestBody @Valid UpdateCardapioItemDTO dto)
+    {
+        var input = CardapioItemMapper.toAtualizarCardapioItemInput(dto);
+        var output = atualizarUseCase.atualizar(id, input);
+        var response = CardapioItemMapper.toCardapioItemResponseDTO(output);
         return ResponseEntity.ok(response);
     }
 
     @Override
     @PutMapping("/itens/batch")
-    public ResponseEntity<List<CardapioItemResponseDTO>> atualizarItensEmLote(@RequestBody @Valid UpdateCardapioItemsBatchDTO dto) {
-        List<CardapioItemResponseDTO> response = atualizarEmLoteUseCase.atualizarEmLote(dto);
+    public ResponseEntity<List<CardapioItemResponseDTO>> atualizarItensEmLote(
+            @RequestBody @Valid UpdateCardapioItemsBatchDTO dto)
+    {
+        var inputs = CardapioItemMapper.toAtualizarCardapioItemBatchInputList(dto);
+        var outputs = atualizarEmLoteUseCase.atualizarEmLote(inputs);
+        var response = CardapioItemMapper.toResponseDTOList(outputs);
         return ResponseEntity.ok(response);
     }
 

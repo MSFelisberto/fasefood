@@ -1,5 +1,6 @@
 package br.com.fiap.fasefood.application.usecases.cardapio.atualizar;
 
+import br.com.fiap.fasefood.application.usecases.cardapio.criar.CriarCardapioItemOutput;
 import br.com.fiap.fasefood.core.entities.CardapioItem;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.gateways.CardapioItemRepository;
@@ -23,26 +24,26 @@ public class AtualizarCardapioItensBatchUseCaseImpl implements AtualizarCardapio
 
     @Override
     @Transactional
-    public List<CardapioItemResponseDTO> atualizarEmLote(UpdateCardapioItemsBatchDTO dto) {
+    public List<CriarCardapioItemOutput> atualizarEmLote(List<AtualizarCardapioItemBatchInput> inputs) {
         List<CardapioItem> itensAtualizados = new ArrayList<>();
 
-        for (UpdateCardapioItemRequestDTO itemDTO : dto.itens()) {
-            CardapioItem item = cardapioItemRepository.findById(itemDTO.id())
-                    .orElseThrow(() -> new ResourceNotFoundException("Item de cardápio com ID: " + itemDTO.id() + " não encontrado."));
+        for (AtualizarCardapioItemBatchInput itemInput : inputs) {
+            CardapioItem item = cardapioItemRepository.findById(itemInput.id())
+                    .orElseThrow(() -> new ResourceNotFoundException("Item de cardápio com ID: " + itemInput.id() + " não encontrado."));
 
             item.atualizar(
-                    itemDTO.nome(),
-                    itemDTO.descricao(),
-                    itemDTO.preco(),
-                    itemDTO.apenasNoLocal(),
-                    itemDTO.caminhoFoto()
+                    itemInput.nome(),
+                    itemInput.descricao(),
+                    itemInput.preco(),
+                    itemInput.apenasNoLocal(),
+                    itemInput.caminhoFoto()
             );
 
             itensAtualizados.add(cardapioItemRepository.salvar(item));
         }
 
         return itensAtualizados.stream()
-                .map(CardapioItemMapper::toResponseDTO)
+                .map(CardapioItemMapper::toCriarCardapioItemOutput)
                 .collect(Collectors.toList());
     }
 }

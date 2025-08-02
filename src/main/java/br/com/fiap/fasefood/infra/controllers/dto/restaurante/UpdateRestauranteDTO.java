@@ -1,6 +1,6 @@
 package br.com.fiap.fasefood.infra.controllers.dto.restaurante;
 
-import br.com.fiap.fasefood.infra.controllers.dto.EnderecoDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.usuario.EnderecoDTO;
 import jakarta.validation.Valid;
 import java.time.LocalTime;
 

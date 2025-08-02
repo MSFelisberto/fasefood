@@ -3,8 +3,6 @@ package br.com.fiap.fasefood.application.usecases.autenticacao.autenticar;
 import br.com.fiap.fasefood.core.entities.Usuario;
 import br.com.fiap.fasefood.core.exceptions.AuthenticationFailedException;
 import br.com.fiap.fasefood.core.gateways.UsuarioRepository;
-import br.com.fiap.fasefood.infra.controllers.dto.LoginRequestDTO;
-import br.com.fiap.fasefood.infra.controllers.dto.LoginResponseDTO;
 import org.springframework.stereotype.Service;
 
 @Service

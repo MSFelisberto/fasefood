@@ -3,7 +3,6 @@ package br.com.fiap.fasefood.application.usecases.autenticacao.atualizar;
 import br.com.fiap.fasefood.core.entities.Usuario;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.gateways.UsuarioRepository;
-import br.com.fiap.fasefood.infra.controllers.dto.ChangeUserPasswordDTO;
 import org.springframework.stereotype.Service;
 
 @Service

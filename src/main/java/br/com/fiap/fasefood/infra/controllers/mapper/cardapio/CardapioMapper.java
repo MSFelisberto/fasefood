@@ -1,11 +1,13 @@
 package br.com.fiap.fasefood.infra.controllers.mapper.cardapio;
 
 import br.com.fiap.fasefood.application.usecases.cardapio.criar.CriarCardapioInput;
+import br.com.fiap.fasefood.application.usecases.cardapio.criar.CriarCardapioOutput;
 import br.com.fiap.fasefood.application.usecases.cardapio.listar.CardapioResponseOutput;
 import br.com.fiap.fasefood.core.entities.Cardapio;
 import br.com.fiap.fasefood.core.entities.Restaurante;
 import br.com.fiap.fasefood.infra.controllers.dto.cardapio.CardapioResponseDTO;
 import br.com.fiap.fasefood.infra.controllers.dto.cardapio.CreateCardapioDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.cardapio.CreateCardapioResponseDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
@@ -47,6 +49,15 @@ public class CardapioMapper {
                 dtos,
                 cardapioResponseOutput.getPageable(),
                 cardapioResponseOutput.getTotalElements()
+        );
+    }
+
+    public static CreateCardapioResponseDTO toResponseCriarCardapioDTO(CriarCardapioOutput cardapioOutput) {
+        if (cardapioOutput == null) {
+            return null;
+        }
+        return new CreateCardapioResponseDTO(
+                cardapioOutput.id()
         );
     }
 }

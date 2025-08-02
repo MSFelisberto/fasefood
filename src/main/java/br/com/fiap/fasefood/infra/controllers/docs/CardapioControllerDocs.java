@@ -2,6 +2,7 @@ package br.com.fiap.fasefood.infra.controllers.docs;
 
 import br.com.fiap.fasefood.infra.controllers.dto.cardapio.CardapioResponseDTO;
 import br.com.fiap.fasefood.infra.controllers.dto.cardapio.CreateCardapioDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.cardapio.CreateCardapioResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -22,7 +23,7 @@ public interface CardapioControllerDocs {
                     @ApiResponse(responseCode = "404", description = "Restaurante não encontrado")
             }
     )
-    ResponseEntity<CardapioResponseDTO> criarCardapio(
+    ResponseEntity<CreateCardapioResponseDTO> criarCardapio(
             @Parameter(description = "Dados para criação do cardápio") CreateCardapioDTO dto,
             UriComponentsBuilder uriBuilder
     );

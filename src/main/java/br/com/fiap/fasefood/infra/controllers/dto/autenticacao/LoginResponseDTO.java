@@ -1,4 +1,4 @@
-package br.com.fiap.fasefood.infra.controllers.dto;
+package br.com.fiap.fasefood.infra.controllers.dto.autenticacao;
 
 
 public record LoginResponseDTO(

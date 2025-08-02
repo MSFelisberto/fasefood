@@ -2,8 +2,10 @@ package br.com.fiap.fasefood.infra.controllers;
 
 import br.com.fiap.fasefood.application.usecases.cardapio.criar.CriarCardapioUseCase;
 import br.com.fiap.fasefood.application.usecases.cardapio.listar.ListarCardapiosUseCase;
+import br.com.fiap.fasefood.infra.controllers.docs.CardapioControllerDocs;
 import br.com.fiap.fasefood.infra.controllers.dto.cardapio.CardapioResponseDTO;
 import br.com.fiap.fasefood.infra.controllers.dto.cardapio.CreateCardapioDTO;
+import br.com.fiap.fasefood.infra.controllers.dto.cardapio.CreateCardapioResponseDTO;
 import br.com.fiap.fasefood.infra.controllers.mapper.cardapio.CardapioMapper;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -17,7 +19,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/api/v1/cardapios")
-public class CardapioController {
+public class CardapioController implements CardapioControllerDocs {
 
     private final CriarCardapioUseCase criarUseCase;
     private final ListarCardapiosUseCase listarUseCase;
@@ -28,8 +30,12 @@ public class CardapioController {
     }
 
     @PostMapping
-    public ResponseEntity<CardapioResponseDTO> criarCardapio(@RequestBody @Valid CreateCardapioDTO dto, UriComponentsBuilder uriBuilder) {
-        var response = criarUseCase.criar(CardapioMapper.toCriarCardapioInput(dto));
+    public ResponseEntity<CreateCardapioResponseDTO> criarCardapio(@RequestBody @Valid CreateCardapioDTO dto,
+                                                                   UriComponentsBuilder uriBuilder) {
+        var output = criarUseCase.criar(CardapioMapper.toCriarCardapioInput(dto));
+
+        var response = CardapioMapper.toResponseCriarCardapioDTO(output);
+
         URI location = uriBuilder.path("/api/v1/cardapios/{id}").buildAndExpand(response.id()).toUri();
         return ResponseEntity.created(location).body(response);
     }

@@ -6,11 +6,7 @@ import br.com.fiap.fasefood.core.entities.Usuario;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.gateways.TipoUsuarioRepository;
 import br.com.fiap.fasefood.core.gateways.UsuarioRepository;
-import br.com.fiap.fasefood.infra.controllers.dto.ListUserDTO;
-import br.com.fiap.fasefood.infra.controllers.dto.UpdateUserTypeDTO;
-import br.com.fiap.fasefood.infra.controllers.mapper.usuario.UsuarioMapper;
 import jakarta.transaction.Transactional;
-import org.springframework.stereotype.Service;
 
 public class AlterarTipoUsuarioUseCaseImpl implements AlterarTipoUsuarioUseCase {
 

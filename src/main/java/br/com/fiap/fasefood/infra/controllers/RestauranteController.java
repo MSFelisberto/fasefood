@@ -22,7 +22,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
-@Tag(name = "Restaurantes", description = "Endpoints para gerenciamento de restaurantes")
 @RestController
 @RequestMapping("/api/v1/restaurantes")
 public class RestauranteController implements RestauranteControllerDocs {
