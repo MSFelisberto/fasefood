@@ -5,11 +5,8 @@ import br.com.fiap.fasefood.application.usecases.usuario.UsuarioOutput;
 import br.com.fiap.fasefood.core.entities.Restaurante;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.gateways.RestauranteRepository;
-import br.com.fiap.fasefood.infra.controllers.dto.restaurante.RestauranteResponseDTO;
-import br.com.fiap.fasefood.infra.controllers.mapper.restaurante.RestauranteMapper;
-import org.springframework.stereotype.Service;
 
-@Service
+
 public class BuscarRestaurantePorIdUseCaseImpl implements BuscarRestaurantePorIdUseCase {
 
     private final RestauranteRepository restauranteRepository;

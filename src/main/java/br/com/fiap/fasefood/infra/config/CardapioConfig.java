@@ -16,6 +16,7 @@ import br.com.fiap.fasefood.application.usecases.cardapio.listar.ListarCardapios
 import br.com.fiap.fasefood.core.gateways.CardapioItemRepository;
 import br.com.fiap.fasefood.core.gateways.CardapioRepository;
 import br.com.fiap.fasefood.core.gateways.RestauranteRepository;
+import br.com.fiap.fasefood.infra.usecases.decorators.cardapio.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -24,7 +25,8 @@ public class CardapioConfig {
 
     @Bean
     public CriarCardapioUseCase criarCardapioUseCase(CardapioRepository cardapioRepo, RestauranteRepository restauranteRepo, CardapioItemRepository itemRepo) {
-        return new CriarCardapioUseCaseImpl(cardapioRepo, restauranteRepo, itemRepo);
+        var impl = new CriarCardapioUseCaseImpl(cardapioRepo, restauranteRepo, itemRepo);
+        return new TransactionalCriarCardapioUseCase(impl);
     }
 
     @Bean
@@ -39,7 +41,8 @@ public class CardapioConfig {
 
     @Bean
     public CriarCardapioItemsBatchUseCase criarCardapioItemsBatchUseCase(CardapioRepository cardapioRepo, CardapioItemRepository itemRepo) {
-        return new CriarCardapioItemsBatchUseCaseImpl(cardapioRepo, itemRepo);
+        var impl = new CriarCardapioItemsBatchUseCaseImpl(cardapioRepo, itemRepo);
+        return new TransactionalCriarCardapioItemsBatchUseCase(impl);
     }
 
     @Bean
@@ -49,12 +52,14 @@ public class CardapioConfig {
 
     @Bean
     public AtualizarCardapioItemUseCase atualizarCardapioItemUseCase(CardapioItemRepository itemRepo) {
-        return new AtualizarCardapioItemUseCaseImpl(itemRepo);
+        var impl = new AtualizarCardapioItemUseCaseImpl(itemRepo);
+        return new TransactionalAtualizarCardapioItemUseCase(impl);
     }
 
     @Bean
     public AtualizarCardapioItensBatchUseCase atualizarCardapioItensBatchUseCase(CardapioItemRepository itemRepo) {
-        return new AtualizarCardapioItensBatchUseCaseImpl(itemRepo);
+        var impl = new AtualizarCardapioItensBatchUseCaseImpl(itemRepo);
+        return new TransactionalAtualizarCardapioItensBatchUseCase(impl);
     }
 
     @Bean
@@ -64,6 +69,7 @@ public class CardapioConfig {
 
     @Bean
     public RemoverItensCardapioUseCase removerItensCardapioUseCase(CardapioItemRepository itemRepo) {
-        return new RemoverItensCardapioUseCaseImpl(itemRepo);
+        var impl = new RemoverItensCardapioUseCaseImpl(itemRepo);
+        return new TransactionalRemoverItensCardapioUseCase(impl);
     }
 }

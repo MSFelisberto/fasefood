@@ -6,7 +6,7 @@ import br.com.fiap.fasefood.core.entities.Usuario;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.gateways.TipoUsuarioRepository;
 import br.com.fiap.fasefood.core.gateways.UsuarioRepository;
-import jakarta.transaction.Transactional;
+
 
 public class AlterarTipoUsuarioUseCaseImpl implements AlterarTipoUsuarioUseCase {
 
@@ -19,7 +19,6 @@ public class AlterarTipoUsuarioUseCaseImpl implements AlterarTipoUsuarioUseCase 
     }
 
     @Override
-    @Transactional
     public ListUserOutput alterarTipoUsuario(Long usuarioId, UpdateUserTypeInput updateUserTypeInput) {
         Usuario usuario = usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado com ID: " + usuarioId));

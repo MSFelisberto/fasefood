@@ -5,10 +5,7 @@ import br.com.fiap.fasefood.application.usecases.usuario.UsuarioOutput;
 import br.com.fiap.fasefood.core.entities.Restaurante;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.gateways.RestauranteRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-@Service
 public class AtualizarRestauranteUseCaseImpl implements AtualizarRestauranteUseCase {
 
     private final RestauranteRepository restauranteRepository;
@@ -18,7 +15,6 @@ public class AtualizarRestauranteUseCaseImpl implements AtualizarRestauranteUseC
     }
 
     @Override
-    @Transactional
     public RestauranteOutput atualizar(Long id, UpdateRestauranteInput input) {
         Restaurante restaurante = restauranteRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Restaurante não encontrado com ID: " + id));

@@ -6,9 +6,8 @@ import br.com.fiap.fasefood.core.entities.Restaurante;
 import br.com.fiap.fasefood.core.gateways.RestauranteRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
-@Service
+
 public class ListarRestaurantesUseCaseImpl implements ListarRestaurantesUseCase {
 
     private final RestauranteRepository restauranteRepository;

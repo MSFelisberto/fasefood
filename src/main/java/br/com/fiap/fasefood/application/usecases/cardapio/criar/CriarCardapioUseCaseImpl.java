@@ -7,7 +7,7 @@ import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.gateways.CardapioItemRepository;
 import br.com.fiap.fasefood.core.gateways.CardapioRepository;
 import br.com.fiap.fasefood.core.gateways.RestauranteRepository;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,6 @@ public class CriarCardapioUseCaseImpl implements CriarCardapioUseCase {
     }
 
     @Override
-    @Transactional
     public CriarCardapioOutput criar(CriarCardapioInput criarCardapioInput) {
         Restaurante restaurante = restauranteRepository.findById(criarCardapioInput.restauranteId())
                 .orElseThrow(() -> new ResourceNotFoundException("Restaurante com ID: " + criarCardapioInput.restauranteId() + " não encontrado."));

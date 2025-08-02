@@ -8,8 +8,6 @@ import br.com.fiap.fasefood.core.exceptions.ResourceAlreadyExists;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.gateways.TipoUsuarioRepository;
 import br.com.fiap.fasefood.core.gateways.UsuarioRepository;
-import br.com.fiap.fasefood.infra.controllers.mapper.usuario.UsuarioMapper;
-import org.springframework.stereotype.Service;
 
 public class CriarUsuarioUseCaseImpl implements CriarUsuarioUseCase {
 

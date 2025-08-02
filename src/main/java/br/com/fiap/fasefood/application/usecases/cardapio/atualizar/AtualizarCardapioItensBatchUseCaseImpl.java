@@ -4,11 +4,8 @@ import br.com.fiap.fasefood.application.usecases.cardapio.criar.CriarCardapioIte
 import br.com.fiap.fasefood.core.entities.CardapioItem;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.gateways.CardapioItemRepository;
-import br.com.fiap.fasefood.infra.controllers.dto.cardapio.CardapioItemResponseDTO;
-import br.com.fiap.fasefood.infra.controllers.dto.cardapio.UpdateCardapioItemRequestDTO;
-import br.com.fiap.fasefood.infra.controllers.dto.cardapio.UpdateCardapioItemsBatchDTO;
 import br.com.fiap.fasefood.infra.controllers.mapper.cardapio.CardapioItemMapper;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +20,6 @@ public class AtualizarCardapioItensBatchUseCaseImpl implements AtualizarCardapio
     }
 
     @Override
-    @Transactional
     public List<CriarCardapioItemOutput> atualizarEmLote(List<AtualizarCardapioItemBatchInput> inputs) {
         List<CardapioItem> itensAtualizados = new ArrayList<>();
 

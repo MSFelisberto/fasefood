@@ -3,7 +3,6 @@ package br.com.fiap.fasefood.application.usecases.usuario.deletar;
 import br.com.fiap.fasefood.core.entities.Usuario;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.gateways.UsuarioRepository;
-import org.springframework.stereotype.Service;
 
 public class DeletarUsuarioUseCaseImpl implements DeletarUsuarioUseCase {
 

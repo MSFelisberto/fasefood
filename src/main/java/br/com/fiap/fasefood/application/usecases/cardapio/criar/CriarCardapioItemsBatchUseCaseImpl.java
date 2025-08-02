@@ -6,7 +6,7 @@ import br.com.fiap.fasefood.core.entities.CardapioItem;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.gateways.CardapioItemRepository;
 import br.com.fiap.fasefood.core.gateways.CardapioRepository;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,6 @@ public class CriarCardapioItemsBatchUseCaseImpl implements CriarCardapioItemsBat
     }
 
     @Override
-    @Transactional
     public List<CriarCardapioItemOutput> criarEmLote(CriarCardapioItemsBatchInput input) {
         Cardapio cardapio = cardapioRepository.findById(input.cardapioId())
                 .orElseThrow(() -> new ResourceNotFoundException("Cardápio com ID: " + input.cardapioId() + " não encontrado."));

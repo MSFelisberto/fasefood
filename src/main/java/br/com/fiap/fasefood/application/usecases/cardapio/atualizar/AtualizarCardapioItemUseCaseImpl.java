@@ -4,10 +4,8 @@ import br.com.fiap.fasefood.application.usecases.cardapio.criar.CriarCardapioIte
 import br.com.fiap.fasefood.core.entities.CardapioItem;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.gateways.CardapioItemRepository;
-import br.com.fiap.fasefood.infra.controllers.dto.cardapio.CardapioItemResponseDTO;
-import br.com.fiap.fasefood.infra.controllers.dto.cardapio.UpdateCardapioItemDTO;
 import br.com.fiap.fasefood.infra.controllers.mapper.cardapio.CardapioItemMapper;
-import org.springframework.transaction.annotation.Transactional;
+
 
 public class AtualizarCardapioItemUseCaseImpl implements AtualizarCardapioItemUseCase {
 
@@ -18,7 +16,6 @@ public class AtualizarCardapioItemUseCaseImpl implements AtualizarCardapioItemUs
     }
 
     @Override
-    @Transactional
     public CriarCardapioItemOutput atualizar(Long id, AtualizarCardapioItemInput input) {
         CardapioItem item = cardapioItemRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Item de cardápio com ID: " + id + " não encontrado."));

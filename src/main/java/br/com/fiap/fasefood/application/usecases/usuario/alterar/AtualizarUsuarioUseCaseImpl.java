@@ -5,7 +5,7 @@ import br.com.fiap.fasefood.core.entities.Endereco;
 import br.com.fiap.fasefood.core.entities.Usuario;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.gateways.UsuarioRepository;
-import org.springframework.transaction.annotation.Transactional;
+
 
 public class AtualizarUsuarioUseCaseImpl implements AtualizarUsuarioUseCase {
     private final UsuarioRepository usuarioRepository;
@@ -15,7 +15,6 @@ public class AtualizarUsuarioUseCaseImpl implements AtualizarUsuarioUseCase {
     }
 
     @Override
-    @Transactional
     public ListUserOutput atualizar(Long id, UpdateUserDataInput dados) {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado com ID: " + id));

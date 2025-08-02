@@ -12,6 +12,7 @@ import br.com.fiap.fasefood.application.usecases.restaurante.listar.ListarRestau
 import br.com.fiap.fasefood.application.usecases.restaurante.listar.ListarRestaurantesUseCaseImpl;
 import br.com.fiap.fasefood.core.gateways.RestauranteRepository;
 import br.com.fiap.fasefood.core.gateways.UsuarioRepository;
+import br.com.fiap.fasefood.infra.usecases.decorators.restaurante.TransactionalAtualizarRestauranteUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -25,7 +26,8 @@ public class RestauranteConfig {
 
     @Bean
     public AtualizarRestauranteUseCase atualizarRestauranteUseCase(RestauranteRepository restauranteRepository) {
-        return new AtualizarRestauranteUseCaseImpl(restauranteRepository);
+        var impl = new AtualizarRestauranteUseCaseImpl(restauranteRepository);
+        return new TransactionalAtualizarRestauranteUseCase(impl);
     }
 
     @Bean

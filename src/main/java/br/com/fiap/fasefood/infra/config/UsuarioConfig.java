@@ -14,6 +14,8 @@ import br.com.fiap.fasefood.application.usecases.usuario.listar.ListarTodosUsuar
 import br.com.fiap.fasefood.application.usecases.usuario.listar.ListarTodosUsuariosUseCaseImpl;
 import br.com.fiap.fasefood.core.gateways.TipoUsuarioRepository;
 import br.com.fiap.fasefood.core.gateways.UsuarioRepository;
+import br.com.fiap.fasefood.infra.usecases.decorators.usuario.TransactionalAlterarTipoUsuarioUseCase;
+import br.com.fiap.fasefood.infra.usecases.decorators.usuario.TransactionalAtualizarUsuarioUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -27,7 +29,8 @@ public class UsuarioConfig {
 
     @Bean
     public AtualizarUsuarioUseCase atualizarUsuarioUseCase(UsuarioRepository usuarioRepository) {
-        return new AtualizarUsuarioUseCaseImpl(usuarioRepository);
+        var impl = new AtualizarUsuarioUseCaseImpl(usuarioRepository);
+        return new TransactionalAtualizarUsuarioUseCase(impl);
     }
 
     @Bean
@@ -47,6 +50,7 @@ public class UsuarioConfig {
 
     @Bean
     public AlterarTipoUsuarioUseCase alterarTipoUsuarioUseCase(UsuarioRepository usuarioRepository, TipoUsuarioRepository tipoUsuarioRepository) {
-        return new AlterarTipoUsuarioUseCaseImpl(usuarioRepository, tipoUsuarioRepository);
+        var impl = new AlterarTipoUsuarioUseCaseImpl(usuarioRepository, tipoUsuarioRepository);
+        return new TransactionalAlterarTipoUsuarioUseCase(impl);
     }
 }

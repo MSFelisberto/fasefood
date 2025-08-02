@@ -9,9 +9,8 @@ import br.com.fiap.fasefood.core.exceptions.RegraDeNegocioException;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.gateways.RestauranteRepository;
 import br.com.fiap.fasefood.core.gateways.UsuarioRepository;
-import org.springframework.stereotype.Service;
 
-@Service
+
 public class CriarRestauranteUseCaseImpl implements CriarRestauranteUseCase {
 
     private final RestauranteRepository restauranteRepository;
