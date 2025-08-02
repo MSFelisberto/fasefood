@@ -9,8 +9,6 @@ import br.com.fiap.fasefood.core.exceptions.RegraDeNegocioException;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.gateways.RestauranteRepository;
 import br.com.fiap.fasefood.core.gateways.UsuarioRepository;
-import br.com.fiap.fasefood.infra.controllers.dto.restaurante.RestauranteResponseDTO;
-import br.com.fiap.fasefood.infra.controllers.mapper.restaurante.RestauranteMapper;
 import org.springframework.stereotype.Service;
 
 @Service

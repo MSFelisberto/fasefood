@@ -1,13 +1,11 @@
 package br.com.fiap.fasefood.application.usecases.cardapio.criar;
 
+import br.com.fiap.fasefood.application.usecases.cardapio.mappers.CardapioOutputMapper;
 import br.com.fiap.fasefood.core.entities.Cardapio;
 import br.com.fiap.fasefood.core.entities.CardapioItem;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.gateways.CardapioItemRepository;
 import br.com.fiap.fasefood.core.gateways.CardapioRepository;
-import br.com.fiap.fasefood.infra.controllers.dto.cardapio.CreateCardapioItemsBatchDTO;
-import br.com.fiap.fasefood.infra.controllers.dto.cardapio.ItensCreateCardapioItemDTO;
-import br.com.fiap.fasefood.infra.controllers.mapper.cardapio.CardapioItemMapper;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -32,12 +30,20 @@ public class CriarCardapioItemsBatchUseCaseImpl implements CriarCardapioItemsBat
 
         List<CardapioItem> itensSalvos = new ArrayList<>();
         for (ItemCardapioInput itemInput : input.itens()) {
-            CardapioItem item = CardapioItemMapper.toDomain(itemInput, cardapio);
+            CardapioItem item = CardapioItem.create(
+                    null,
+                    cardapio,
+                    itemInput.nome(),
+                    itemInput.descricao(),
+                    itemInput.preco(),
+                    itemInput.apenasNoLocal(),
+                    itemInput.caminhoFoto(),
+                    true);
             itensSalvos.add(cardapioItemRepository.salvar(item));
         }
 
         return itensSalvos.stream()
-                .map(CardapioItemMapper::toCriarCardapioItemOutput)
+                .map(CardapioOutputMapper::toCriarCardapioItemOutput)
                 .collect(Collectors.toList());
     }
 }

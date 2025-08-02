@@ -5,8 +5,10 @@ import br.com.fiap.fasefood.application.usecases.cardapio.atualizar.AtualizarCar
 import br.com.fiap.fasefood.application.usecases.cardapio.atualizar.AtualizarCardapioItensBatchUseCase;
 import br.com.fiap.fasefood.application.usecases.cardapio.atualizar.AtualizarCardapioItensBatchUseCaseImpl;
 import br.com.fiap.fasefood.application.usecases.cardapio.criar.*;
-import br.com.fiap.fasefood.application.usecases.cardapio.deletar.DeletarCardapioItemUseCase;
-import br.com.fiap.fasefood.application.usecases.cardapio.deletar.DeletarCardapioItemUseCaseImpl;
+import br.com.fiap.fasefood.application.usecases.cardapio.deletar.RemoverCardapioItemUseCase;
+import br.com.fiap.fasefood.application.usecases.cardapio.deletar.RemoverCardapioItemUseCaseImpl;
+import br.com.fiap.fasefood.application.usecases.cardapio.deletar.RemoverItensCardapioUseCase;
+import br.com.fiap.fasefood.application.usecases.cardapio.deletar.RemoverItensCardapioUseCaseImpl;
 import br.com.fiap.fasefood.application.usecases.cardapio.listar.ListarCardapioItensUseCase;
 import br.com.fiap.fasefood.application.usecases.cardapio.listar.ListarCardapioItensUseCaseImpl;
 import br.com.fiap.fasefood.application.usecases.cardapio.listar.ListarCardapiosUseCase;
@@ -56,7 +58,12 @@ public class CardapioConfig {
     }
 
     @Bean
-    public DeletarCardapioItemUseCase deletarCardapioItemUseCase(CardapioItemRepository itemRepo) {
-        return new DeletarCardapioItemUseCaseImpl(itemRepo);
+    public RemoverCardapioItemUseCase removerCardapioItemUseCase(CardapioItemRepository itemRepo) {
+        return new RemoverCardapioItemUseCaseImpl(itemRepo);
+    }
+
+    @Bean
+    public RemoverItensCardapioUseCase removerItensCardapioUseCase(CardapioItemRepository itemRepo) {
+        return new RemoverItensCardapioUseCaseImpl(itemRepo);
     }
 }

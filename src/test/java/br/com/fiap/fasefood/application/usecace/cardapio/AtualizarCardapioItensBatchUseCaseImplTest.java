@@ -1,6 +1,8 @@
 package br.com.fiap.fasefood.application.usecace.cardapio;
 
+import br.com.fiap.fasefood.application.usecases.cardapio.atualizar.AtualizarCardapioItemBatchInput;
 import br.com.fiap.fasefood.application.usecases.cardapio.atualizar.AtualizarCardapioItensBatchUseCaseImpl;
+import br.com.fiap.fasefood.application.usecases.cardapio.criar.CriarCardapioItemOutput;
 import br.com.fiap.fasefood.core.entities.Cardapio;
 import br.com.fiap.fasefood.core.entities.CardapioItem;
 import br.com.fiap.fasefood.core.entities.Endereco;
@@ -12,6 +14,7 @@ import br.com.fiap.fasefood.core.gateways.CardapioItemRepository;
 import br.com.fiap.fasefood.infra.controllers.dto.cardapio.CardapioItemResponseDTO;
 import br.com.fiap.fasefood.infra.controllers.dto.cardapio.UpdateCardapioItemRequestDTO;
 import br.com.fiap.fasefood.infra.controllers.dto.cardapio.UpdateCardapioItemsBatchDTO;
+import br.com.fiap.fasefood.infra.controllers.mapper.cardapio.CardapioItemMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,8 +28,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -46,38 +48,42 @@ public class AtualizarCardapioItensBatchUseCaseImplTest {
         atualizarCardapioItensBatchUseCaseTest = new AtualizarCardapioItensBatchUseCaseImpl(cardapioItemRepository);
     }
 
-
     @Test
     public void deveAtualizarComSucesso() {
-        UpdateCardapioItemsBatchDTO updateCardapioItemDTO = buildUpdateCardapioItemsBatchDTO();
+        UpdateCardapioItemsBatchDTO updateDto = buildUpdateCardapioItemsBatchDTO();
+        List<AtualizarCardapioItemBatchInput> inputs = CardapioItemMapper.toAtualizarCardapioItemBatchInputList(updateDto);
+
         CardapioItem cardapioItem = buildCardapioItem();
         when(cardapioItemRepository.findById(1L)).thenReturn(Optional.of(cardapioItem));
-        when(cardapioItemRepository.salvar(any())).thenReturn(any());
+        when(cardapioItemRepository.salvar(any())).thenReturn(cardapioItem);
 
-        List<CardapioItemResponseDTO> response = atualizarCardapioItensBatchUseCaseTest.atualizarEmLote(updateCardapioItemDTO);
+        List<CriarCardapioItemOutput> response = atualizarCardapioItensBatchUseCaseTest.atualizarEmLote(inputs);
 
         verify(cardapioItemRepository, times(1)).salvar(any());
+        assertNotNull(response);
+        assertFalse(response.isEmpty());
     }
 
     @Test
     public void deveLancarExcecao_QuandoCardapioNaoEncontrado() {
-        UpdateCardapioItemsBatchDTO updateCardapioItemDTO = buildUpdateCardapioItemsBatchDTO();
+        UpdateCardapioItemsBatchDTO updateDto = buildUpdateCardapioItemsBatchDTO();
+        List<AtualizarCardapioItemBatchInput> inputs = CardapioItemMapper.toAtualizarCardapioItemBatchInputList(updateDto);
 
         when(cardapioItemRepository.findById(1L)).thenReturn(Optional.empty());
+
         ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
-            atualizarCardapioItensBatchUseCaseTest.atualizarEmLote(updateCardapioItemDTO);
+            atualizarCardapioItensBatchUseCaseTest.atualizarEmLote(inputs);
         });
 
         assertEquals("Item de cardápio com ID: 1 não encontrado.", exception.getMessage());
     }
 
-
     private UpdateCardapioItemsBatchDTO buildUpdateCardapioItemsBatchDTO (){
-        return new UpdateCardapioItemsBatchDTO(List.of(buildUpdateCardapioItemDTO()));
+        return new UpdateCardapioItemsBatchDTO(List.of(buildUpdateCardapioItemRequestDTO()));
 
     }
 
-    private UpdateCardapioItemRequestDTO buildUpdateCardapioItemDTO(){
+    private UpdateCardapioItemRequestDTO buildUpdateCardapioItemRequestDTO(){
         BigDecimal bigDecimal = new BigDecimal(15);
         return new UpdateCardapioItemRequestDTO(1L,"teste update","validando update",bigDecimal, false,"testePathFoto");
     }

@@ -85,7 +85,19 @@ public interface CardapioItemControllerDocs {
                     @ApiResponse(responseCode = "404", description = "Item não encontrado")
             }
     )
-    ResponseEntity<Void> deletarItem(
-            @Parameter(description = "ID do item a ser deletado") Long id
+    ResponseEntity<Void> removerItem(
+            @Parameter(description = "ID do item a ser removido") Long id
+    );
+
+    @Operation(
+            summary = "Remover múltiplos itens do cardápio",
+            description = "Desativa uma lista de itens de um cardápio (soft delete) em uma única requisição.",
+            responses = {
+                    @ApiResponse(responseCode = "204", description = "Itens desativados com sucesso"),
+                    @ApiResponse(responseCode = "404", description = "Um ou mais itens não foram encontrados")
+            }
+    )
+    ResponseEntity<Void> removerItens(
+            @Parameter(description = "Lista de IDs dos itens a serem removidos") RemoverItensCardapioDTO dto
     );
 }

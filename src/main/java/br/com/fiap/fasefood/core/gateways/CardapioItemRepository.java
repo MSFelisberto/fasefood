@@ -10,5 +10,5 @@ public interface CardapioItemRepository {
     CardapioItem salvar(CardapioItem item);
     Optional<CardapioItem> findById(Long id);
     Page<CardapioItem> findByCardapioId(Long cardapioId, Pageable pageable);
-    void deletar(Long id);
+    void remover(Long id);
 }

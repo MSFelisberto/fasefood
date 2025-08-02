@@ -42,7 +42,7 @@ public class CardapioItemRepositoryImpl implements CardapioItemRepository {
 
     @Override
     @Transactional
-    public void deletar(Long id) {
+    public void remover(Long id) {
         CardapioItem item = this.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Item de cardápio com ID: " + id + " não encontrado para deleção."));
 

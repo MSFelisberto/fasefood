@@ -1,6 +1,8 @@
 package br.com.fiap.fasefood.application.usecace.cardapio;
 
+import br.com.fiap.fasefood.application.usecases.cardapio.atualizar.AtualizarCardapioItemInput;
 import br.com.fiap.fasefood.application.usecases.cardapio.atualizar.AtualizarCardapioItemUseCaseImpl;
+import br.com.fiap.fasefood.application.usecases.cardapio.criar.CriarCardapioItemOutput;
 import br.com.fiap.fasefood.core.entities.Cardapio;
 import br.com.fiap.fasefood.core.entities.CardapioItem;
 import br.com.fiap.fasefood.core.entities.Endereco;
@@ -9,8 +11,8 @@ import br.com.fiap.fasefood.core.entities.TipoUsuario;
 import br.com.fiap.fasefood.core.entities.Usuario;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.gateways.CardapioItemRepository;
-import br.com.fiap.fasefood.infra.controllers.dto.cardapio.CardapioItemResponseDTO;
 import br.com.fiap.fasefood.infra.controllers.dto.cardapio.UpdateCardapioItemDTO;
+import br.com.fiap.fasefood.infra.controllers.mapper.cardapio.CardapioItemMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,8 +25,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -47,26 +48,33 @@ public class AtualizarCardapioItemUseCaseImplTest {
     @Test
     public void deveAtualizarComSucesso() {
         UpdateCardapioItemDTO updateCardapioItemDTO = buildUpdateCardapioItemDTO();
+        AtualizarCardapioItemInput input = CardapioItemMapper.toAtualizarCardapioItemInput(updateCardapioItemDTO);
+
         CardapioItem cardapioItem = buildCardapioItem();
         when(cardapioItemRepository.findById(1L)).thenReturn(Optional.of(cardapioItem));
-        when(cardapioItemRepository.salvar(any())).thenReturn(any());
+        when(cardapioItemRepository.salvar(any())).thenReturn(cardapioItem); // Retornar o item para o mapper
 
-        CardapioItemResponseDTO response = atualizarCardapioItemUseCaseTest.atualizar(1L, updateCardapioItemDTO);
+        CriarCardapioItemOutput response = atualizarCardapioItemUseCaseTest.atualizar(1L, input);
 
         verify(cardapioItemRepository, times(1)).salvar(any());
+        assertNotNull(response);
     }
 
     @Test
     public void deveLancarExcecao_QuandoCardapioNaoEncontrado() {
         UpdateCardapioItemDTO updateCardapioItemDTO = buildUpdateCardapioItemDTO();
+        AtualizarCardapioItemInput input = CardapioItemMapper.toAtualizarCardapioItemInput(updateCardapioItemDTO);
 
         when(cardapioItemRepository.findById(1L)).thenReturn(Optional.empty());
+
         ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
-            atualizarCardapioItemUseCaseTest.atualizar(1L, updateCardapioItemDTO);
+            atualizarCardapioItemUseCaseTest.atualizar(1L, input);
         });
 
         assertEquals("Item de cardápio com ID: 1 não encontrado.", exception.getMessage());
     }
+
+    // Métodos de build (buildUpdateCardapioItemDTO, etc.) permanecem os mesmos
     private Endereco buildEndereco(){
         return Endereco.criarEndereco(1L, "logradouro", "01", "0000001", "complemento", "bairro","cidade", "uf");
     }
@@ -101,6 +109,5 @@ public class AtualizarCardapioItemUseCaseImplTest {
         BigDecimal bigDecimal = new BigDecimal(15);
         return new UpdateCardapioItemDTO("teste update","validando update",bigDecimal, false,"testePathFoto");
     }
-
 
 }

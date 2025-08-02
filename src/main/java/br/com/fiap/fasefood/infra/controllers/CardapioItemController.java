@@ -4,7 +4,8 @@ import br.com.fiap.fasefood.application.usecases.cardapio.atualizar.AtualizarCar
 import br.com.fiap.fasefood.application.usecases.cardapio.atualizar.AtualizarCardapioItensBatchUseCase;
 import br.com.fiap.fasefood.application.usecases.cardapio.criar.CriarCardapioItemUseCase;
 import br.com.fiap.fasefood.application.usecases.cardapio.criar.CriarCardapioItemsBatchUseCase;
-import br.com.fiap.fasefood.application.usecases.cardapio.deletar.DeletarCardapioItemUseCase;
+import br.com.fiap.fasefood.application.usecases.cardapio.deletar.RemoverCardapioItemUseCase;
+import br.com.fiap.fasefood.application.usecases.cardapio.deletar.RemoverItensCardapioUseCase;
 import br.com.fiap.fasefood.application.usecases.cardapio.listar.ListarCardapioItensUseCase;
 import br.com.fiap.fasefood.infra.controllers.docs.CardapioItemControllerDocs;
 import br.com.fiap.fasefood.infra.controllers.dto.cardapio.*;
@@ -28,20 +29,23 @@ public class CardapioItemController implements CardapioItemControllerDocs {
     private final CriarCardapioItemUseCase criarUseCase;
     private final ListarCardapioItensUseCase listarUseCase;
     private final AtualizarCardapioItemUseCase atualizarUseCase;
-    private final DeletarCardapioItemUseCase deletarUseCase;
+    private final RemoverCardapioItemUseCase removerUseCase;
+    private final RemoverItensCardapioUseCase removerItensUseCase;
     private final CriarCardapioItemsBatchUseCase criarEmLoteUseCase;
     private final AtualizarCardapioItensBatchUseCase atualizarEmLoteUseCase;
 
     public CardapioItemController(CriarCardapioItemUseCase criarUseCase,
                                   ListarCardapioItensUseCase listarUseCase,
                                   AtualizarCardapioItemUseCase atualizarUseCase,
-                                  DeletarCardapioItemUseCase deletarUseCase,
+                                  RemoverCardapioItemUseCase removerUseCase,
+                                  RemoverItensCardapioUseCase removerItensUseCase,
                                   CriarCardapioItemsBatchUseCase criarEmLoteUseCase,
                                   AtualizarCardapioItensBatchUseCase atualizarEmLoteUseCase) {
         this.criarUseCase = criarUseCase;
         this.listarUseCase = listarUseCase;
         this.atualizarUseCase = atualizarUseCase;
-        this.deletarUseCase = deletarUseCase;
+        this.removerUseCase = removerUseCase;
+        this.removerItensUseCase = removerItensUseCase;
         this.criarEmLoteUseCase = criarEmLoteUseCase;
         this.atualizarEmLoteUseCase = atualizarEmLoteUseCase;
     }
@@ -102,8 +106,14 @@ public class CardapioItemController implements CardapioItemControllerDocs {
 
     @Override
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarItem(@PathVariable Long id) {
-        deletarUseCase.deletar(id);
+    public ResponseEntity<Void> removerItem(@PathVariable Long id) {
+        removerUseCase.remover(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/itens/batch")
+    public ResponseEntity<Void> removerItens(@RequestBody @Valid RemoverItensCardapioDTO dto) {
+        removerItensUseCase.removerEmLote(dto.itemIds());
         return ResponseEntity.noContent().build();
     }
 }

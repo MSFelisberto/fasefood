@@ -44,21 +44,6 @@ public class CardapioItemMapper {
         );
     }
 
-    public static CardapioItemResponseDTO toResponseDTO(CardapioItem item) {
-        if (item == null || item.getCardapio() == null) {
-            return null;
-        }
-        return new CardapioItemResponseDTO(
-                item.getId(),
-                item.getCardapio().getId(),
-                item.getNome(),
-                item.getDescricao(),
-                item.getPreco(),
-                item.isApenasNoLocal(),
-                item.getCaminhoFoto()
-        );
-    }
-
     public static List<CriarCardapioItemInput> toCriarCardapioItemInput(List<ItensCreateCardapioItemDTO> itensCardapioDTO) {
         List<CriarCardapioItemInput> criarCardapioItemInputs = new ArrayList<>();
 
