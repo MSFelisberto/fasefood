@@ -1,5 +1,6 @@
 package br.com.fiap.fasefood.infra.controllers;
 
+import br.com.fiap.fasefood.application.usecases.shared.paginacao.PaginationInput;
 import br.com.fiap.fasefood.application.usecases.usuario.alterar.AlterarTipoUsuarioUseCase;
 import br.com.fiap.fasefood.application.usecases.usuario.alterar.AtualizarUsuarioUseCase;
 import br.com.fiap.fasefood.application.usecases.usuario.criar.CriarUsuarioOutput;
@@ -60,8 +61,11 @@ public class UsuarioController implements UsuarioControllerDocs {
     public ResponseEntity<Page<ListUserDTO>> listarTodos(
             @PageableDefault(size = 10, sort = {"nome"}) Pageable pageable
     ) {
-        Page<ListUserOutput> usuarios = listarTodosUsuariosUseCase.listar(pageable);
-        return ResponseEntity.ok(UsuarioMapper.toListUserOutputPaginacao(usuarios));
+        var paginacaoInput = UsuarioMapper.toPaginationInput(pageable);
+
+        var pageOutput = listarTodosUsuariosUseCase.listar(paginacaoInput);
+
+        return ResponseEntity.ok(UsuarioMapper.toListUserOutputPaginacao(pageOutput));
     }
 
     @Override

@@ -3,6 +3,8 @@ package br.com.fiap.fasefood.infra.controllers.mapper.cardapio;
 import br.com.fiap.fasefood.application.usecases.cardapio.criar.CriarCardapioInput;
 import br.com.fiap.fasefood.application.usecases.cardapio.criar.CriarCardapioOutput;
 import br.com.fiap.fasefood.application.usecases.cardapio.listar.CardapioResponseOutput;
+import br.com.fiap.fasefood.application.usecases.shared.paginacao.PageOutput;
+import br.com.fiap.fasefood.application.usecases.shared.paginacao.PaginationInput;
 import br.com.fiap.fasefood.core.entities.Cardapio;
 import br.com.fiap.fasefood.core.entities.Restaurante;
 import br.com.fiap.fasefood.infra.controllers.dto.cardapio.CardapioResponseDTO;
@@ -10,6 +12,8 @@ import br.com.fiap.fasefood.infra.controllers.dto.cardapio.CreateCardapioDTO;
 import br.com.fiap.fasefood.infra.controllers.dto.cardapio.CreateCardapioResponseDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -39,16 +43,16 @@ public class CardapioMapper {
         );
     }
 
-    public static Page<CardapioResponseDTO> toRestauranteDtoPaginacao(Page<CardapioResponseOutput> cardapioResponseOutput) {
-        List<CardapioResponseDTO> dtos = cardapioResponseOutput
+    public static Page<CardapioResponseDTO> toRestauranteDtoPaginacao(PageOutput<CardapioResponseOutput> cardapioResponseOutput) {
+        List<CardapioResponseDTO> dtos = cardapioResponseOutput.content()
                 .stream()
                 .map(CardapioMapper::toResponseDTO)
                 .toList();
 
         return new PageImpl<>(
                 dtos,
-                cardapioResponseOutput.getPageable(),
-                cardapioResponseOutput.getTotalElements()
+                PageRequest.of(cardapioResponseOutput.currentPage(), cardapioResponseOutput.size()),
+                cardapioResponseOutput.totalElements()
         );
     }
 
@@ -58,6 +62,28 @@ public class CardapioMapper {
         }
         return new CreateCardapioResponseDTO(
                 cardapioOutput.id()
+        );
+    }
+
+    public static PaginationInput toPaginationInput(Pageable pageable) {
+        if (pageable == null) {
+            return new PaginationInput(0, 10, "id", "ASC");
+        }
+
+        String sortField = "id";
+        String sortDirection = "ASC";
+
+        if (pageable.getSort().isSorted()) {
+            var order = pageable.getSort().iterator().next();
+            sortField = order.getProperty();
+            sortDirection = order.getDirection().name();
+        }
+
+        return new PaginationInput(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                sortField,
+                sortDirection
         );
     }
 }

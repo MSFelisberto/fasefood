@@ -76,7 +76,8 @@ public class CardapioItemController implements CardapioItemControllerDocs {
     public ResponseEntity<Page<CardapioItemResponseDTO>> listarItens(@PathVariable Long cardapioId,
                                                                      @PageableDefault(size = 10, sort = {"nome"}) Pageable pageable)
     {
-        var outputPage = listarUseCase.listar(cardapioId, pageable);
+        var paginacaoInput = CardapioItemMapper.toPaginationInput(pageable);
+        var outputPage = listarUseCase.listar(cardapioId, paginacaoInput);
         var responsePage = CardapioItemMapper.toCardapioItemResponseDTOPage(outputPage);
 
         return ResponseEntity.ok(responsePage);

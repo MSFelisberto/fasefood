@@ -6,6 +6,7 @@ import br.com.fiap.fasefood.application.usecases.restaurante.criar.CriarRestaura
 import br.com.fiap.fasefood.application.usecases.restaurante.deletar.DeletarRestauranteUseCase;
 import br.com.fiap.fasefood.application.usecases.restaurante.listar.BuscarRestaurantePorIdUseCase;
 import br.com.fiap.fasefood.application.usecases.restaurante.listar.ListarRestaurantesUseCase;
+import br.com.fiap.fasefood.application.usecases.shared.paginacao.PageOutput;
 import br.com.fiap.fasefood.infra.controllers.docs.RestauranteControllerDocs;
 import br.com.fiap.fasefood.infra.controllers.dto.restaurante.CreateRestauranteDTO;
 import br.com.fiap.fasefood.infra.controllers.dto.restaurante.RestauranteResponseDTO;
@@ -65,7 +66,10 @@ public class RestauranteController implements RestauranteControllerDocs {
     public ResponseEntity<Page<RestauranteResponseDTO>> listarRestaurantes(
             @PageableDefault(size = 10, sort = {"nome"}) Pageable pageable
     ) {
-        Page<RestauranteOutput> restaurantes = listarRestaurantesUseCase.listar(pageable);
+        var paginacaoInput = RestauranteMapper.toPaginationInput(pageable);
+
+        PageOutput<RestauranteOutput> restaurantes = listarRestaurantesUseCase.listar(paginacaoInput);
+
         return ResponseEntity.ok(RestauranteMapper.toRestauranteDtoPaginacao(restaurantes));
     }
 

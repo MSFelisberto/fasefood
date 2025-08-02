@@ -1,9 +1,9 @@
 package br.com.fiap.fasefood.application.usecases.restaurante.listar;
 
 import br.com.fiap.fasefood.application.usecases.restaurante.RestauranteOutput;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import br.com.fiap.fasefood.application.usecases.shared.paginacao.PageOutput;
+import br.com.fiap.fasefood.application.usecases.shared.paginacao.PaginationInput;
 
 public interface ListarRestaurantesUseCase {
-    Page<RestauranteOutput> listar(Pageable pageable);
+    PageOutput<RestauranteOutput> listar(PaginationInput pageable);
 }

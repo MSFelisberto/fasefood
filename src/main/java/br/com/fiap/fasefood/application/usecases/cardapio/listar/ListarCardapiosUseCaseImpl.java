@@ -1,9 +1,9 @@
 package br.com.fiap.fasefood.application.usecases.cardapio.listar;
 
 import br.com.fiap.fasefood.application.usecases.cardapio.mappers.CardapioOutputMapper;
+import br.com.fiap.fasefood.application.usecases.shared.paginacao.PageOutput;
+import br.com.fiap.fasefood.application.usecases.shared.paginacao.PaginationInput;
 import br.com.fiap.fasefood.core.gateways.CardapioRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 public class ListarCardapiosUseCaseImpl implements ListarCardapiosUseCase {
 
@@ -14,8 +14,19 @@ public class ListarCardapiosUseCaseImpl implements ListarCardapiosUseCase {
     }
 
     @Override
-    public Page<CardapioResponseOutput> listar(Long restauranteId, Pageable pageable) {
-        return cardapioRepository.findByRestauranteId(restauranteId, pageable)
-                .map(CardapioOutputMapper::toCardapioResponseOutput);
+    public PageOutput<CardapioResponseOutput> listar(Long restauranteId, PaginationInput pageable) {
+        var cardapioPage = cardapioRepository.findByRestauranteId(restauranteId, pageable);
+
+        var content = cardapioPage.content().stream()
+                .map(CardapioOutputMapper::toCardapioResponseOutput)
+                .toList();
+
+        return new PageOutput<>(
+                content,
+                cardapioPage.currentPage(),
+                cardapioPage.size(),
+                cardapioPage.totalPages(),
+                cardapioPage.totalElements()
+        );
     }
 }

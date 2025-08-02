@@ -1,8 +1,9 @@
 package br.com.fiap.fasefood.application.usecases.usuario.listar;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+
+import br.com.fiap.fasefood.application.usecases.shared.paginacao.PageOutput;
+import br.com.fiap.fasefood.application.usecases.shared.paginacao.PaginationInput;
 
 public interface ListarTodosUsuariosUseCase {
-    Page<ListUserOutput> listar(Pageable pageable);
+    PageOutput<ListUserOutput> listar(PaginationInput pageable);
 }

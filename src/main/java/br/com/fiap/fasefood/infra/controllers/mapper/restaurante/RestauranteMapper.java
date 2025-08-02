@@ -4,6 +4,8 @@ import br.com.fiap.fasefood.application.usecases.restaurante.RestauranteOutput;
 import br.com.fiap.fasefood.application.usecases.restaurante.atualizar.UpdateRestauranteInput;
 import br.com.fiap.fasefood.application.usecases.restaurante.criar.CriarRestauranteInput;
 import br.com.fiap.fasefood.application.usecases.shared.endereco.EnderecoInput;
+import br.com.fiap.fasefood.application.usecases.shared.paginacao.PageOutput;
+import br.com.fiap.fasefood.application.usecases.shared.paginacao.PaginationInput;
 import br.com.fiap.fasefood.core.entities.Endereco;
 import br.com.fiap.fasefood.core.entities.Restaurante;
 import br.com.fiap.fasefood.core.entities.Usuario;
@@ -14,6 +16,8 @@ import br.com.fiap.fasefood.infra.controllers.dto.restaurante.UpdateRestauranteD
 import br.com.fiap.fasefood.infra.controllers.mapper.endereco.EnderecoMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -104,16 +108,38 @@ public class RestauranteMapper {
         );
     }
 
-    public static Page<RestauranteResponseDTO> toRestauranteDtoPaginacao(Page<RestauranteOutput> restauranteOutputPage) {
-        List<RestauranteResponseDTO> dtos = restauranteOutputPage
+    public static Page<RestauranteResponseDTO> toRestauranteDtoPaginacao(PageOutput<RestauranteOutput> restauranteOutputPage) {
+        List<RestauranteResponseDTO> dtos = restauranteOutputPage.content()
                 .stream()
                 .map(RestauranteMapper::toResponseDTO)
                 .toList();
 
         return new PageImpl<>(
                 dtos,
-                restauranteOutputPage.getPageable(),
-                restauranteOutputPage.getTotalElements()
+                PageRequest.of(restauranteOutputPage.currentPage(), restauranteOutputPage.size()),
+                restauranteOutputPage.totalElements()
+        );
+    }
+
+    public static PaginationInput toPaginationInput(Pageable pageable) {
+        if (pageable == null) {
+            return new PaginationInput(0, 10, "id", "ASC"); // Padrão
+        }
+
+        String sortField = "id";
+        String sortDirection = "ASC";
+
+        if (pageable.getSort().isSorted()) {
+            var order = pageable.getSort().iterator().next();
+            sortField = order.getProperty();
+            sortDirection = order.getDirection().name();
+        }
+
+        return new PaginationInput(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                sortField,
+                sortDirection
         );
     }
 

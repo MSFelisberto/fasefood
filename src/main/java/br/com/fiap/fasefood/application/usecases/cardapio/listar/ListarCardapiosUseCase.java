@@ -1,8 +1,8 @@
 package br.com.fiap.fasefood.application.usecases.cardapio.listar;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import br.com.fiap.fasefood.application.usecases.shared.paginacao.PageOutput;
+import br.com.fiap.fasefood.application.usecases.shared.paginacao.PaginationInput;
 
 public interface ListarCardapiosUseCase {
-    Page<CardapioResponseOutput> listar(Long restauranteId, Pageable pageable);
+    PageOutput<CardapioResponseOutput> listar(Long restauranteId, PaginationInput pageable);
 }

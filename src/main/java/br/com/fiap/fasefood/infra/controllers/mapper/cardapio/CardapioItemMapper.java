@@ -6,12 +6,16 @@ import br.com.fiap.fasefood.application.usecases.cardapio.criar.CriarCardapioIte
 import br.com.fiap.fasefood.application.usecases.cardapio.criar.CriarCardapioItemInput;
 import br.com.fiap.fasefood.application.usecases.cardapio.criar.CriarCardapioItemOutput;
 import br.com.fiap.fasefood.application.usecases.cardapio.criar.ItemCardapioInput;
+import br.com.fiap.fasefood.application.usecases.shared.paginacao.PageOutput;
+import br.com.fiap.fasefood.application.usecases.shared.paginacao.PaginationInput;
 import br.com.fiap.fasefood.core.entities.Cardapio;
 import br.com.fiap.fasefood.core.entities.CardapioItem;
 
 import br.com.fiap.fasefood.infra.controllers.dto.cardapio.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,12 +130,12 @@ public class CardapioItemMapper {
         return new CriarCardapioItemsBatchInput(dto.cardapioId(), itemInputs);
     }
 
-    public static Page<CardapioItemResponseDTO> toCardapioItemResponseDTOPage(Page<CriarCardapioItemOutput> outputPage) {
-        List<CardapioItemResponseDTO> dtos = outputPage.getContent().stream()
+    public static Page<CardapioItemResponseDTO> toCardapioItemResponseDTOPage(PageOutput<CriarCardapioItemOutput> outputPage) {
+        List<CardapioItemResponseDTO> dtos = outputPage.content().stream()
                 .map(CardapioItemMapper::toCardapioItemResponseDTO)
                 .collect(Collectors.toList());
 
-        return new PageImpl<>(dtos, outputPage.getPageable(), outputPage.getTotalElements());
+        return new PageImpl<>(dtos, PageRequest.of(outputPage.currentPage(), outputPage.size()), outputPage.totalElements());
     }
 
     public static AtualizarCardapioItemInput toAtualizarCardapioItemInput(UpdateCardapioItemDTO dto) {
@@ -155,5 +159,27 @@ public class CardapioItemMapper {
                         itemDto.caminhoFoto()
                 ))
                 .collect(Collectors.toList());
+    }
+
+    public static PaginationInput toPaginationInput(Pageable pageable) {
+        if (pageable == null) {
+            return new PaginationInput(0, 10, "id", "ASC");
+        }
+
+        String sortField = "id";
+        String sortDirection = "ASC";
+
+        if (pageable.getSort().isSorted()) {
+            var order = pageable.getSort().iterator().next();
+            sortField = order.getProperty();
+            sortDirection = order.getDirection().name();
+        }
+
+        return new PaginationInput(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                sortField,
+                sortDirection
+        );
     }
 }

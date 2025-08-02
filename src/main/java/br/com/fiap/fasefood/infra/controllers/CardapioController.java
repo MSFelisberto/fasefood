@@ -45,7 +45,10 @@ public class CardapioController implements CardapioControllerDocs {
             @PathVariable Long restauranteId,
             @PageableDefault(size = 10, sort = {"nome"}) Pageable pageable
     ) {
-        var page = listarUseCase.listar(restauranteId, pageable);
+        var paginacaoInput = CardapioMapper.toPaginationInput(pageable);
+
+        var page = listarUseCase.listar(restauranteId, paginacaoInput);
+
         return ResponseEntity.ok(CardapioMapper.toRestauranteDtoPaginacao(page));
     }
 }

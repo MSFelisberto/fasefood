@@ -1,6 +1,8 @@
 package br.com.fiap.fasefood.infra.controllers.mapper.usuario;
 
 import br.com.fiap.fasefood.application.usecases.shared.endereco.EnderecoInput;
+import br.com.fiap.fasefood.application.usecases.shared.paginacao.PageOutput;
+import br.com.fiap.fasefood.application.usecases.shared.paginacao.PaginationInput;
 import br.com.fiap.fasefood.application.usecases.usuario.alterar.UpdateUserDataInput;
 import br.com.fiap.fasefood.application.usecases.usuario.alterar.UpdateUserTypeInput;
 import br.com.fiap.fasefood.application.usecases.usuario.criar.CriarUsuarioInput;
@@ -13,6 +15,8 @@ import br.com.fiap.fasefood.infra.controllers.dto.usuario.UpdateUserTypeDTO;
 import br.com.fiap.fasefood.infra.controllers.mapper.endereco.EnderecoMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -53,16 +57,16 @@ public class UsuarioMapper {
         );
     }
 
-    public static Page<ListUserDTO> toListUserOutputPaginacao(Page<ListUserOutput> listUserPage) {
-        List<ListUserDTO> dtos = listUserPage
+    public static Page<ListUserDTO> toListUserOutputPaginacao(PageOutput<ListUserOutput> listUserPage) {
+        List<ListUserDTO> dtos = listUserPage.content()
                 .stream()
                 .map(UsuarioMapper::toListUserDTO)
                 .toList();
 
         return new PageImpl<>(
                 dtos,
-                listUserPage.getPageable(),
-                listUserPage.getTotalElements()
+                PageRequest.of(listUserPage.currentPage(), listUserPage.size()),
+                listUserPage.totalElements()
         );
     }
 
@@ -87,6 +91,31 @@ public class UsuarioMapper {
 
     public static UpdateUserTypeInput toUpdateUserTypeInput(UpdateUserTypeDTO dto) {
         return new UpdateUserTypeInput(dto.tipoUsuarioId());
+    }
+
+    public static PaginationInput toPaginationInput(Pageable pageable) {
+        if (pageable == null) {
+            return new PaginationInput(0, 10, "id", "ASC");
+        }
+
+        String sortField = "id"; // Default
+        String sortDirection = "ASC"; // Default
+
+        if (pageable.getSort().isSorted()) {
+            var sortIterator = pageable.getSort().iterator();
+            if (sortIterator.hasNext()) {
+                var order = sortIterator.next();
+                sortField = order.getProperty();
+                sortDirection = order.getDirection().name();
+            }
+        }
+
+        return new PaginationInput(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                sortField,
+                sortDirection
+        );
     }
 
 }
