@@ -68,7 +68,6 @@ public class CriarRestauranteUseCaseImplTest {
 
 
             RestauranteResponseDTO response = criarRestauranteUseCase.criar(createRestauranteDTO);
-
             assertEquals(response, restauranteResponseDTO);
         }
     }
