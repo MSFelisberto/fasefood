@@ -1,10 +1,11 @@
 package br.com.fiap.fasefood.application.usecases.cardapio.atualizar;
 
 import br.com.fiap.fasefood.application.usecases.cardapio.criar.CriarCardapioItemOutput;
+import br.com.fiap.fasefood.application.usecases.cardapio.mappers.CardapioOutputMapper;
 import br.com.fiap.fasefood.core.entities.CardapioItem;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
 import br.com.fiap.fasefood.core.gateways.CardapioItemRepository;
-import br.com.fiap.fasefood.infra.controllers.mapper.cardapio.CardapioItemMapper;
+
 
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class AtualizarCardapioItensBatchUseCaseImpl implements AtualizarCardapio
         }
 
         return itensAtualizados.stream()
-                .map(CardapioItemMapper::toCriarCardapioItemOutput)
+                .map(CardapioOutputMapper::toCriarCardapioItemOutput)
                 .collect(Collectors.toList());
     }
 }
