@@ -6,9 +6,7 @@ import br.com.fiap.fasefood.core.entities.Restaurante;
 import br.com.fiap.fasefood.core.gateways.RestauranteRepository;
 import br.com.fiap.fasefood.infra.controllers.mapper.restaurante.RestauranteEntityMapper;
 import br.com.fiap.fasefood.infra.persistence.jpa.RestauranteJpaRepository;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
