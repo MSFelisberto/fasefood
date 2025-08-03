@@ -42,7 +42,8 @@ A aplicação está containerizada com Docker, utilizando um container para a ap
 
 ### Diagrama do Banco de Dados
 
-```erDiagram
+```mermaid
+erDiagram
     usuarios {
         BIGINT id PK
         VARCHAR nome
