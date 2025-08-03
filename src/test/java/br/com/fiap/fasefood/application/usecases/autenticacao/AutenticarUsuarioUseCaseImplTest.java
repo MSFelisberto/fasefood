@@ -1,0 +1,77 @@
+package br.com.fiap.fasefood.application.usecases.autenticacao;
+
+import br.com.fiap.fasefood.application.usecases.autenticacao.autenticar.AutenticarUsuarioUseCaseImpl;
+import br.com.fiap.fasefood.application.usecases.autenticacao.autenticar.LoginRequestInput;
+import br.com.fiap.fasefood.application.usecases.autenticacao.autenticar.LoginResponseOutput;
+import br.com.fiap.fasefood.core.entities.Usuario;
+import br.com.fiap.fasefood.core.exceptions.AuthenticationFailedException;
+import br.com.fiap.fasefood.core.gateways.UsuarioRepository;
+import br.com.fiap.fasefood.infra.controllers.dto.autenticacao.LoginRequestDTO;
+import br.com.fiap.fasefood.infra.controllers.mapper.autenticar.AutenticarMapper;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.Optional;
+
+@ExtendWith(MockitoExtension.class)
+public class AutenticarUsuarioUseCaseImplTest {
+
+    private AutenticarUsuarioUseCaseImpl autenticarUsuario;
+    private UsuarioRepository usuarioRepository;
+
+    private LoginRequestDTO loginRequest;
+    private Usuario usuario;
+
+    private static final String SENHA_IGUAIS = "1010";
+    private static final String SENHA_DIFERENTE = "10";
+
+    @BeforeEach
+    public void setUp() {
+        usuarioRepository = mock(UsuarioRepository.class);
+        autenticarUsuario = new AutenticarUsuarioUseCaseImpl(usuarioRepository);
+
+        loginRequest = mock(LoginRequestDTO.class);
+        usuario = mock(Usuario.class);
+    }
+
+    @Test
+    public void deveAutenticarComSucesso() {
+        when(usuarioRepository.findByLogin(loginRequest.login())).thenReturn(Optional.of(usuario));
+        when(usuario.getSenha()).thenReturn(SENHA_IGUAIS);
+        when(loginRequest.senha()).thenReturn(SENHA_IGUAIS);
+
+        when(usuarioRepository.findByLogin(loginRequest.login())).thenReturn(Optional.of(usuario));
+        LoginResponseOutput response = autenticarUsuario.autenticar(AutenticarMapper.toRequestInput(loginRequest));
+        assertTrue(response.sucesso());
+        assertEquals("Login realizado com sucesso", response.mensagem());
+    }
+
+    @Test
+    public void deveLancarExcecaoQuandoUsuarioNaoEncontrado() {
+        when(usuarioRepository.findByLogin(loginRequest.login())).thenReturn(Optional.empty());
+
+        AuthenticationFailedException exception = assertThrows(AuthenticationFailedException.class, () -> autenticarUsuario.autenticar(AutenticarMapper.toRequestInput(loginRequest)));
+        assertEquals("Login ou senha incorretos", exception.getMessage());
+    }
+
+    @Test
+    public void deveLancarExcecaoQuandoSenhaIncorreta() {
+        LoginRequestInput loginInput = mock(LoginRequestInput.class);
+        when(usuarioRepository.findByLogin(loginRequest.login())).thenReturn(Optional.of(usuario));
+        when(usuario.getSenha()).thenReturn(SENHA_IGUAIS);
+
+        AuthenticationFailedException exception = assertThrows(AuthenticationFailedException.class,
+                () -> autenticarUsuario.autenticar(loginInput));
+
+        assertEquals("Login ou senha incorretos", exception.getMessage());
+    }
+}
