@@ -28,6 +28,7 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
+		<maven.compiler.release>21</maven.compiler.release>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -81,10 +82,109 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>5.12.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-testcontainers</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>mysql</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.11</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration>
+							<dataFile>${project.build.directory}/jacoco.exec</dataFile>
+							<outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
+							<excludes>
+								<exclude>br/com/fiap/fasefood/core/entities/**</exclude>
+								<exclude>br/com/fiap/fasefood/core/exceptions/**</exclude>
+								<exclude>br/com/fiap/fasefood/core/gateways/**</exclude>
+								<exclude>br/com/fiap/fasefood/infra/controllers/docs/**</exclude>
+								<exclude>br/com/fiap/fasefood/infra/controllers/dto/**</exclude>
+								<exclude>br/com/fiap/fasefood/infra/controllers/mapper/cardapio/**</exclude>
+								<exclude>br/com/fiap/fasefood/infra/controllers/mapper/restaurante/**</exclude>
+								<exclude>br/com/fiap/fasefood/infra/controllers/mapper/autenticar/**</exclude>
+								<exclude>br/com/fiap/fasefood/infra/controllers/mapper/endereco/**</exclude>
+								<exclude>br/com/fiap/fasefood/infra/controllers/mapper/usuario/**</exclude>
+								<exclude>br/com/fiap/fasefood/infra/controllers/mapper/**</exclude>
+								<exclude>br/com/fiap/fasefood/infra/persistence/entities/**</exclude>
+								<exclude>br/com/fiap/fasefood/infra/persistence/jpa/**</exclude>
+								<exclude>**/*Application.class</exclude>
+							</excludes>
+						</configuration>
+					</execution>
+					<execution>
+						<id>check</id>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<rule>
+									<element>BUNDLE</element>
+									<excludes>
+										<exclude>br/com/fiap/fasefood/core/entities/**</exclude>
+										<exclude>br/com/fiap/fasefood/core/exceptions/**</exclude>
+										<exclude>br/com/fiap/fasefood/core/gateways/**</exclude>
+										<exclude>br/com/fiap/fasefood/infra/controllers/docs/**</exclude>
+										<exclude>br/com/fiap/fasefood/infra/controllers/dto/**</exclude>
+										<exclude>br/com/fiap/fasefood/infra/controllers/mapper/cardapio/**</exclude>
+										<exclude>br/com/fiap/fasefood/infra/controllers/mapper/restaurante/**</exclude>
+										<exclude>br/com/fiap/fasefood/infra/controllers/mapper/autenticar/**</exclude>
+										<exclude>br/com/fiap/fasefood/infra/controllers/mapper/endereco/**</exclude>
+										<exclude>br/com/fiap/fasefood/infra/controllers/mapper/usuario/**</exclude>
+										<exclude>br/com/fiap/fasefood/infra/controllers/mapper/**</exclude>
+										<exclude>br/com/fiap/fasefood/infra/persistence/entities/**</exclude>
+										<exclude>br/com/fiap/fasefood/infra/persistence/jpa/**</exclude>
+										<exclude>**/*Application.class</exclude>
+									</excludes>
+								</rule>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.1.2</version>
+				<configuration>
+					<useModulePath>false</useModulePath>
+					<forkCount>1</forkCount>
+					<reuseForks>true</reuseForks>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>

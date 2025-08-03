@@ -1,0 +1,42 @@
+package br.com.fiap.fasefood.application.usecases.usuario.alterar;
+
+import br.com.fiap.fasefood.application.usecases.usuario.listar.ListUserOutput;
+import br.com.fiap.fasefood.core.entities.TipoUsuario;
+import br.com.fiap.fasefood.core.entities.Usuario;
+import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
+import br.com.fiap.fasefood.core.gateways.TipoUsuarioRepository;
+import br.com.fiap.fasefood.core.gateways.UsuarioRepository;
+
+
+public class AlterarTipoUsuarioUseCaseImpl implements AlterarTipoUsuarioUseCase {
+
+    private final UsuarioRepository usuarioRepository;
+    private final TipoUsuarioRepository tipoUsuarioRepository;
+
+    public AlterarTipoUsuarioUseCaseImpl(UsuarioRepository usuarioRepository, TipoUsuarioRepository tipoUsuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+        this.tipoUsuarioRepository = tipoUsuarioRepository;
+    }
+
+    @Override
+    public ListUserOutput alterarTipoUsuario(Long usuarioId, UpdateUserTypeInput updateUserTypeInput) {
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado com ID: " + usuarioId));
+
+        TipoUsuario novoTipoUsuario = tipoUsuarioRepository.findById(updateUserTypeInput.tipoUsuarioId())
+                .orElseThrow(() -> new ResourceNotFoundException("Tipo de usuário não encontrado com ID: " + updateUserTypeInput.tipoUsuarioId()));
+
+        usuario.alterarTipoUsuario(novoTipoUsuario);
+
+        Usuario usuarioAtualizado = usuarioRepository.salvar(usuario);
+
+        return new ListUserOutput(
+                usuarioAtualizado.getId(),
+                usuarioAtualizado.getNome(),
+                usuarioAtualizado.getEmail(),
+                usuarioAtualizado.getLogin(),
+                usuarioAtualizado.getTipoUsuario(),
+                usuarioAtualizado.getEndereco()
+        );
+    }
+}

@@ -1,12 +1,14 @@
 package br.com.fiap.fasefood.infra.persistence;
 
-import br.com.fiap.fasefood.core.domain.entities.Cardapio;
+import br.com.fiap.fasefood.application.usecases.shared.paginacao.PageOutput;
+import br.com.fiap.fasefood.application.usecases.shared.paginacao.PaginationInput;
+import br.com.fiap.fasefood.core.entities.Cardapio;
 import br.com.fiap.fasefood.core.exceptions.ResourceNotFoundException;
-import br.com.fiap.fasefood.core.usecase.gateways.CardapioRepository;
-import br.com.fiap.fasefood.infra.controller.mapper.cardapio.CardapioEntityMapper;
+import br.com.fiap.fasefood.core.gateways.CardapioRepository;
+import br.com.fiap.fasefood.infra.controllers.mapper.cardapio.CardapioEntityMapper;
 import br.com.fiap.fasefood.infra.persistence.jpa.CardapioJpaRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
@@ -33,8 +35,26 @@ public class CardapioRepositoryImpl implements CardapioRepository {
     }
 
     @Override
-    public Page<Cardapio> findByRestauranteId(Long restauranteId, Pageable pageable) {
-        return jpaRepository.findAllByRestauranteIdAndAtivoTrue(restauranteId, pageable).map(CardapioEntityMapper::toDomain);
+    public PageOutput<Cardapio> findByRestauranteId(Long restauranteId, PaginationInput pageable) {
+        var springPageable = PageRequest.of(
+                pageable.page(),
+                pageable.size(),
+                Sort.by(Sort.Direction.fromString(pageable.sortDirection()), pageable.sortField())
+        );
+
+        var pageEntity = jpaRepository.findAllByRestauranteIdAndAtivoTrue(restauranteId, springPageable);
+
+        var domainList = pageEntity.getContent().stream()
+                .map(CardapioEntityMapper::toDomain)
+                .toList();
+
+        return new PageOutput<>(
+                domainList,
+                pageEntity.getNumber(),
+                pageEntity.getSize(),
+                pageEntity.getTotalPages(),
+                pageEntity.getTotalElements()
+        );
     }
 
     @Override

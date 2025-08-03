@@ -1,9 +1,8 @@
 package br.com.fiap.fasefood.infra.persistence;
 
-import br.com.fiap.fasefood.core.domain.entities.TipoUsuario;
-import br.com.fiap.fasefood.core.usecase.gateways.TipoUsuarioRepository;
-import br.com.fiap.fasefood.infra.controller.mapper.TipoUsuarioMapper;
-import br.com.fiap.fasefood.infra.persistence.entities.TipoUsuarioEntity;
+import br.com.fiap.fasefood.core.entities.TipoUsuario;
+import br.com.fiap.fasefood.core.gateways.TipoUsuarioRepository;
+import br.com.fiap.fasefood.infra.controllers.mapper.TipoUsuarioMapper;
 import br.com.fiap.fasefood.infra.persistence.jpa.TipoUsuarioJpaRepository;
 import org.springframework.stereotype.Repository;
 

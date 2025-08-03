@@ -3,58 +3,137 @@
 ## 1. Introdução
 
 ### Descrição do problema
-O Fase Food é uma solução de gestão para restaurantes de fast food, visando automatizar o processo de pedidos e organizar o fluxo de preparação e entrega. O sistema gerencia usuários (clientes e administradores) com objetivo de facilitar o processo de pedidos e reduzir filas.
-
+Um grupo de restaurantes de fast food busca uma solução de gestão unificada para otimizar suas operações e reduzir custos com sistemas individuais. A ausência de uma plataforma compartilhada dificulta a padronização e a eficiência, impactando a experiência do cliente.
 ### Objetivo do projeto
-Desenvolver um backend robusto utilizando Spring Boot para gerenciar usuários, incluindo operações CRUD completas e validação de login. O sistema será containerizado com Docker e utilizará um banco de dados MySQL para persistência de dados, focando no gerenciamento de usuários.
-
+Desenvolver um backend robusto utilizando Spring Boot que sirva como um sistema de gestão compartilhado. Nesta segunda fase, o projeto expande para incluir o gerenciamento completo de restaurantes, cardápios e seus itens, além da diferenciação de tipos de usuário ("Cliente" e "Dono de Restaurante"). O objetivo é fornecer uma API completa para que os estabelecimentos possam gerenciar suas operações de forma autônoma.
 ## 2. Arquitetura do Sistema
 
-### Descrição da Arquitetura
-O projeto Fase Food segue uma arquitetura em camadas, similar ao padrão MVC adaptado para APIs REST:
+### Arquitetura da API (Clean Architecture)
+O projeto adota os princípios da Clean Architecture para garantir a separação de responsabilidades, testabilidade e escalabilidade. O código é organizado nas seguintes camadas:
 
-- **Controller Layer**: Responsável por receber as requisições HTTP, validar os inputs e direcionar para os serviços apropriados.
-- **Service Layer**: Contém a lógica de negócio, orquestrando as operações e interagindo com os repositórios.
-- **Repository Layer**: Responsável pela persistência e recuperação de dados do banco MySQL.
-- **Model/Entity Layer**: Representa as entidades de domínio (ex: Usuário, Endereço) e suas relações.
-- **DTO Layer**: Objetos de transferência de dados que isolam a API externa das entidades internas.
-
-A aplicação está containerizada com Docker, utilizando um container para a aplicação Spring Boot e outro para o banco de dados MySQL. A comunicação é estabelecida via Docker Compose, garantindo isolamento e facilidade de implantação.
-
-### Diagrama da Arquitetura
+- **Domain (core)**:Contém as entidades de negócio (Usuario, Restaurante, etc.) e as interfaces dos repositórios (gateways), representando o núcleo da aplicação.
+- **Application (application)**: Orquestra os fluxos de negócio através dos usecases, implementando a lógica da aplicação sem depender de frameworks externos.
+- **Infrastructure (infra)**: Camada mais externa, responsável pelos detalhes de implementação, como os controllers da API REST, a persistência de dados com Spring Data JPA e as configurações do Spring Boot.
 
 ```mermaid
 graph TD
-    subgraph "Docker Environment"
-        SpringBoot["Spring Boot Application (api-fasefood)"] <--> MySQLDB["MySQL Database (mysql)"]
+subgraph "Infrastructure"
+A[Controllers]
+B[Spring Data JPA / MySQL]
+C[Configurações Spring]
+end
+
+    subgraph "Application"
+        D[Use Cases / Services]
     end
-    
-    Clients["Clients (Postman, Web, Mobile)"] --> SpringBoot
-    
-    classDef container fill:#34495e,stroke:#ffffff,stroke-width:2px,color:#ffffff;
-    classDef springapp fill:#27ae60,stroke:#ffffff,stroke-width:2px,color:#ffffff;
-    classDef database fill:#2980b9,stroke:#ffffff,stroke-width:2px,color:#ffffff;
-    classDef client fill:#f39c12,stroke:#ffffff,stroke-width:2px,color:#ffffff;
-    
-    class Docker container;
-    class SpringBoot springapp;
-    class MySQLDB database;
-    class Clients client;
+
+    subgraph "Domain"
+        E[Entities / Models]
+        F[Gateways / Interfaces]
+    end
+
+    A --> D
+    D --> F
+    B -- implementa --> F
+    D --> E
+```
+
+A aplicação está containerizada com Docker, utilizando um container para a aplicação Spring Boot e outro para o banco de dados MySQL. A comunicação é estabelecida via Docker Compose, garantindo isolamento e facilidade de implantação.
+
+### Diagrama do Banco de Dados
+
+```mermaid
+erDiagram
+    usuarios {
+        BIGINT id PK
+        VARCHAR nome
+        VARCHAR email
+        VARCHAR login
+        VARCHAR senha
+        BIT ativo
+        BIGINT endereco_id FK
+        BIGINT tipo_usuario_id FK
+    }
+    enderecos {
+        BIGINT id PK
+        VARCHAR logradouro
+        VARCHAR numero
+        VARCHAR cep
+        VARCHAR bairro
+        VARCHAR cidade
+        VARCHAR uf
+    }
+    tipo_usuario {
+        BIGINT id PK
+        VARCHAR nome
+    }
+    restaurantes {
+        BIGINT id PK
+        VARCHAR nome
+        VARCHAR tipo_cozinha
+        TIME horario_abertura
+        TIME horario_fechamento
+        BIT ativo
+        BIGINT endereco_id FK
+        BIGINT dono_id FK
+    }
+    cardapios {
+        BIGINT id PK
+        VARCHAR nome
+        VARCHAR descricao
+        BIT ativo
+        BIGINT restaurante_id FK
+    }
+    cardapio_itens {
+        BIGINT id PK
+        VARCHAR nome
+        VARCHAR descricao
+        DECIMAL preco
+        BIT apenas_no_local
+        VARCHAR caminho_foto
+        BIT ativo
+        BIGINT cardapio_id FK
+    }
+
+    usuarios ||--o{ enderecos : "possui"
+    usuarios ||--o{ tipo_usuario : "é do tipo"
+    restaurantes ||--o{ enderecos : "possui"
+    restaurantes ||--o{ usuarios : "pertence a"
+    cardapios ||--o{ restaurantes : "pertence a"
+    cardapio_itens ||--o{ cardapios : "pertence a"
 ```
 
 ## 3. Descrição dos Endpoints da API
 
+A API foi expandida para incluir CRUDs completos para todas as novas entidades.
+
 ### Tabela de Endpoints
 
-| Endpoint                      | Método | Descrição                                      |
-|-------------------------------|--------|------------------------------------------------|
-| `/api/v1/users`                 | GET    | Recupera todos os usuários (paginado)            |
-| `/api/v1/users/{id}`            | GET    | Recupera um usuário específico pelo ID         |
-| `/api/v1/users`                 | POST   | Adiciona um novo usuário (Comum ou Administrador) |
-| `/api/v1/users/{id}`            | PUT    | Atualiza dados de um usuário existente         |
-| `/api/v1/auth/{id}/password`  | PATCH  | Atualiza a senha de um usuário                 |
-| `/api/v1/users/{id}`            | DELETE | Remove um usuário do sistema                   |
-| `/api/v1/auth/login`            | POST   | Autentica um usuário no sistema                |
+| Entidade       | Endpoint                              | Método | Descrição                                         |
+|----------------|---------------------------------------|--------|---------------------------------------------------|
+| Usuários       | `/api/v1/users`                       | GET    | Recupera todos os usuários (paginado)             |
+|                | `/api/v1/users/{id}`                  | GET    | Recupera um usuário específico pelo ID            |
+|                | `/api/v1/users`                       | POST   | Adiciona um novo usuário (Comum ou Administrador) |
+|                | `/api/v1/users/{id}`                  | PUT    | Atualiza dados de um usuário existente            |
+|                | `/api/v1/users/{id}`                  | DELETE | Remove um usuário do sistema                      |
+|                | `/api/v1/users/{id}/tipo`             | PATCH  | Altera o tipo de um usuário.                      |
+| Autenticação   | `/api/v1/auth/{id}/password`          | PATCH  | Atualiza a senha de um usuário                    |
+|                | `/api/v1/auth/login`                  | POST   | Autentica um usuário no sistema                   |
+| Restaurantes   | `/api/v1/restaurantes`                | POST   | Cadastra um novo restaurante.                     |
+|                | `/api/v1/restaurantes`                | GET    | Lista todos os restaurantes ativos.               |
+|                | `/api/v1/restaurantes/{id}`           | GET    | Busca um restaurante pelo ID.                     |
+|                | `/api/v1/restaurantes/{id}`           | PUT    | Atualiza os dados de um restaurante.              |
+|                | `/api/v1/restaurantes/{id}`           | DELETE | Remove (desativa) um restaurante.                 |
+| Cardápios      | `/api/v1/cardapios`                   | POST   | Cria um novo cardápio para um restaurante.        |
+|                | `/api/v1/cardapios/restaurante/{id}`  | GET    | Lista os cardápios de um restaurante.             |
+| Itens Cardápio | `/api/v1/item-cardapio`               | POST   | Cria um novo item em um cardápio.                 |
+|                | `/api/v1/item-cardapio/itens/batch`   | POST   | Cria múltiplos itens em lote.                     |
+|                | `/api/v1/item-cardapio/cardapio/{id}` | GET    | Lista os itens de um cardápio.                    |
+|                | `/api/v1/item-cardapio/{id}`          | PUT    | Atualiza um item do cardápio.                     |
+|                | `/api/v1/item-cardapio/itens/batch`   | PUT    | Atualiza múltiplos itens em lote.                 |
+|                | `/api/v1/item-cardapio/{id}`          | DELETE | Remove (desativa) um item.                        |
+|                | `/api/v1/item-cardapio/itens/batch`   | DELETE | Remove múltiplos itens em lote.                   |
+
 
 ### Exemplos de requisição e resposta
 
@@ -83,7 +162,7 @@ graph TD
 **Resposta Esperada (Exemplo 201 Created):**
 ```json
 {
-    "id": 1, // Ou o ID gerado
+    "id": 1,
     "nome": "Leonardo",
     "email": "leonardomattioli00@gmail.com",
     "login": "leomattioli",
@@ -109,11 +188,34 @@ graph TD
 }
 ```
 
-## 4. Configuração do Projeto
+## 4.  Configuração e Execução
 
-### Configuração do Docker Compose
+### Pré-requisitos
+- Docker
+- Docker Compose
 
-O arquivo `docker-compose.yml` orquestra os serviços da aplicação:
+### Instruções para execução
+1. Clone o repositório:
+```
+git clone https://github.com/MSFelisberto/fasefood
+cd fasefood
+```
+
+2. Construa e execute com Docker Compose:
+Na raiz do projeto, execute o comando:
+
+```
+docker-compose up --build -d
+```
+Este comando irá construir a imagem da aplicação e iniciar os contêineres da API e do banco de dados em segundo plano.
+
+3. Acesse as interfaces:
+   * API: http://localhost:8080
+   * Swagger UI (Documentação): http://localhost:8080/swagger-ui.html
+   * Banco de Dados (MySQL): Acessível em localhost:3306 com as credenciais definidas no docker-compose.yml.
+
+
+4. arquivo `docker-compose.yml` orquestra os serviços da aplicação:
 
 ```yaml
 services:
@@ -161,75 +263,32 @@ Este arquivo define:
 - Uma rede compartilhada (`api-network`) para comunicação entre os containers.
 - Um volume persistente (`mysql-data`) para armazenar os dados do MySQL.
 
-### Instruções para execução local
+## 5. Qualidade do Código e Testes
+O projeto adota uma estratégia de testes em duas camadas para garantir a máxima qualidade e confiabilidade.
 
-1.  **Clone o repositório:**
-    ```bash
-    git clone https://github.com/MSFelisberto/fasefood
-    cd fasefood # ou o nome da pasta raiz do projeto
-    ```
+### Testes Unitários
+Os testes unitários focam em validar a lógica de negócio dentro dos usecases e domain de forma isolada. Utilizamos JUnit 5 e Mockito para mockar as dependências externas (como repositórios), garantindo que apenas a unidade de código em questão seja testada.
+A cobertura de testes unitários para as camadas de negócio é de 98%.
 
-2.  **Construa e execute com Docker Compose:**
-    Na raiz do projeto (onde o arquivo `docker-compose.yml` está localizado), execute:
-    ```bash
-    docker-compose up --build -d
-    ```
-    O comando `--build` garante que a imagem da aplicação seja construída (ou reconstruída se houver alterações no `Dockerfile`). O `-d` executa os containers em segundo plano.
-    Aguarde alguns instantes para que o banco de dados e a aplicação sejam iniciados. O `Dockerfile` da aplicação inclui um `sleep 15` para dar tempo ao MySQL.
+### Testes de Integração
+Para validar a colaboração entre as diferentes camadas da aplicação, o projeto conta com uma suíte de **testes de integração automatizados**.
 
-3.  **Acesse as interfaces:**
-    *   **API**: `http://localhost:8080/api/v1`
-    *   **Banco de Dados (MySQL)**: Acessível em `localhost:3306` com um cliente MySQL (ex: DBeaver, MySQL Workbench).
-        *   Host: `localhost`
-        *   Porta: `3306`
-        *   Usuário: `root`
-        *   Senha: `password`
-        *   Database: `fasefood`
+* **Tecnologias**: Utilizamos JUnit 5, Spring Boot Test, Testcontainers e MockMvc.
+* **Como funciona**: Para cada execução dos testes, o Testcontainers sobe um contêiner Docker com uma instância limpa do banco de dados MySQL. O Flyway é executado para criar o schema e popular os dados iniciais. Em seguida, o MockMvc realiza requisições HTTP reais aos endpoints da API, validando todo o fluxo, desde o Controller até a persistência no banco de dados.
+* **Isolamento**: Cada classe de teste é anotada com @Transactional e @DirtiesContext, garantindo que as alterações no banco de dados sejam desfeitas após cada teste e que o contexto da aplicação seja reiniciado entre as classes de teste, assegurando total independência e evitando resultados inconsistentes.
 
-## 5. Qualidade do Código
+### Como executar os testes
 
-### Boas Práticas Utilizadas
+Para rodar a suíte completa de testes (unitários e de integração), execute o seguinte comando Maven na raiz do projeto:
 
-O projeto visa implementar boas práticas de desenvolvimento, incluindo:
+```
+mvn verify
+```
 
-1.  **Princípios SOLID** (quando aplicável nas camadas de serviço e componentes):
-    *   **Responsabilidade Única (SRP)**: Classes com responsabilidades bem definidas (Controllers para API, Services para lógica, Repositories para dados).
-    *   **Aberto/Fechado (OCP)**: Uso de interfaces para serviços/repositórios pode facilitar a extensão.
-    *   **Inversão de Dependência (DIP)**: Spring Boot gerencia dependências, promovendo o uso de abstrações.
-
-2.  **Validação de Dados**: Utilização de anotações de validação (ex: `@NotBlank`, `@Email`, `@Size`) nos DTOs/Entidades para garantir a integridade dos dados de entrada.
-3.  **Documentação da API**: (Opcional, mas recomendado) Integração com Swagger/OpenAPI para documentação interativa dos endpoints. Se implementado, geralmente acessível em `/swagger-ui.html` ou `/v3/api-docs`.
-4.  **Tratamento de Exceções**: Implementação de handlers globais de exceção para fornecer respostas de erro consistentes e significativas.
-5.  **Containerização**: Uso de Docker para um ambiente de desenvolvimento e implantação consistente.
 
 ## 6. Collections para Teste
-
-### Collection do Postman
-
-A collection do Postman para testar a API está disponível no repositório: `fasefood - Tech Challenge.postman_collection.json`.
-
-### Como importar e usar a collection:
-
-1.  Abra o Postman.
-2.  Clique em "Import" (geralmente no canto superior esquerdo).
-3.  Faça o upload ou selecione o arquivo `fasefood - Tech Challenge.postman_collection.json`.
-4.  Após a importação, você verá a collection "fasefood - Tech Challenge" no painel lateral.
-5.  As requisições usarão `http://localhost:8080` como base para os endpoints.
-
-### Descrição dos Testes Manuais
-
-A collection contém requisições para validar todos os endpoints principais:
-
-1.  **Adicionar Usuário**: Teste a criação de usuários comuns e administradores.
-2.  **Recuperar Usuários**: Verifique a listagem de todos os usuários e a busca por ID.
-3.  **Atualizar Usuário**: Modifique dados de um usuário existente.
-4.  **Atualizar Senha**: Teste a funcionalidade de alteração de senha.
-5.  **Fazer Login**: Verifique o processo de autenticação.
-6.  **Deletar Usuário**: Teste a remoção de um usuário.
-7.  **Testes de Validação**: A collection também inclui cenários para testar validações de entrada (ex: campos obrigatórios, formato de email, tamanho de senha).
+A collection do Postman para testes manuais e exploratórios da API está disponível no repositório: ```FaseFood - Coleção de Testes.postman_collection.json.```
 
 ## 7. Repositório do Código
-
-### URL do Repositório
-
-O código completo está disponível em: `https://github.com/MSFelisberto/fasefood`
+O código-fonte completo está disponível no GitHub:
+https://github.com/MSFelisberto/fasefood

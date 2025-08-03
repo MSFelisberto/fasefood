@@ -1,11 +1,13 @@
 package br.com.fiap.fasefood.infra.persistence;
 
-import br.com.fiap.fasefood.core.domain.entities.Restaurante;
-import br.com.fiap.fasefood.core.usecase.gateways.RestauranteRepository;
-import br.com.fiap.fasefood.infra.controller.mapper.restaurante.RestauranteEntityMapper;
+import br.com.fiap.fasefood.application.usecases.shared.paginacao.PageOutput;
+import br.com.fiap.fasefood.application.usecases.shared.paginacao.PaginationInput;
+import br.com.fiap.fasefood.core.entities.Restaurante;
+import br.com.fiap.fasefood.core.gateways.RestauranteRepository;
+import br.com.fiap.fasefood.infra.controllers.mapper.restaurante.RestauranteEntityMapper;
 import br.com.fiap.fasefood.infra.persistence.jpa.RestauranteJpaRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 
@@ -34,8 +36,25 @@ public class RestauranteRepositoryImpl implements RestauranteRepository {
     }
 
     @Override
-    public Page<Restaurante> listarTodosAtivos(Pageable paginacao) {
-        return restauranteJpaRepository.findAllByAtivoTrue(paginacao)
-                .map(RestauranteEntityMapper::toDomain);
+    public PageOutput<Restaurante> listarTodosAtivos(PaginationInput paginacao) {
+        var pageable = PageRequest.of(
+                paginacao.page(),
+                paginacao.size(),
+                Sort.by(Sort.Direction.fromString(paginacao.sortDirection()), paginacao.sortField())
+        );
+
+        var pageEntity = restauranteJpaRepository.findAllByAtivoTrue(pageable);
+
+        var domainList = pageEntity.getContent().stream()
+                .map(RestauranteEntityMapper::toDomain)
+                .toList();
+
+        return new PageOutput<>(
+                domainList,
+                pageEntity.getNumber(),
+                pageEntity.getSize(),
+                pageEntity.getTotalPages(),
+                pageEntity.getTotalElements()
+        );
     }
 }
